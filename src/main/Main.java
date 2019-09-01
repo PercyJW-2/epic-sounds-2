@@ -13,6 +13,8 @@ import util.Prefixes;
 import javax.security.auth.login.LoginException;
 import java.sql.*;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
@@ -29,7 +31,7 @@ public class Main {
             }
         }));
 
-        JDA jda = null;
+        JDA jda;
 
         builder = new JDABuilder(AccountType.BOT);
 
@@ -47,7 +49,7 @@ public class Main {
 
             try {
                 loadPrefixes(jda);
-                loadSounds();
+                loadSounds(jda);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -57,6 +59,18 @@ public class Main {
             i.printStackTrace();
         }
 
+        ExecutorService myExecutor = Executors.newCachedThreadPool();
+        myExecutor.execute(() -> {
+            try {
+                Thread.sleep(new Long(120000)); //Wait 2h
+                backupPrefixes();
+                backupSounds();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (SQLException s) {
+                s.printStackTrace();
+            }
+        });
     }
 
     private static void addCommands() {
@@ -140,11 +154,70 @@ public class Main {
     }
 
     private static void backupSounds() throws SQLException{
+        Connection conn = connect();
+        if (conn == null) {
+            System.out.println("Failed to backup the Prefixes");
+            return;
+        }
 
+        //checking if table is available
+
+        String sql = "CREATE TABLE IF NOT EXISTS sounds (" +
+                " serverID BIGINT PRIMARY KEY, " +
+                " soundName CHAR" +
+                " soundLink CHAR" +
+                ");";
+
+        Statement stmt = conn.createStatement();
+        stmt.execute(sql);
+        stmt.close();
+
+        //backup Prefixes starts
+
+        //
+
+        conn.close();
+        System.out.println("Cosed Database connection");
     }
 
-    private static void loadSounds() throws SQLException{
+    private static void loadSounds(JDA jda) throws SQLException{
+        Connection conn = connect();
+        if (conn == null) {
+            System.out.println("Failed to load Prefixes");
+            return;
+        }
 
+        //checking if table is available
+
+        String sql = "CREATE TABLE IF NOT EXISTS sounds (" +
+                " serverID BIGINT PRIMARY KEY, " +
+                " soundName CHAR" +
+                " soundLink CHAR" +
+                ");";
+
+        Statement stmt = conn.createStatement();
+        stmt.execute(sql);
+        stmt.close();
+
+        //loading the saved Prefixes
+
+        sql = "SELECT *" +
+                "FROM sounds";
+
+        stmt = conn.createStatement();
+        ResultSet result = stmt.executeQuery(sql);
+        stmt.close();
+
+        Long[] serveridArray = (Long[]) result.getArray("serverId").getArray();
+        String[] soundNameArray = (String[]) result.getArray("soundName").getArray();
+        String[] soundLinkArray = (String[]) result.getArray("soundLink").getArray();
+
+        for (int i = 0; serveridArray.length > i && soundNameArray.length > i && soundLinkArray.length > i; i++) {
+            //
+        }
+
+        conn.close();
+        System.out.println("Closed Database connection");
     }
 
     private static Connection connect() {
