@@ -1,13 +1,18 @@
 package commands;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Prefixes;
 
 import java.awt.*;
 
+import static util.defaultMessageWriter.writeError;
+import static util.defaultMessageWriter.writeMessage;
+
 public class PrefixCustomizer implements Command {
+
+    private long guildID = 0;
 
     public boolean called(String[] args, MessageReceivedEvent event) {
         if (event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
@@ -17,27 +22,9 @@ public class PrefixCustomizer implements Command {
         }
     }
 
-    private void writeError (String error, MessageReceivedEvent event) {
-        event.getChannel().sendMessage(
-                new EmbedBuilder()
-                        .setColor(Color.RED)
-                        .setTitle("Error")
-                        .setDescription(error)
-                        .build()
-        ).queue();
-    }
-
-    private void writeMessage (String msg, MessageReceivedEvent event) {
-        event.getChannel().sendMessage(
-                new EmbedBuilder()
-                        .setColor(Color.BLUE)
-                        .setDescription(msg)
-                        .build()
-        ).queue();
-    }
-
     public void action(String[] args, MessageReceivedEvent event) {
         if (args.length == 0) {
+            guildID = event.getGuild().getIdLong();
             writeMessage(help(), event);
             return;
         }
@@ -45,7 +32,7 @@ public class PrefixCustomizer implements Command {
             writeError("Don't use any Spaces for your Custom Prefix!", event);
             return;
         }
-        Prefixes.prefixMap.put(event.getGuild(), args[0]);
+        Prefixes.prefixMap.put(event.getGuild().getIdLong(), args[0]);
         writeMessage("Successfully changed Prefix to" + args[0], event);
     }
 
@@ -63,7 +50,7 @@ public class PrefixCustomizer implements Command {
 
     public String help() {
         return "Usage of the Command, to change the Prefix for the Bot:\n" +
-                "   Yo!changePrefix [new Prefix]\n" +
+                "   " + Prefixes.getPrefix(guildID) + "changePrefix [new Prefix]\n" +
                 "\n" +
                 "IMPORTANT:\n" +
                 "   When you change the Default Prefix (Yo!)\n" +
