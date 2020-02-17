@@ -1,20 +1,31 @@
 package main;
 
+import audioCore.AudioInstanceManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import commands.PrefixCustomizer;
+import commands.music.*;
 import listeners.CommandListener;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
-import util.Prefixes;
+import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 
 import javax.security.auth.login.LoginException;
-import java.sql.*;
-import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
+
+import static util.Prefixes.prefixMap;
 
 public class Main {
 
@@ -26,7 +37,7 @@ public class Main {
             try {
                 backupPrefixes();
                 backupSounds();
-            } catch (SQLException s) {
+            } catch (IOException s) {
                 s.printStackTrace();
             }
         }));
@@ -38,7 +49,7 @@ public class Main {
         builder.setToken(args[0]);
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
-        builder.setGame(Game.playing("your Music"));
+        builder.setActivity(Activity.playing("your Music | Yo!help"));
 
         addListeners();
         addCommands();
@@ -50,7 +61,7 @@ public class Main {
             try {
                 loadPrefixes(jda);
                 loadSounds(jda);
-            } catch (SQLException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (LoginException l) {
@@ -62,174 +73,72 @@ public class Main {
         ExecutorService myExecutor = Executors.newCachedThreadPool();
         myExecutor.execute(() -> {
             try {
-                Thread.sleep(new Long(120000)); //Wait 2h
+                Thread.sleep(86400000L); //Wait 2h
                 backupPrefixes();
                 backupSounds();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } catch (SQLException s) {
+            } catch (IOException s) {
                 s.printStackTrace();
             }
         });
     }
 
     private static void addCommands() {
+        AudioInstanceManager audioManager = new AudioInstanceManager();
         CommandHandler.commands.put("customizePrefix", new PrefixCustomizer());
+        CommandHandler.commands.put("join", new Join(audioManager));
+        CommandHandler.commands.put("leave", new Leave(audioManager));
+        CommandHandler.commands.put("play", new Play(audioManager));
+        CommandHandler.commands.put("stop", new Stop(audioManager));
+        CommandHandler.commands.put("skip", new Skip(audioManager));
     }
 
     private static void addListeners() {
-        builder.addEventListener(new CommandListener());
+        builder.addEventListeners(new CommandListener());
     }
 
-    private static void backupPrefixes() throws SQLException{
-        Connection conn = connect();
-        if (conn == null) {
-            System.out.println("Failed to backup the Prefixes");
-            return;
-        }
+    private static void backupPrefixes() throws IOException {
+        Gson gson = new Gson();
+        String json = gson.toJson(prefixMap);
+        System.out.println(json);
+        FileWriter writer = new FileWriter("prefixes.json");
+        writer.write(json);
+        writer.flush();
+        writer.close();
 
-        //checking if table is available
-
-        String sql = "CREATE TABLE IF NOT EXISTS prefixes (" +
-                " serverId BIGINT PRIMARY KEY, " +
-                " prefix CHAR" +
-                ");";
-
-        Statement stmt = conn.createStatement();
-        stmt.execute(sql);
-        stmt.close();
-
-        //backup Prefixes starts
-
-        for (Map.Entry<Guild, String> e: Prefixes.prefixMap.entrySet()) {
-            sql = "INSERT OR REPLACE INTO prefixes (serverID, prefix) VALUES (" +
-                     e.getKey().getId() + ", '" +
-                     e.getValue() +
-                    "');";
-            stmt = conn.createStatement();
-            stmt.execute(sql);
-            stmt.close();
-        }
-
-        conn.close();
-        System.out.println("Cosed Database connection");
+        System.out.println("saved prefixMap in prefixes.json");
     }
 
-    private static void loadPrefixes(JDA jda) throws SQLException{
-        Connection conn = connect();
-        if (conn == null) {
-            System.out.println("Failed to load Prefixes");
-            return;
-        }
-
-        //checking if table is available
-
-        String sql = "CREATE TABLE IF NOT EXISTS prefixes (" +
-                " serverId BIGINT PRIMARY KEY, " +
-                " prefix CHAR" +
-                ");";
-
-        Statement stmt = conn.createStatement();
-        stmt.execute(sql);
-        stmt.close();
-
-        //loading the saved Prefixes
-
-        sql = "SELECT *" +
-                "FROM prefixes";
-
-        stmt = conn.createStatement();
-        ResultSet result = stmt.executeQuery(sql);
-        stmt.close();
-
-        Long[] serveridArray = (Long[]) result.getArray("serverId").getArray();
-        String[] prefixArray = (String[]) result.getArray("prefix").getArray();
-
-        for (int i = 0; serveridArray.length > i && prefixArray.length > i; i++) {
-            Prefixes.prefixMap.put(jda.getGuildById(serveridArray[i]), prefixArray[i]);
-        }
-
-        conn.close();
-        System.out.println("Closed Database connection");
-    }
-
-    private static void backupSounds() throws SQLException{
-        Connection conn = connect();
-        if (conn == null) {
-            System.out.println("Failed to backup the Prefixes");
-            return;
-        }
-
-        //checking if table is available
-
-        String sql = "CREATE TABLE IF NOT EXISTS sounds (" +
-                " serverID BIGINT PRIMARY KEY, " +
-                " soundName CHAR" +
-                " soundLink CHAR" +
-                ");";
-
-        Statement stmt = conn.createStatement();
-        stmt.execute(sql);
-        stmt.close();
-
-        //backup Prefixes starts
-
-        //
-
-        conn.close();
-        System.out.println("Cosed Database connection");
-    }
-
-    private static void loadSounds(JDA jda) throws SQLException{
-        Connection conn = connect();
-        if (conn == null) {
-            System.out.println("Failed to load Prefixes");
-            return;
-        }
-
-        //checking if table is available
-
-        String sql = "CREATE TABLE IF NOT EXISTS sounds (" +
-                " serverID BIGINT PRIMARY KEY, " +
-                " soundName CHAR" +
-                " soundLink CHAR" +
-                ");";
-
-        Statement stmt = conn.createStatement();
-        stmt.execute(sql);
-        stmt.close();
-
-        //loading the saved Prefixes
-
-        sql = "SELECT *" +
-                "FROM sounds";
-
-        stmt = conn.createStatement();
-        ResultSet result = stmt.executeQuery(sql);
-        stmt.close();
-
-        Long[] serveridArray = (Long[]) result.getArray("serverId").getArray();
-        String[] soundNameArray = (String[]) result.getArray("soundName").getArray();
-        String[] soundLinkArray = (String[]) result.getArray("soundLink").getArray();
-
-        for (int i = 0; serveridArray.length > i && soundNameArray.length > i && soundLinkArray.length > i; i++) {
-            //
-        }
-
-        conn.close();
-        System.out.println("Closed Database connection");
-    }
-
-    private static Connection connect() {
-        Connection conn = null;
+    private static void loadPrefixes(JDA jda) throws IOException{
+        Gson gson = new Gson();
         try {
-            String url = "jdbc:sqlite:epic-sounds-2-data.db";
-            conn = DriverManager.getConnection(url);
-            System.out.println("Connected to Database");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            //load File
+            StringBuilder contentBuilder = new StringBuilder();
+            Stream<String> stream = Files.lines(Paths.get("prefixes.json"), StandardCharsets.UTF_8);
+            stream.forEach(s -> contentBuilder.append(s));
+            String json = contentBuilder.toString();
+            //loaded File
+            System.out.println(json);
+            Type type = new TypeToken<HashMap<Long,String>>(){}.getType();
+            prefixMap = gson.fromJson(json, type);
+        } catch (NoSuchFileException f){
+            System.out.println("File does not exist");
         }
-        return conn;
+        if (prefixMap == null) {
+            prefixMap = new HashMap<Long,String>();
+        }
+        System.out.println("loaded prefixMap");
+    }
+
+    private static void backupSounds() throws IOException{
+
+        System.out.println("Cosed Database connection");
+    }
+
+    private static void loadSounds(JDA jda) throws IOException{
+
+        System.out.println("Closed Database connection");
     }
 
 }

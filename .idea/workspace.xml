@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="270" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1Xkm9XQp6cyOILPCcwKjT2ipLfr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+      <command value="mvn install" />
+      <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
+      <module name="epic-sounds-2" />
+      <option name="PROGRAM_PARAMETERS" value="NjE4MDc2NTE3NTMyMTcyMjg5.Xklotw.rwu1Qb0_7HHrFoDc1_Xq4ko3L_o" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="" />
+      <created>1581598315556</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581598315556</updated>
+      <workItem from="1581598319032" duration="457000" />
+      <workItem from="1581782936649" duration="4552000" />
+      <workItem from="1581862983814" duration="19022000" />
+      <workItem from="1581952045119" duration="5818000" />
+    </task>
+    <task id="LOCAL-00001" summary="add gitignore">
+      <created>1581598745047</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581598745047</updated>
+    </task>
+    <task id="LOCAL-00002" summary="small cleanup">
+      <created>1581863029188</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1581863029188</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added functionality to play Music via a Command.">
+      <created>1581887768799</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1581887768799</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Final edits to the play-command">
+      <created>1581888442045</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1581888442045</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Bugfixes on play-Command">
+      <created>1581890968595</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1581890968595</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added stop-command">
+      <created>1581957651109</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1581957651109</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added skip-command">
+      <created>1581968505647</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1581968505647</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add gitignore" />
+    <MESSAGE value="small cleanup" />
+    <MESSAGE value="Added functionality to play Music via a Command." />
+    <MESSAGE value="Final edits to the play-command" />
+    <MESSAGE value="Bugfixes on play-Command" />
+    <MESSAGE value="Added stop-command" />
+    <MESSAGE value="Added skip-command" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added skip-command" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="555" y="215" width="800" height="675" key="#Project_Structure" timestamp="1581868505192">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="555" y="215" width="800" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581868505192" />
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581869320460">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581869320460" />
+    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser" timestamp="1581891486179">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581891486179" />
+    <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1581782992630">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581782992630" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1581968505592">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581968505592" />
+    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1581783392110">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581783392110" />
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1581968596413">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581968596413" />
+    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1581968596412">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581968596412" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1581968596412">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581968596412" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1581968596412">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581968596412" />
+    <state width="1870" height="341" key="GridCell.Tab.1.bottom" timestamp="1581895069201">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="341" key="GridCell.Tab.1.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
+    <state width="1870" height="341" key="GridCell.Tab.1.center" timestamp="1581895069201">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="341" key="GridCell.Tab.1.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
+    <state width="1870" height="341" key="GridCell.Tab.1.left" timestamp="1581895069201">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="341" key="GridCell.Tab.1.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
+    <state width="1870" height="341" key="GridCell.Tab.1.right" timestamp="1581895069201">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="341" key="GridCell.Tab.1.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
+    <state x="665" y="269" width="632" height="568" key="MultipleFileMergeDialog" timestamp="1581598468489">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="665" y="269" width="632" height="568" key="MultipleFileMergeDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581598468489" />
+    <state x="441" y="189" key="SettingsEditor" timestamp="1581784182495">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="441" y="189" key="SettingsEditor/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581784182495" />
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1581969639976">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581969639976" />
+    <state x="615" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1581598323137">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="615" y="381" key="com.intellij.ide.util.TipDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581598323137" />
+    <state x="684" y="214" width="541" height="678" key="git4idea.branch.GitSmartOperationDialog" timestamp="1581598480970">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="684" y="214" width="541" height="678" key="git4idea.branch.GitSmartOperationDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581598480970" />
+    <state x="624" y="254" width="672" height="678" key="run.anything.popup" timestamp="1581785347742">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="624" y="254" width="672" height="678" key="run.anything.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581785347742" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/epic_sounds_2$Main.ic" NAME="Main Coverage Results" MODIFIED="1581880583161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>main.*</FILTER>
+    </SUITE>
+  </component>
+</project>

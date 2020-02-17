@@ -1,15 +1,17 @@
 package util;
 
-import net.dv8tion.jda.core.entities.Guild;
-
 import java.util.HashMap;
 
 public class Prefixes {
 
-    private static final String defaultPrefix = "Yo!";
-    public static HashMap<Guild, String > prefixMap = new HashMap<Guild, String>();
+    public static final String defaultPrefix = "Yo!";
+    public static HashMap<Long, String > prefixMap = new HashMap<Long, String>();
 
-    public static String getDefaultPrefix() {
-        return defaultPrefix;
+    public static String getPrefix (Long guildID) {
+        String prefix = prefixMap.get(guildID);
+        if (prefix == null) {
+            prefix = defaultPrefix;
+        }
+        return prefix;
     }
 }
