@@ -23,7 +23,7 @@ public class Volume implements Command {
     public void action(String[] args, MessageReceivedEvent event) {
         boolean show = true;
         int volume = 50;
-        if (args != null || args.length > 0) {
+        if (args.length > 0) {
             for (String s: args) {
                 switch (s.toLowerCase()) {
                     case "--help":
@@ -40,7 +40,7 @@ public class Volume implements Command {
                         break;
                     default:
                         show = false;
-                        volume = Integer.valueOf(s);
+                        volume = Integer.parseInt(s);
                 }
             }
             if (show) {

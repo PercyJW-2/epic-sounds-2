@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/commands/music/Volume.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/music/Join.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Join.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/music/Leave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Leave.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/music/Play.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Play.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/music/Skip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Skip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/music/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Stop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/defaultMessageWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/defaultMessageWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/music/Volume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Volume.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +111,7 @@
       <workItem from="1581782936649" duration="4552000" />
       <workItem from="1581862983814" duration="19022000" />
       <workItem from="1581952045119" duration="5818000" />
-      <workItem from="1582038384470" duration="3171000" />
+      <workItem from="1582038384470" duration="3474000" />
     </task>
     <task id="LOCAL-00001" summary="add gitignore">
       <created>1581598745047</created>
@@ -169,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581968505647</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added volume-command">
+      <created>1582045049819</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1582045049819</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +196,8 @@
     <MESSAGE value="Bugfixes on play-Command" />
     <MESSAGE value="Added stop-command" />
     <MESSAGE value="Added skip-command" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added skip-command" />
+    <MESSAGE value="Added volume-command" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added volume-command" />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="675" key="#Project_Structure" timestamp="1581868505192">
@@ -215,10 +216,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581782992630" />
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1581968505592">
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582045049713">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581968505592" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582045049713" />
     <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1581783392110">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
