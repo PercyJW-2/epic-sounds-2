@@ -4,8 +4,7 @@ import audioCore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import static util.defaultMessageWriter.writeError;
-import static util.defaultMessageWriter.writeMessage;
+import static util.defaultMessageWriter.*;
 
 public class Leave implements Command {
 
@@ -24,7 +23,7 @@ public class Leave implements Command {
     public void action(String[] args, MessageReceivedEvent event) {
         if (args != null && args.length > 0) {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h"))
-                writeMessage(help(), event); return;
+                writePersistentMessage(help(), event); return;
         }
         if (event.getGuild().getAudioManager().isConnected()==false) {
             writeError("The Bot is in not connected to any Channel", event);

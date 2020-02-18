@@ -43,4 +43,13 @@ public class defaultMessageWriter {
             }
         }, 3000);
     }
+
+    public static void writePersistentMessage (String msg, MessageReceivedEvent event) {
+        event.getChannel().sendMessage(
+                new EmbedBuilder()
+                        .setColor(Color.BLUE)
+                        .setDescription(msg)
+                        .build()
+        ).queue();
+    }
 }

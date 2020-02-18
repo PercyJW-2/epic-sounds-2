@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Prefixes;
 
-import static util.defaultMessageWriter.writeMessage;
+import static util.defaultMessageWriter.*;
 
 public class Stop implements Command {
 
@@ -29,7 +29,7 @@ public class Stop implements Command {
         guildID = g.getIdLong();
         if (args != null && args.length > 0) {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writeMessage(help(), event);
+                writePersistentMessage(help(), event);
                 return;
             }
         }

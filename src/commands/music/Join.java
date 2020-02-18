@@ -6,8 +6,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import static util.defaultMessageWriter.writeError;
-import static util.defaultMessageWriter.writeMessage;
+import static util.defaultMessageWriter.*;
 
 public class Join implements Command {
 
@@ -27,7 +26,7 @@ public class Join implements Command {
         Guild g = event.getGuild();
         if (args != null && args.length > 0) {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writeMessage(help(), event);
+                writePersistentMessage(help(), event);
                 return;
             }
         }

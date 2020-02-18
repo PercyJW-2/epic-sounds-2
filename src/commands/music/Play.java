@@ -7,8 +7,7 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Prefixes;
 
-import static util.defaultMessageWriter.writeError;
-import static util.defaultMessageWriter.writeMessage;
+import static util.defaultMessageWriter.*;
 
 public class Play implements Command {
 
@@ -43,7 +42,7 @@ public class Play implements Command {
             switch (s.toLowerCase()) {
                 case "--help":
                 case "-h":
-                    writeMessage(help(),event);
+                    writePersistentMessage(help(),event);
                     return;
                 case "--ytsearch":
                 case "-yts":
