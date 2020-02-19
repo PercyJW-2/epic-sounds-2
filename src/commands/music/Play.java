@@ -34,6 +34,7 @@ public class Play implements Command {
             if (audioInstanceManager.getPlayer(g).isPaused()) {
                 audioInstanceManager.getPlayer(g).setPaused(false);
                 writeMessage("Resumed Playback!", event);
+                return;
             }
             writeError("Provide at least one argument and/or a searchkeyword.\nTo find out about the possible inputs write '" +
                               Prefixes.getPrefix(g.getIdLong()) +
@@ -85,6 +86,9 @@ public class Play implements Command {
             VoiceChannel vChan = event.getMember().getVoiceState().getChannel();
             audioInstanceManager.getPlayer(g);
             g.getAudioManager().openAudioConnection(vChan);
+            if (audioInstanceManager.getPlayer(g).isPaused()) {
+                audioInstanceManager.getPlayer(g).setPaused(false);
+            }
         }
         audioInstanceManager.loadTrack(searchFinal, event.getMember(), event.getMessage(), playlist);
     }

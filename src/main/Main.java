@@ -93,6 +93,7 @@ public class Main {
         CommandHandler.commands.put("stop", new Stop(audioManager));
         CommandHandler.commands.put("skip", new Skip(audioManager));
         CommandHandler.commands.put("volume", new Volume(audioManager));
+        CommandHandler.commands.put("pause", new Pause(audioManager));
     }
 
     private static void addListeners() {

@@ -36,6 +36,9 @@ public class Join implements Command {
         } else if (vChan != null) {
             g.getAudioManager().openAudioConnection(vChan);
             audioInstanceManager.getPlayer(g);
+            if (audioInstanceManager.getPlayer(g).isPaused()) {
+                audioInstanceManager.getPlayer(g).setPaused(false);
+            }
             writeMessage("Joined Voice-Channel", event);
         }
     }
