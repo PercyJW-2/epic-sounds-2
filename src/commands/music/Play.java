@@ -31,7 +31,11 @@ public class Play implements Command {
         Guild g = event.getGuild();
 
         if (args == null || args.length < 1) {
-            writeError("Provide atleast one argument and/or a searchkeyword.\nTo find out about the possible inputs write '" +
+            if (audioInstanceManager.getPlayer(g).isPaused()) {
+                audioInstanceManager.getPlayer(g).setPaused(false);
+                writeMessage("Resumed Playback!", event);
+            }
+            writeError("Provide at least one argument and/or a searchkeyword.\nTo find out about the possible inputs write '" +
                               Prefixes.getPrefix(g.getIdLong()) +
                               "play --help'",event);
             return;
@@ -97,6 +101,7 @@ public class Play implements Command {
                 "use '--ytsearch' or '-yts' to search your music on Youtube. (This is enabled by default.)\n" +
                 "use '--scsearch' or '-scs' to search your music on Soundcloud.\n" +
                 "use '--ytsearchplaylist' or '-ytsp' to add the complete search-result from Youtube to your queue.\n" +
-                "or just write the link to your music after the command.";
+                "or just write the link to your music after the command.\n" +
+                "finally, when the playback was stopped just write the command to resume playback.";
     }
 }
