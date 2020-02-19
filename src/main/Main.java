@@ -3,6 +3,7 @@ package main;
 import audioCore.AudioInstanceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;
 import listeners.CommandListener;
@@ -87,6 +88,7 @@ public class Main {
 
     private static void addCommands() {
         CommandHandler.commands.put("customizePrefix", new PrefixCustomizer());
+        CommandHandler.commands.put("help", new Help());
         CommandHandler.commands.put("join", new Join(audioManager));
         CommandHandler.commands.put("leave", new Leave(audioManager));
         CommandHandler.commands.put("play", new Play(audioManager));
