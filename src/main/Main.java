@@ -30,6 +30,7 @@ import static util.Prefixes.prefixMap;
 public class Main {
 
     private static JDABuilder builder;
+    private static AudioInstanceManager audioManager = new AudioInstanceManager();
 
     public static void main(String[] args) {
 
@@ -85,7 +86,6 @@ public class Main {
     }
 
     private static void addCommands() {
-        AudioInstanceManager audioManager = new AudioInstanceManager();
         CommandHandler.commands.put("customizePrefix", new PrefixCustomizer());
         CommandHandler.commands.put("join", new Join(audioManager));
         CommandHandler.commands.put("leave", new Leave(audioManager));
@@ -98,6 +98,7 @@ public class Main {
         CommandHandler.commands.put("queue", new Queue(audioManager));
         CommandHandler.commands.put("current", new Current(audioManager));
         CommandHandler.commands.put("playing", new Current(audioManager));
+        CommandHandler.commands.put("undo", new Undo(audioManager));
     }
 
     private static void addListeners() {
