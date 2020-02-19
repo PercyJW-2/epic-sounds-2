@@ -54,7 +54,7 @@ public class AudioInstanceManager {
         }
     }
 
-    private TrackManager getTrackManager (Guild g) {
+    public TrackManager getTrackManager (Guild g) {
         return PLAYERS.get(g).getValue();
     }
 
@@ -134,7 +134,7 @@ public class AudioInstanceManager {
         return (hours == 0 ? "" : hours +":") + String.format("%02d", mins) + ":" + String.format("%02d", seconds);
     }
 
-    private String buildQueueMessage(AudioInfo info) {
+    public String buildQueueMessage(AudioInfo info) {
         AudioTrackInfo trackInfo = info.getTRACK().getInfo();
         String title = trackInfo.title;
         long length = trackInfo.length;
@@ -144,11 +144,6 @@ public class AudioInstanceManager {
     public void skip (Guild g) {
         if (isIdle(g)) return;
         getPlayer(g).stopTrack();
-    }
-
-    public void pause (Guild g) {
-        if (isIdle(g)) return;
-        getPlayer(g).setPaused(true);
     }
 
     public void setVolume (Guild g, int volume) {
