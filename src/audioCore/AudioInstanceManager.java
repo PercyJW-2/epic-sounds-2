@@ -58,7 +58,7 @@ public class AudioInstanceManager {
         return PLAYERS.get(g).getValue();
     }
 
-    private boolean isIdle(Guild g) {
+    public boolean isIdle(Guild g) {
         return !hasPlayer(g) || getPlayer(g).getPlayingTrack() == null;
     }
 
@@ -125,7 +125,7 @@ public class AudioInstanceManager {
         });
     }
 
-    private String getTimestamp(long milis) {
+    public String getTimestamp(long milis) {
         long seconds = milis / 1000;
         long hours = Math.floorDiv(seconds, 3600);
         seconds = seconds - (hours * 3600);

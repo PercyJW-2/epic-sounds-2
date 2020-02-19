@@ -34,7 +34,11 @@ public class Queue implements Command {
                 writePersistentMessage(help(), event);
                 return;
             } else {
-                sideNumb = Integer.parseInt(args[0]);
+                try {
+                    sideNumb = Integer.parseInt(args[0]);
+                } catch (Exception e) {
+                    writeError("Please write a number for the queue-page.", event);
+                }
             }
         }
 

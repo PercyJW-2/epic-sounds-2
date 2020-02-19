@@ -92,9 +92,12 @@ public class Main {
         CommandHandler.commands.put("play", new Play(audioManager));
         CommandHandler.commands.put("stop", new Stop(audioManager));
         CommandHandler.commands.put("skip", new Skip(audioManager));
+        CommandHandler.commands.put("next", new Skip(audioManager));
         CommandHandler.commands.put("volume", new Volume(audioManager));
         CommandHandler.commands.put("pause", new Pause(audioManager));
         CommandHandler.commands.put("queue", new Queue(audioManager));
+        CommandHandler.commands.put("current", new Current(audioManager));
+        CommandHandler.commands.put("playing", new Current(audioManager));
     }
 
     private static void addListeners() {

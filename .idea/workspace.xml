@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/commands/music/Queue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commands/music/Current.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/audioCore/AudioInstanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audioCore/AudioInstanceManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/music/Play.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Play.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/music/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/music/Queue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +117,7 @@
       <workItem from="1582038384470" duration="5167000" />
       <workItem from="1582135649099" duration="554000" />
       <workItem from="1582136216174" duration="380000" />
-      <workItem from="1582136614022" duration="5514000" />
+      <workItem from="1582136614022" duration="7522000" />
     </task>
     <task id="LOCAL-00001" summary="add gitignore">
       <created>1581598745047</created>
@@ -196,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582139681867</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added queue-command.">
+      <created>1582142155097</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1582142155097</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,7 +234,8 @@
     <MESSAGE value="cleaned up volume-command" />
     <MESSAGE value="added resuming playback for the play-command" />
     <MESSAGE value="added pause-command." />
-    <option name="LAST_COMMIT_MESSAGE" value="added pause-command." />
+    <MESSAGE value="added queue-command." />
+    <option name="LAST_COMMIT_MESSAGE" value="added queue-command." />
   </component>
   <component name="WindowStateProjectService">
     <state x="395" y="215" width="960" height="675" key="#Project_Structure" timestamp="1582136313068">
@@ -238,38 +246,38 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581869320460" />
-    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser" timestamp="1582140161431">
+    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser" timestamp="1582142782264">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582140161431" />
+    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582142782264" />
     <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1581782992630">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581782992630" />
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582139681788">
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582142155031">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582139681788" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582142155031" />
     <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1582136800057">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582136800057" />
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1582141646250">
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1582144007295">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582141646250" />
-    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1582141646250">
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582144007295" />
+    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1582144007295">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582141646250" />
-    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1582141646250">
+    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582144007295" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1582144007294">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582141646250" />
-    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1582141646250">
+    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582144007294" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1582144007295">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582141646250" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582144007295" />
     <state width="1870" height="341" key="GridCell.Tab.1.bottom" timestamp="1581895069201">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -298,10 +306,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970891947" />
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1581970945346">
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1582142271883">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970945346" />
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582142271883" />
     <state x="100" y="128" width="1720" height="852" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1581970891947">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
