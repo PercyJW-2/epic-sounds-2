@@ -19,6 +19,7 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class AudioInstanceManager {
 
     private static final int PLAYLIST_LIMIT = 1000;
@@ -115,12 +116,17 @@ public class AudioInstanceManager {
 
             @Override
             public void noMatches() {
-
+                msg.getTextChannel().sendMessage(
+                        new EmbedBuilder()
+                                .setColor(Color.RED)
+                                .setDescription("There was thothing to be found")
+                        .build()
+                ).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-
+                exception.printStackTrace();
             }
         });
     }
