@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="epic-sounds-2:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/commands/music/Undo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audioCore/TrackManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audioCore/TrackManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +69,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -116,7 +122,8 @@
       <workItem from="1582038384470" duration="5167000" />
       <workItem from="1582135649099" duration="554000" />
       <workItem from="1582136216174" duration="380000" />
-      <workItem from="1582136614022" duration="9368000" />
+      <workItem from="1582136614022" duration="12418000" />
+      <workItem from="1582149110858" duration="605000" />
     </task>
     <task id="LOCAL-00001" summary="add gitignore">
       <created>1581598745047</created>
@@ -216,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582144933133</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Added undo-command.">
+      <created>1582146229196</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1582146229196</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,49 +264,58 @@
     <MESSAGE value="added queue-command." />
     <MESSAGE value="added current-command." />
     <MESSAGE value="Improved music search error displaying." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved music search error displaying." />
+    <MESSAGE value="Added undo-command." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added undo-command." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="395" y="215" width="960" height="675" key="#Project_Structure" timestamp="1582136313068">
+    <state x="888" y="127" width="960" height="675" key="#Project_Structure" timestamp="1582148943277">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="395" y="215" width="960" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582136313068" />
-    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581869320460">
+    <state x="888" y="127" width="960" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148943277" />
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582149010119">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581869320460" />
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149010119" />
     <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser" timestamp="1582144952152">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582144952152" />
+    <state x="607" y="337" width="525" height="429" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582148921689">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="607" y="337" width="525" height="429" key="#com.intellij.ide.util.TreeClassChooserDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148921689" />
     <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1581782992630">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581782992630" />
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582144933064">
+    <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1582148768789">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582144933064" />
-    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1582136800057">
+    <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148768789" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582146229138">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582136800057" />
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1582145985571">
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582146229138" />
+    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1582148879798">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582145985571" />
-    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1582145985571">
+    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148879798" />
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1582149034629">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582145985571" />
-    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1582145985571">
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149034629" />
+    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1582149034629">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582145985571" />
-    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1582145985571">
+    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149034629" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1582149034629">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582145985571" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149034629" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1582149034629">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149034629" />
     <state width="1870" height="341" key="GridCell.Tab.1.bottom" timestamp="1581895069201">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -321,10 +344,14 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970891947" />
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1582142271883">
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1582146232290">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582142271883" />
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582146232290" />
+    <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor" timestamp="1582148307611">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148307611" />
     <state x="100" y="128" width="1720" height="852" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1581970891947">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>

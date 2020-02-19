@@ -74,7 +74,7 @@ public class Main {
         ExecutorService myExecutor = Executors.newCachedThreadPool();
         myExecutor.execute(() -> {
             try {
-                Thread.sleep(86400000L); //Wait 2h
+                Thread.sleep(86400000L); //Wait 24h
                 backupPrefixes();
                 backupSounds();
             } catch (InterruptedException e) {

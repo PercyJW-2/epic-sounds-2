@@ -1,2 +1,5 @@
 /prefixes.json
 /.idea/
+/target/
+/out/
+/src/META-INF/
