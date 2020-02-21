@@ -7,9 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/epic-sounds-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/epic-sounds-2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +80,18 @@
       <command value="mvn clean" />
       <command value="mvn install" />
       <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
     </option>
   </component>
   <component name="RunManager">
@@ -275,114 +288,60 @@
     <option name="LAST_COMMIT_MESSAGE" value="Some small modifications" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="888" y="127" width="960" height="675" key="#Project_Structure" timestamp="1582148943277">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="888" y="127" width="960" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148943277" />
-    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582149010119">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149010119" />
-    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser" timestamp="1582150257412">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582150257412" />
-    <state x="607" y="337" width="525" height="429" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582148921689">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="607" y="337" width="525" height="429" key="#com.intellij.ide.util.TreeClassChooserDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148921689" />
-    <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1581782992630">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581782992630" />
-    <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1582148768789">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148768789" />
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582149736143">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149736143" />
-    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1582148879798">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148879798" />
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1582152737256">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1582152737256">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1582152737256">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1582152737256">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="341" key="GridCell.Tab.1.bottom" timestamp="1581895069201">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="341" key="GridCell.Tab.1.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
-    <state width="1870" height="341" key="GridCell.Tab.1.center" timestamp="1581895069201">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="341" key="GridCell.Tab.1.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
-    <state width="1870" height="341" key="GridCell.Tab.1.left" timestamp="1581895069201">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="341" key="GridCell.Tab.1.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
-    <state width="1870" height="341" key="GridCell.Tab.1.right" timestamp="1581895069201">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1870" height="341" key="GridCell.Tab.1.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581895069201" />
-    <state x="665" y="269" width="632" height="568" key="MultipleFileMergeDialog" timestamp="1581598468489">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="665" y="269" width="632" height="568" key="MultipleFileMergeDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581598468489" />
-    <state x="441" y="189" key="SettingsEditor" timestamp="1582136202350">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="441" y="189" key="SettingsEditor/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582136202350" />
-    <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog" timestamp="1581970891947">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970891947" />
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1582146232290">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582146232290" />
-    <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor" timestamp="1582148307611">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148307611" />
-    <state x="100" y="128" width="1720" height="852" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1581970891947">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="100" y="128" width="1720" height="852" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970891947" />
-    <state x="615" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1581598323137">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="615" y="381" key="com.intellij.ide.util.TipDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581598323137" />
-    <state x="725" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581970891907">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="725" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970891907" />
-    <state x="684" y="214" width="541" height="678" key="git4idea.branch.GitSmartOperationDialog" timestamp="1581598480970">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="684" y="214" width="541" height="678" key="git4idea.branch.GitSmartOperationDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581598480970" />
-    <state x="624" y="254" width="672" height="678" key="run.anything.popup" timestamp="1581785347742">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="624" y="254" width="672" height="678" key="run.anything.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581785347742" />
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1582039035705">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582039035705" />
+    <state x="888" y="127" width="960" height="675" key="#Project_Structure" />
+    <state x="888" y="127" width="960" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser" />
+    <state x="768" y="263" width="374" height="579" key="#com.intellij.ide.util.MemberChooser/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="607" y="337" width="525" height="429" key="#com.intellij.ide.util.TreeClassChooserDialog" />
+    <state x="607" y="337" width="525" height="429" key="#com.intellij.ide.util.TreeClassChooserDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" />
+    <state x="801" y="446" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" />
+    <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" />
+    <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom" />
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="292" key="GridCell.Tab.0.center" />
+    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="341" key="GridCell.Tab.1.bottom" />
+    <state width="1870" height="341" key="GridCell.Tab.1.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="341" key="GridCell.Tab.1.center" />
+    <state width="1870" height="341" key="GridCell.Tab.1.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="341" key="GridCell.Tab.1.left" />
+    <state width="1870" height="341" key="GridCell.Tab.1.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state width="1870" height="341" key="GridCell.Tab.1.right" />
+    <state width="1870" height="341" key="GridCell.Tab.1.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="665" y="269" width="632" height="568" key="MultipleFileMergeDialog" />
+    <state x="665" y="269" width="632" height="568" key="MultipleFileMergeDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="441" y="189" key="SettingsEditor" />
+    <state x="441" y="189" key="SettingsEditor/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog" />
+    <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" />
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor" />
+    <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="100" y="128" width="1720" height="852" key="com.intellij.dvcs.ui.CompareBranchesDialog" />
+    <state x="100" y="128" width="1720" height="852" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="615" y="381" key="com.intellij.ide.util.TipDialog" />
+    <state x="615" y="381" key="com.intellij.ide.util.TipDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="725" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" />
+    <state x="725" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="684" y="214" width="541" height="678" key="git4idea.branch.GitSmartOperationDialog" />
+    <state x="684" y="214" width="541" height="678" key="git4idea.branch.GitSmartOperationDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="624" y="254" width="672" height="678" key="run.anything.popup" />
+    <state x="624" y="254" width="672" height="678" key="run.anything.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/epic_sounds_2$Main.ic" NAME="Main Coverage Results" MODIFIED="1581880583161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
