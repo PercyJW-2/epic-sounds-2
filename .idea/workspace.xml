@@ -7,9 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b44d300-43c9-450c-98c9-576d03dd755e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/epic-sounds-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/epic-sounds-2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listeners/CommandListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/CommandListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/CommandParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Prefixes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Prefixes.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +73,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -122,7 +126,8 @@
       <workItem from="1582135649099" duration="554000" />
       <workItem from="1582136216174" duration="380000" />
       <workItem from="1582136614022" duration="12418000" />
-      <workItem from="1582149110858" duration="3838000" />
+      <workItem from="1582149110858" duration="5434000" />
+      <workItem from="1583064177659" duration="3480000" />
     </task>
     <task id="LOCAL-00001" summary="add gitignore">
       <created>1581598745047</created>
@@ -236,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582149736308</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Added help-command">
+      <created>1582152966246</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1582152966246</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,13 +284,14 @@
     <MESSAGE value="Improved music search error displaying." />
     <MESSAGE value="Added undo-command." />
     <MESSAGE value="Some small modifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some small modifications" />
+    <MESSAGE value="Added help-command" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added help-command" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="888" y="127" width="960" height="675" key="#Project_Structure" timestamp="1582148943277">
+    <state x="888" y="127" width="960" height="675" key="#Project_Structure" timestamp="1582226437854">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="888" y="127" width="960" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148943277" />
+    <state x="888" y="127" width="960" height="675" key="#Project_Structure/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582226437854" />
     <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582149010119">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -299,30 +312,30 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="608" y="310" width="524" height="482" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148768789" />
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582149736143">
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2" timestamp="1582152966161">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582149736143" />
+    <state x="404" y="72" width="1017" height="912" key="CommitChangelistDialog2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152966161" />
     <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl" timestamp="1582148879798">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="743" y="312" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582148879798" />
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1582152737256">
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom" timestamp="1583067778372">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1582152737256">
+    <state width="1870" height="292" key="GridCell.Tab.0.bottom/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1583067778372" />
+    <state width="1870" height="292" key="GridCell.Tab.0.center" timestamp="1583067778372">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1582152737256">
+    <state width="1870" height="292" key="GridCell.Tab.0.center/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1583067778372" />
+    <state width="1870" height="292" key="GridCell.Tab.0.left" timestamp="1583067778372">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
-    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1582152737256">
+    <state width="1870" height="292" key="GridCell.Tab.0.left/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1583067778372" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right" timestamp="1583067778372">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582152737256" />
+    <state width="1870" height="292" key="GridCell.Tab.0.right/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1583067778372" />
     <state width="1870" height="341" key="GridCell.Tab.1.bottom" timestamp="1581895069201">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -351,10 +364,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="100" y="128" width="1720" height="852" key="ShowDiffWithBranchDialog/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581970891947" />
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1582146232290">
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1582153959295">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582146232290" />
+    <state x="555" y="289" width="800" height="527" key="Vcs.Push.Dialog.v2/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582153959295" />
     <state x="632" y="419" width="476" height="264" key="classpath-attribute-editor" timestamp="1582148307611">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -379,10 +392,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="624" y="254" width="672" height="678" key="run.anything.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1581785347742" />
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1582039035705">
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1583066223425">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1582039035705" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052/1920.0.1920.1080@0.28.1920.1052" timestamp="1583066223425" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/epic_sounds_2$Main.ic" NAME="Main Coverage Results" MODIFIED="1581880583161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

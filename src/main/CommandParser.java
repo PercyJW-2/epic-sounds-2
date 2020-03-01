@@ -3,13 +3,14 @@ package main;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class CommandParser {
 
     public static commandContainer parser(String raw, MessageReceivedEvent event, String prefix) {
 
         String beheaded = raw;
-        beheaded = raw.replaceFirst(prefix, "");
+        beheaded = raw.replaceFirst(Pattern.quote(prefix), "");
         String[] splitBeheaded = beheaded.split(" ");
         String invoke = splitBeheaded[0];
         ArrayList<String> split = new ArrayList<String>();
