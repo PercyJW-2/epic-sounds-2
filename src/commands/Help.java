@@ -35,7 +35,7 @@ public class Help implements Command {
                         .addField(prefix + "volume", "Changes and displays the master volume.", false)
                         .addField(prefix + "current", "Displays the currently played song", false)
                         .addField(prefix + "queue", "Displays the current queue of songs", false)
-                        .addField(prefix + "undo", "Removes the most recently added song", false)
+                        .addField(prefix + "undo", "Removes the most recently added song. Add a number to remove the more songs.", false)
                         .build()
         ).queue();
     }
