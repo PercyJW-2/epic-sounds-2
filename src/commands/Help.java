@@ -36,6 +36,7 @@ public class Help implements Command {
                         .addField(prefix + "current", "Displays the currently played song", false)
                         .addField(prefix + "queue", "Displays the current queue of songs", false)
                         .addField(prefix + "undo", "Removes the most recently added song. Add a number to remove the more songs.", false)
+                        .addField(prefix + "delete", "Removes the song, that is going to be played next. Add a number to remove more songs.", false)
                         .build()
         ).queue();
     }

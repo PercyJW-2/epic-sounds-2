@@ -100,7 +100,9 @@ public class Main {
         CommandHandler.commands.put("queue", new Queue(audioManager));
         CommandHandler.commands.put("current", new Current(audioManager));
         CommandHandler.commands.put("playing", new Current(audioManager));
+        CommandHandler.commands.put("np", new Current(audioManager));
         CommandHandler.commands.put("undo", new Undo(audioManager));
+        CommandHandler.commands.put("delete", new Delete(audioManager));
     }
 
     private static void addListeners() {

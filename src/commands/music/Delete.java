@@ -10,11 +10,11 @@ import java.util.Queue;
 
 import static util.defaultMessageWriter.*;
 
-public class Undo implements Command {
+public class Delete implements Command {
 
     AudioInstanceManager audioInstanceManager;
 
-    public Undo (AudioInstanceManager audioInstanceManager) {
+    public Delete(AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
@@ -42,23 +42,24 @@ public class Undo implements Command {
         }
 
         if (audioInstanceManager.isIdle(g)) {
-            writeError("There is nothing to undo", event);
+            writeError("There is nothing to delete", event);
         } else {
-            if (audioInstanceManager.getTrackManager(g).getQueue().isEmpty()) {
+            Queue<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(g).getRealQueue();
+            if (audioQueue.size() < 2) {
                 writeError("There is nothing that can be deleted.", event);
             } else {
-                Queue<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(g).getRealQueue();
                 if (audioQueue.size() < count) {
                     writeError("Requested to many songs to be deleted", event);
                     return;
                 }
-                for (int i = audioQueue.size(); i > count; i--) {
-                    audioQueue.add(audioQueue.poll());
-                }
+                audioQueue.add(audioQueue.poll());
                 for (int i = 0; i < count; i++) {
                     audioQueue.poll();
                 }
-                writeMessage("Deleted " + count + " the most recent additions to the queue.", event);
+                for (int i = 1; i < audioQueue.size(); i++) {
+                    audioQueue.add(audioQueue.poll());
+                }
+                writeMessage("Deleted " + count + " of the next tracks.", event);
             }
         }
     }
@@ -70,7 +71,7 @@ public class Undo implements Command {
 
     @Override
     public String help() {
-        return "Use this Command to delete the most recent addition to the queue.\n" +
+        return "Use this Command to delete the next song, that is going to be played.\n" +
                 "Add a number to undo multiple songs.";
     }
 }
