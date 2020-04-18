@@ -1,19 +1,11 @@
 package commands.music;
 
-import audioCore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import static util.defaultMessageWriter.writeError;
-import static util.defaultMessageWriter.writeMessage;
+import static util.DefaultMessageWriter.*;
 
 public class Leave implements Command {
-
-    private AudioInstanceManager audioInstanceManager;
-
-    public Leave(AudioInstanceManager audioManager) {
-        audioInstanceManager = audioManager;
-    }
 
     @Override
     public boolean called(String[] args, MessageReceivedEvent event) {
@@ -24,9 +16,9 @@ public class Leave implements Command {
     public void action(String[] args, MessageReceivedEvent event) {
         if (args != null && args.length > 0) {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h"))
-                writeMessage(help(), event); return;
+                writePersistentMessage(help(), event); return;
         }
-        if (event.getGuild().getAudioManager().isConnected()==false) {
+        if (!event.getGuild().getAudioManager().isConnected()) {
             writeError("The Bot is in not connected to any Channel", event);
             return;
         }

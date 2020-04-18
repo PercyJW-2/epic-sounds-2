@@ -34,6 +34,10 @@ public class TrackManager extends AudioEventAdapter {
         return new LinkedHashSet<>(QUEUE);
     }
 
+    public Queue<AudioInfo> getRealQueue() {
+        return QUEUE;
+    }
+
     public void purgeQueue() {
         QUEUE.clear();
     }

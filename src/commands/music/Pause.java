@@ -4,17 +4,14 @@ import audioCore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import util.Prefixes;
 
 import static util.DefaultMessageWriter.*;
 
-public class Stop implements Command {
-
-    private long guildID;
+public class Pause implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Stop (AudioInstanceManager audioInstanceManager) {
+    public Pause (AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
@@ -26,17 +23,14 @@ public class Stop implements Command {
     @Override
     public void action(String[] args, MessageReceivedEvent event) {
         Guild g = event.getGuild();
-        guildID = g.getIdLong();
-        if (args != null && args.length > 0) {
+        if (args == null || args.length < 1) {
+            audioInstanceManager.getPlayer(g).setPaused(true);
+            writeMessage("Paused playback!", event);
+        } else {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
                 writePersistentMessage(help(), event);
-                return;
             }
         }
-
-        audioInstanceManager.stop(g);
-
-        writeMessage("Stopped playback and purged queue.",event);
     }
 
     @Override
@@ -46,7 +40,6 @@ public class Stop implements Command {
 
     @Override
     public String help() {
-        return "Use this command to stop the music playback and purge the queue.\n" +
-                "To view this message write '"+ Prefixes.getPrefix(guildID) + "stop --help'.";
+        return "Use this command to pause the music-playback. If the bot rejoins the channel it forgets that is was paused.";
     }
 }

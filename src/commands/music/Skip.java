@@ -6,13 +6,13 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Prefixes;
 
-import static util.defaultMessageWriter.writeMessage;
+import static util.DefaultMessageWriter.*;
 
 public class Skip implements Command {
 
     private long guildID;
 
-    private AudioInstanceManager audioInstanceManager;
+    private final AudioInstanceManager audioInstanceManager;
 
     public Skip (AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
@@ -29,7 +29,7 @@ public class Skip implements Command {
         guildID = g.getIdLong();
         if (args != null && args.length > 0) {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writeMessage(help(), event);
+                writePersistentMessage(help(), event);
                 return;
             }
         }
@@ -47,6 +47,6 @@ public class Skip implements Command {
     @Override
     public String help() {
         return "Use this command to skip a song and continue to the next if it exists.\n" +
-                "To view this message write '"+ Prefixes.getPrefix(guildID) + "stop --help'.";
+                "To view this message write '"+ Prefixes.getPrefix(guildID) + "skip --help'.";
     }
 }

@@ -5,8 +5,7 @@ import java.util.HashMap;
 import commands.Command;
 
 public class CommandHandler {
-    public static final CommandParser parse = new CommandParser();
-    public static HashMap<String, Command> commands = new HashMap<String, Command>();
+    public static HashMap<String, Command> commands = new HashMap<>();
 
     public static void handlerCommand (CommandParser.commandContainer cmd) {
 
@@ -16,10 +15,8 @@ public class CommandHandler {
 
             if (!safe) {
                 commands.get(cmd.invoke).action(cmd.args, cmd.event);
-                commands.get(cmd.invoke).executed(safe, cmd.event);
-            } else {
-                commands.get(cmd.invoke).executed(safe, cmd.event);
             }
+            commands.get(cmd.invoke).executed(safe, cmd.event);
 
         } else {
 

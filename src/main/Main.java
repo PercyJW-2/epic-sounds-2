@@ -3,6 +3,7 @@ package main;
 import audioCore.AudioInstanceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;
 import listeners.CommandListener;
@@ -30,6 +31,7 @@ import static util.Prefixes.prefixMap;
 public class Main {
 
     private static JDABuilder builder;
+    private static final AudioInstanceManager audioManager = new AudioInstanceManager();
 
     public static void main(String[] args) {
 
@@ -59,39 +61,45 @@ public class Main {
             jda.awaitReady();
 
             try {
-                loadPrefixes(jda);
-                loadSounds(jda);
+                loadPrefixes();
+                loadSounds();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (LoginException l) {
+        } catch (LoginException | InterruptedException l) {
             l.printStackTrace();
-        } catch (InterruptedException i) {
-            i.printStackTrace();
         }
 
         ExecutorService myExecutor = Executors.newCachedThreadPool();
         myExecutor.execute(() -> {
             try {
-                Thread.sleep(86400000L); //Wait 2h
+                Thread.sleep(86400000L); //Wait 24h
                 backupPrefixes();
                 backupSounds();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
-            } catch (IOException s) {
-                s.printStackTrace();
             }
         });
     }
 
     private static void addCommands() {
-        AudioInstanceManager audioManager = new AudioInstanceManager();
-        CommandHandler.commands.put("customizePrefix", new PrefixCustomizer());
+        CommandHandler.commands.put("customizeprefix", new PrefixCustomizer());
+        CommandHandler.commands.put("help", new Help());
         CommandHandler.commands.put("join", new Join(audioManager));
-        CommandHandler.commands.put("leave", new Leave(audioManager));
+        CommandHandler.commands.put("leave", new Leave());
         CommandHandler.commands.put("play", new Play(audioManager));
         CommandHandler.commands.put("stop", new Stop(audioManager));
         CommandHandler.commands.put("skip", new Skip(audioManager));
+        CommandHandler.commands.put("next", new Skip(audioManager));
+        CommandHandler.commands.put("volume", new Volume(audioManager));
+        CommandHandler.commands.put("pause", new Pause(audioManager));
+        CommandHandler.commands.put("queue", new Queue(audioManager));
+        CommandHandler.commands.put("current", new Current(audioManager));
+        CommandHandler.commands.put("playing", new Current(audioManager));
+        CommandHandler.commands.put("np", new Current(audioManager));
+        CommandHandler.commands.put("undo", new Undo(audioManager));
+        CommandHandler.commands.put("delete", new Delete(audioManager));
+        CommandHandler.commands.put("shuffle", new Shuffle(audioManager));
     }
 
     private static void addListeners() {
@@ -110,13 +118,13 @@ public class Main {
         System.out.println("saved prefixMap in prefixes.json");
     }
 
-    private static void loadPrefixes(JDA jda) throws IOException{
+    private static void loadPrefixes() throws IOException{
         Gson gson = new Gson();
         try {
             //load File
             StringBuilder contentBuilder = new StringBuilder();
             Stream<String> stream = Files.lines(Paths.get("prefixes.json"), StandardCharsets.UTF_8);
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
             String json = contentBuilder.toString();
             //loaded File
             System.out.println(json);
@@ -126,7 +134,7 @@ public class Main {
             System.out.println("File does not exist");
         }
         if (prefixMap == null) {
-            prefixMap = new HashMap<Long,String>();
+            prefixMap = new HashMap<>();
         }
         System.out.println("loaded prefixMap");
     }
@@ -136,7 +144,7 @@ public class Main {
         System.out.println("Cosed Database connection");
     }
 
-    private static void loadSounds(JDA jda) throws IOException{
+    private static void loadSounds() throws IOException{
 
         System.out.println("Closed Database connection");
     }
