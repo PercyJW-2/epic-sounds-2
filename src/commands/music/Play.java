@@ -54,7 +54,7 @@ public class Play implements Command {
                     ytsearch = false;
                     scsearch = true;
                 }
-                case "--playlist", " -p" -> playlist = true;
+                case "--playlist", "-p" -> playlist = true;
                 default -> search.append(s).append(" ");
             }
         }

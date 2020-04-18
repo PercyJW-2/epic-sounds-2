@@ -4,11 +4,12 @@ A Discord-Musicbot designed to be similar to the [Groovy Music-Bot](https://groo
 
 ## Features  
 
-- Support for a lot of Music-Streams including Youtube, Soundcloud and mp3-Files  
+- Support for a lot of Music-Streams including Youtube, SoundCloud and mp3-Files (For details visit the
+[Lavaplayer](https://github.com/sedmelluq/lavaplayer) GitHub-Page)  
 - No constant leaving/joining of the Voice-Channel, because of the join and leave commands  
-- User controllable Mastervolume for the Bot, to change the Volume for everyone  
-- Customizable Prefix for the Bot. (Serveradmin-Permissions needed)
-- Console-like usage. All commands are designed to be used like a Command in a Console.
+- User controllable Master-Volume for the Bot, to change the Volume for everyone  
+- Customizable Prefix for the Bot. (Server Admin-Permissions needed)
+- Console-like usage. All commands are programmed to be used like a Command in a Console.
 - (Planned) Fully customizable Soundboard  
 
 ## Commands  
