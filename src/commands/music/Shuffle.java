@@ -4,17 +4,15 @@ import audioCore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import static util.DefaultMessageWriter.*;
 import util.Prefixes;
 
-import static util.DefaultMessageWriter.*;
-
-public class Stop implements Command {
-
-    private long guildID;
+public class Shuffle implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
+    private long guildID;
 
-    public Stop (AudioInstanceManager audioInstanceManager) {
+    public Shuffle (AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
@@ -28,15 +26,18 @@ public class Stop implements Command {
         Guild g = event.getGuild();
         guildID = g.getIdLong();
         if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writePersistentMessage(help(), event);
+            if (args[0].equals("--help") || args[0].equals("-h")) {
+                writeMessage(help(), event);
                 return;
             }
         }
 
-        audioInstanceManager.stop(g);
+        if (audioInstanceManager.getTrackManager(g).getQueue().isEmpty()) {
+            writeError("Queue is empty", event);
+        }
 
-        writeMessage("Stopped playback and purged queue.",event);
+        audioInstanceManager.getTrackManager(g).shuffleQueue();
+        writeMessage("Shuffled queue successfully", event);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Stop implements Command {
 
     @Override
     public String help() {
-        return "Use this command to stop the music playback and purge the queue.\n" +
-                "To view this message write '"+ Prefixes.getPrefix(guildID) + "stop --help'.";
+        return "Use this command to shuffle the queue.\n" +
+                "To view this message write '"+ Prefixes.getPrefix(guildID) + "shuffle --help'.";
     }
 }

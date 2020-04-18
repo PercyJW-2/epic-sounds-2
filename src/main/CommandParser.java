@@ -3,19 +3,17 @@ package main;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class CommandParser {
 
     public static commandContainer parser(String raw, MessageReceivedEvent event, String prefix) {
 
-        String beheaded = raw;
-        beheaded = raw.replaceFirst(prefix, "");
+        var beheaded = raw.replaceFirst(Pattern.quote(prefix), "");
         String[] splitBeheaded = beheaded.split(" ");
-        String invoke = splitBeheaded[0];
-        ArrayList<String> split = new ArrayList<String>();
-        for ( String s : splitBeheaded) {
-            split.add(s);
-        }
+        var invoke = splitBeheaded[0].toLowerCase();
+        ArrayList<String> split = new ArrayList<>(Arrays.asList(splitBeheaded));
         String[] args = new String[split.size() - 1];
         split.subList(1, split.size()).toArray(args);
 

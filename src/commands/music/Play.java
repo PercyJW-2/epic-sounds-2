@@ -7,12 +7,11 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Prefixes;
 
-import static util.defaultMessageWriter.writeError;
-import static util.defaultMessageWriter.writeMessage;
+import static util.DefaultMessageWriter.*;
 
 public class Play implements Command {
 
-    private AudioInstanceManager audioInstanceManager;
+    private final AudioInstanceManager audioInstanceManager;
 
     public Play (AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
@@ -32,7 +31,12 @@ public class Play implements Command {
         Guild g = event.getGuild();
 
         if (args == null || args.length < 1) {
-            writeError("Provide atleast one argument and/or a searchkeyword.\nTo find out about the possible inputs write '" +
+            if (audioInstanceManager.getPlayer(g).isPaused()) {
+                audioInstanceManager.getPlayer(g).setPaused(false);
+                writeMessage("Resumed Playback!", event);
+                return;
+            }
+            writeError("Provide at least one argument and/or a searchkeyword.\nTo find out about the possible inputs write '" +
                               Prefixes.getPrefix(g.getIdLong()) +
                               "play --help'",event);
             return;
@@ -41,24 +45,17 @@ public class Play implements Command {
         StringBuilder search = new StringBuilder();
         for (String s : args) {
             switch (s.toLowerCase()) {
-                case "--help":
-                case "-h":
-                    writeMessage(help(),event);
+                case "--help", "-h" -> {
+                    writePersistentMessage(help(),event);
                     return;
-                case "--ytsearch":
-                case "-yts":
-                    break;
-                case "--scsearch":
-                case "-scs":
+                }
+                case "--ytsearch", "-yts" -> ytsearch = true;
+                case "--scsearch", "-scs" -> {
                     ytsearch = false;
                     scsearch = true;
-                    break;
-                case "--ytsearchplaylist":
-                case "-ytsp":
-                    playlist = true;
-                    break;
-                default:
-                    search.append(s).append(" ");
+                }
+                case "--playlist", " -p" -> playlist = true;
+                default -> search.append(s).append(" ");
             }
         }
 
@@ -82,6 +79,9 @@ public class Play implements Command {
             VoiceChannel vChan = event.getMember().getVoiceState().getChannel();
             audioInstanceManager.getPlayer(g);
             g.getAudioManager().openAudioConnection(vChan);
+            if (audioInstanceManager.getPlayer(g).isPaused()) {
+                audioInstanceManager.getPlayer(g).setPaused(false);
+            }
         }
         audioInstanceManager.loadTrack(searchFinal, event.getMember(), event.getMessage(), playlist);
     }
@@ -93,11 +93,13 @@ public class Play implements Command {
 
     @Override
     public String help() {
-        return "Use this command to add music to the queue.\n" +
-                "use '--help' or '-h' to view this page.\n" +
-                "use '--ytsearch' or '-yts' to search your music on Youtube. (This is enabled by default.)\n" +
-                "use '--scsearch' or '-scs' to search your music on Soundcloud.\n" +
-                "use '--ytsearchplaylist' or '-ytsp' to add the complete search-result from Youtube to your queue.\n" +
-                "or just write the link to your music after the command.";
+        return """
+                Use this command to add music to the queue.
+                use '--help' or '-h' to view this page.
+                use '--ytsearch' or '-yts' to search your music on Youtube. (This is enabled by default.)
+                use '--scsearch' or '-scs' to search your music on Soundcloud.
+                use '--playlist' or '-p' to add the all search-results to your queue.
+                or just write the link to your music after the command.
+                finally, when the playback was stopped just write the command to resume playback.""";
     }
 }

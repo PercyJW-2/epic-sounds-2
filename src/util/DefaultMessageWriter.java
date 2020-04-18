@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class defaultMessageWriter {
+public class DefaultMessageWriter {
     public static void writeError (String error, MessageReceivedEvent event) {
         System.out.println(error);
         Message msg = event.getTextChannel().sendMessage(
@@ -24,7 +24,7 @@ public class defaultMessageWriter {
             public void run() {
                 msg.delete().queue();
             }
-        }, 3000);
+        }, 10000);
     }
 
     public static void writeMessage (String msg, MessageReceivedEvent event) {
@@ -41,6 +41,15 @@ public class defaultMessageWriter {
             public void run() {
                 message.delete().queue();
             }
-        }, 3000);
+        }, 10000);
+    }
+
+    public static void writePersistentMessage (String msg, MessageReceivedEvent event) {
+        event.getChannel().sendMessage(
+                new EmbedBuilder()
+                        .setColor(Color.BLUE)
+                        .setDescription(msg)
+                        .build()
+        ).queue();
     }
 }

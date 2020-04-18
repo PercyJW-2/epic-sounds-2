@@ -6,12 +6,11 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import static util.defaultMessageWriter.writeError;
-import static util.defaultMessageWriter.writeMessage;
+import static util.DefaultMessageWriter.*;
 
 public class Join implements Command {
 
-    private AudioInstanceManager audioInstanceManager;
+    private final AudioInstanceManager audioInstanceManager;
 
     public Join(AudioInstanceManager audioManager) {
         audioInstanceManager = audioManager;
@@ -27,7 +26,7 @@ public class Join implements Command {
         Guild g = event.getGuild();
         if (args != null && args.length > 0) {
             if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writeMessage(help(), event);
+                writePersistentMessage(help(), event);
                 return;
             }
         }
@@ -37,6 +36,9 @@ public class Join implements Command {
         } else if (vChan != null) {
             g.getAudioManager().openAudioConnection(vChan);
             audioInstanceManager.getPlayer(g);
+            if (audioInstanceManager.getPlayer(g).isPaused()) {
+                audioInstanceManager.getPlayer(g).setPaused(false);
+            }
             writeMessage("Joined Voice-Channel", event);
         }
     }

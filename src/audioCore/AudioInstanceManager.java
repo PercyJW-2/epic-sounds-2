@@ -19,6 +19,7 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class AudioInstanceManager {
 
     private static final int PLAYLIST_LIMIT = 1000;
@@ -54,11 +55,11 @@ public class AudioInstanceManager {
         }
     }
 
-    private TrackManager getTrackManager (Guild g) {
+    public TrackManager getTrackManager (Guild g) {
         return PLAYERS.get(g).getValue();
     }
 
-    private boolean isIdle(Guild g) {
+    public boolean isIdle(Guild g) {
         return !hasPlayer(g) || getPlayer(g).getPlayingTrack() == null;
     }
 
@@ -76,8 +77,13 @@ public class AudioInstanceManager {
                                 .setColor(new Color(255, 0, 0))
                                 .setDescription(":musical_note: **Song added!**")
                                 .addField("       Title: ", track.getInfo().title, true)
+                                .addField("       Author:", track.getInfo().author, true)
+                                .addBlankField(true)
+                                .addField("         URL:", track.getInfo().uri, true)
                                 .addField("    Duration: ", "`" + getTimestamp(track.getDuration()) + " Minutes`", true)
+                                .addBlankField(true)
                                 .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", false)
+                                .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
                                 .build()
                 ).queue();
             }
@@ -86,13 +92,19 @@ public class AudioInstanceManager {
             public void playlistLoaded(AudioPlaylist playlist) {
                 if (!searchPlaylist) {
                     getTrackManager(guild).enQueue(playlist.getTracks().get(0), author, msg.getTextChannel());
+                    AudioTrackInfo trackInfo = playlist.getTracks().get(0).getInfo();
                     msg.getTextChannel().sendMessage(
                             new EmbedBuilder()
                                     .setColor(new Color(255, 0, 0))
                                     .setDescription(":musical_note: **Song added!**")
-                                    .addField("       Title: ", playlist.getTracks().get(0).getInfo().title, true)
+                                    .addField("       Title: ", trackInfo.title, true)
+                                    .addField("      Author: ", trackInfo.author, true)
+                                    .addBlankField(true)
+                                    .addField("         URL: ", trackInfo.uri, true)
                                     .addField("    Duration: ", "`" + getTimestamp(playlist.getTracks().get(0).getDuration()) + " Minutes`", true)
+                                    .addBlankField(true)
                                     .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", false)
+                                    .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
                                     .build()
                     ).queue();
                     System.out.println("YOUTUBE SUCHEN SONG, " + identifier);
@@ -106,7 +118,11 @@ public class AudioInstanceManager {
                                     .setDescription(":musical_note: **Playlist added!**")
                                     .addField("       Title: ", playlist.getName(), true)
                                     .addField("        Size: ", "`" + playlist.getTracks().size() + " Songs`", true)
-                                    .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", false)
+                                    .addBlankField(true)
+                                    .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", true)
+                                    .addField("Duration: ", "`" + getPlaylistTimestamp(playlist) + " Minutes`", true)
+                                    .addBlankField(true)
+                                    .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
                                     .build()
                     ).queue();
                     System.out.println("YOUTUBE SUCHEN PLAYLIST, " + identifier);
@@ -115,17 +131,22 @@ public class AudioInstanceManager {
 
             @Override
             public void noMatches() {
-
+                msg.getTextChannel().sendMessage(
+                        new EmbedBuilder()
+                                .setColor(Color.RED)
+                                .setDescription("There was nothing to be found")
+                        .build()
+                ).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-
+                exception.printStackTrace();
             }
         });
     }
 
-    private String getTimestamp(long milis) {
+    public String getTimestamp(long milis) {
         long seconds = milis / 1000;
         long hours = Math.floorDiv(seconds, 3600);
         seconds = seconds - (hours * 3600);
@@ -134,21 +155,17 @@ public class AudioInstanceManager {
         return (hours == 0 ? "" : hours +":") + String.format("%02d", mins) + ":" + String.format("%02d", seconds);
     }
 
-    private String buildQueueMessage(AudioInfo info) {
-        AudioTrackInfo trackInfo = info.getTRACK().getInfo();
-        String title = trackInfo.title;
-        long length = trackInfo.length;
-        return "`[ " + getTimestamp(length) + " ]`" + title + "\n";
+    private String getPlaylistTimestamp(AudioPlaylist playlist) {
+        long allMilis = 0;
+        for (AudioTrack t : playlist.getTracks()) {
+            allMilis += t.getDuration();
+        }
+        return getTimestamp(allMilis);
     }
 
     public void skip (Guild g) {
         if (isIdle(g)) return;
         getPlayer(g).stopTrack();
-    }
-
-    public void pause (Guild g) {
-        if (isIdle(g)) return;
-        getPlayer(g).setPaused(true);
     }
 
     public void setVolume (Guild g, int volume) {
