@@ -25,19 +25,19 @@ To view details of Commands while the Bot operates, use `-h` or `--help`
 ### Music Commands  
 
 - `join` to join a channel.  
-- `leave` to leave a channel. (It currently cannot do that by itself)  
+- `leave` to leave a channel. (It can do that automatically)  
 - `play` to start music playback  
 - `pause` to pause music playback  
 - `stop` to pause playback and delete the current queue  
 - `skip` to skip the current song  
-- `volume` to change or view the Mastervolume  
+- `volume` to change or view the Master volume  
 - `current` to view the currently playing song  
 - `queue` to view the current queue  
 - `undo` to remove the most recent addition of the queue  
 - `delete` to remove the next song in the queue  
 - `shuffle` to shuffle the current queue  
 
-### Soundboard Comands
+### Soundboard Commands
 
 WIP  
 

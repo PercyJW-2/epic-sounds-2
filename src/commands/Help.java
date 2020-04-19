@@ -28,7 +28,7 @@ public class Help implements Command {
                                 _(for further details write the command with the addition of an '--help')_""")
                         .addField(prefix + "customizePrefix","Changes the current Prefix.",false)
                         .addField(prefix + "join", "Summons the bot to your voice-channel.", false)
-                        .addField(prefix + "leave", "Prompts the bot to leave your voice-channel. The bot won't do that on itself.", false)
+                        .addField(prefix + "leave", "Prompts the bot to leave your voice-channel.", false)
                         .addField(prefix + "play", "Adds Music provided by links and search-queries to the queue.", false)
                         .addField(prefix + "pause", "Pauses the music playback of the bot. To resume playback use the '" + prefix + "play' command", false)
                         .addField(prefix + "stop", "Stops the music playback and purges the queue.", false)

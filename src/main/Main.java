@@ -7,6 +7,7 @@ import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;
 import listeners.CommandListener;
+import listeners.UserJoinListener;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -104,6 +105,7 @@ public class Main {
 
     private static void addListeners() {
         builder.addEventListeners(new CommandListener());
+        builder.addEventListeners(new UserJoinListener());
     }
 
     private static void backupPrefixes() throws IOException {
