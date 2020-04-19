@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 import java.io.FileWriter;
@@ -22,6 +23,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,18 +40,25 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                backupPrefixes();
-                backupSounds();
-            } catch (IOException s) {
-                s.printStackTrace();
-            }
-        }));
-
         JDA jda;
 
-        builder = JDABuilder.createDefault(args[0]);
+        builder = new JDABuilder(args[0]);
+
+        /*builder = JDABuilder.create(args[0], Arrays.asList(
+                GatewayIntent.DIRECT_MESSAGE_REACTIONS,
+                GatewayIntent.DIRECT_MESSAGE_TYPING,
+                GatewayIntent.DIRECT_MESSAGES,
+                GatewayIntent.GUILD_BANS,
+                GatewayIntent.GUILD_EMOJIS,
+                GatewayIntent.GUILD_INVITES,
+                GatewayIntent.GUILD_MEMBERS,
+                GatewayIntent.GUILD_MESSAGE_REACTIONS,
+                GatewayIntent.GUILD_MESSAGE_TYPING,
+                GatewayIntent.GUILD_MESSAGES,
+                GatewayIntent.GUILD_PRESENCES,
+                GatewayIntent.GUILD_VOICE_STATES)
+        );
+        Usable in the Future*/
 
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
@@ -63,6 +74,14 @@ public class Main {
             try {
                 loadPrefixes();
                 loadSounds();
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    try {
+                        backupPrefixes();
+                        backupSounds();
+                    } catch (IOException s) {
+                        s.printStackTrace();
+                    }
+                }));
             } catch (IOException e) {
                 e.printStackTrace();
             }

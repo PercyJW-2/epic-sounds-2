@@ -45,17 +45,24 @@ public class Play implements Command {
         StringBuilder search = new StringBuilder();
         for (String s : args) {
             switch (s.toLowerCase()) {
-                case "--help", "-h" -> {
+                case "--help":
+                case "-h":
                     writePersistentMessage(help(),event);
-                    return;
-                }
-                case "--ytsearch", "-yts" -> ytsearch = true;
-                case "--scsearch", "-scs" -> {
+                    break;
+                case "--ytsearch":
+                case "-yts":
+                    ytsearch = true;
+                    break;
+                case "--scsearch":
+                case "-scs":
                     ytsearch = false;
                     scsearch = true;
-                }
-                case "--playlist", "-p" -> playlist = true;
-                default -> search.append(s).append(" ");
+                    break;
+                case "--playlist":
+                case "-p":
+                    playlist = true;
+                default:
+                    search.append(s).append(" ");
             }
         }
 

@@ -25,16 +25,21 @@ public class Volume implements Command {
         if (args.length > 0) {
             for (String s: args) {
                 switch (s.toLowerCase()) {
-                    case "--help", "-h" -> {
+                    case "--help":
+                    case "-h":
                         writePersistentMessage(help(), event);
-                        return;
-                    }
-                    case "--show", "-s" -> show = true;
-                    case "--changeVolume", "-cv" -> show = false;
-                    default -> {
+                        break;
+                    case "--show":
+                    case "-s":
+                        show = true;
+                        break;
+                    case "--changeVolume":
+                    case "-cv":
+                        show = false;
+                        break;
+                    default:
                         show = false;
                         volume = Integer.parseInt(s);
-                    }
                 }
             }
             if (show) {
