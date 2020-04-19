@@ -59,10 +59,9 @@ public class Volume implements Command {
 
     @Override
     public String help() {
-        return """
-                Use this Command to change the master volume of the bot.
-                Use '--help' or '-h' to view this message.
-                Use '--show', '-s' or write nothing to view the current volume.
-                Write a number to change the Volume to that number.""";
+        return "Use this Command to change the master volume of the bot.\n" +
+                "Use '--help' or '-h' to view this message.\n" +
+                "Use '--show', '-s' or write nothing to view the current volume.\n" +
+                "Write a number to change the Volume to that number.";
     }
 }

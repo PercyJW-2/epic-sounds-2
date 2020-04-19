@@ -93,13 +93,12 @@ public class Play implements Command {
 
     @Override
     public String help() {
-        return """
-                Use this command to add music to the queue.
-                use '--help' or '-h' to view this page.
-                use '--ytsearch' or '-yts' to search your music on Youtube. (This is enabled by default.)
-                use '--scsearch' or '-scs' to search your music on Soundcloud.
-                use '--playlist' or '-p' to add the all search-results to your queue.
-                or just write the link to your music after the command.
-                finally, when the playback was stopped just write the command to resume playback.""";
+        return "Use this command to add music to the queue.\n" +
+                "use '--help' or '-h' to view this page.\n" +
+                "use '--ytsearch' or '-yts' to search your music on Youtube. (This is enabled by default.)\n" +
+                "use '--scsearch' or '-scs' to search your music on Soundcloud.\n" +
+                "use '--playlist' or '-p' to add the all search-results to your queue.\n" +
+                "or just write the link to your music after the command.\n" +
+                "finally, when the playback was stopped just write the command to resume playback.";
     }
 }

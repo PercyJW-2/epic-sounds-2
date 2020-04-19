@@ -49,12 +49,11 @@ public class PrefixCustomizer implements Command {
     }
 
     public String help() {
-        return """
-                Usage of the Command, to change the Prefix for the Bot:
-                $prefix changePrefix [new Prefix]
-                
-                IMPORTANT:
-                   When you change the Default Prefix (Yo!)
-                   you need to use your custom one instead.""".replace("$prefix", Prefixes.getPrefix(guildID));
+        return ("Usage of the Command, to change the Prefix for the Bot:\n" +
+                "$prefix changePrefix [new Prefix]\n" +
+                "\n" +
+                "IMPORTANT:\n" +
+                "  When you change the Default Prefix (Yo!) \n" +
+                "  you need to use your custom one instead.").replace("$prefix", Prefixes.getPrefix(guildID));
     }
 }

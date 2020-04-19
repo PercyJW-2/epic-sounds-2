@@ -18,14 +18,13 @@ public class Help implements Command {
         event.getChannel().sendMessage(
                 new EmbedBuilder()
                         .setColor(Color.GREEN)
-                        .setDescription("""
-                                ``` __  __     ______     __         ______  
-                                /\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\  == \\ 
-                                \\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\  _-/ 
-                                 \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\   
-                                  \\/_/\\/_/   \\/_____/   \\/_____/   \\/_/   
-                                                                          ```
-                                _(for further details write the command with the addition of an '--help')_""")
+                        .setDescription("``` __  __     ______     __         ______  \n" +
+                                        "/\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\  == \\ \n" +
+                                        " \\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\  _-/ \n" +
+                                        "  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\   \n" +
+                                        "   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_/   \n" +
+                                        "                                  ``` \n" +
+                                "_(for further details write the command with the addition of an '--help')_")
                         .addField(prefix + "customizePrefix","Changes the current Prefix.",false)
                         .addField(prefix + "join", "Summons the bot to your voice-channel.", false)
                         .addField(prefix + "leave", "Prompts the bot to leave your voice-channel.", false)

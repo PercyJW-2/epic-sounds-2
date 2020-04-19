@@ -47,9 +47,8 @@ public class Main {
 
         JDA jda;
 
-        builder = new JDABuilder(AccountType.BOT);
+        builder = JDABuilder.createDefault(args[0]);
 
-        builder.setToken(args[0]);
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("your Music | Yo!help"));
