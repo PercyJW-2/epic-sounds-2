@@ -42,23 +42,13 @@ public class Main {
 
         JDA jda;
 
-        builder = new JDABuilder(args[0]);
-
-        /*builder = JDABuilder.create(args[0], Arrays.asList(
-                GatewayIntent.DIRECT_MESSAGE_REACTIONS,
-                GatewayIntent.DIRECT_MESSAGE_TYPING,
-                GatewayIntent.DIRECT_MESSAGES,
-                GatewayIntent.GUILD_BANS,
+        builder = JDABuilder.create(args[0], Arrays.asList(
                 GatewayIntent.GUILD_EMOJIS,
-                GatewayIntent.GUILD_INVITES,
                 GatewayIntent.GUILD_MEMBERS,
-                GatewayIntent.GUILD_MESSAGE_REACTIONS,
-                GatewayIntent.GUILD_MESSAGE_TYPING,
                 GatewayIntent.GUILD_MESSAGES,
                 GatewayIntent.GUILD_PRESENCES,
                 GatewayIntent.GUILD_VOICE_STATES)
         );
-        Usable in the Future*/
 
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
