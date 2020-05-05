@@ -119,6 +119,7 @@ public class Main {
         CommandHandler.commands.put("undo", new Undo(audioManager));
         CommandHandler.commands.put("delete", new Delete(audioManager));
         CommandHandler.commands.put("shuffle", new Shuffle(audioManager));
+        //CommandHandler.commands.put("bassboost", new BassBoost(audioManager)); TODO ->firstly migration to lavalink
     }
 
     private static void addListeners() {

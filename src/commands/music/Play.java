@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Prefixes;
 
+import java.util.Objects;
+
 import static util.DefaultMessageWriter.*;
 
 public class Play implements Command {
@@ -61,6 +63,7 @@ public class Play implements Command {
                 case "--playlist":
                 case "-p":
                     playlist = true;
+                    break;
                 default:
                     search.append(s).append(" ");
             }
@@ -83,14 +86,14 @@ public class Play implements Command {
         }
 
         if (!g.getAudioManager().isConnected()) {
-            VoiceChannel vChan = event.getMember().getVoiceState().getChannel();
+            VoiceChannel vChan = Objects.requireNonNull(Objects.requireNonNull(event.getMember()).getVoiceState()).getChannel();
             audioInstanceManager.getPlayer(g);
             g.getAudioManager().openAudioConnection(vChan);
             if (audioInstanceManager.getPlayer(g).isPaused()) {
                 audioInstanceManager.getPlayer(g).setPaused(false);
             }
         }
-        audioInstanceManager.loadTrack(searchFinal, event.getMember(), event.getMessage(), playlist);
+        audioInstanceManager.loadTrack(searchFinal, Objects.requireNonNull(event.getMember()), event.getMessage(), playlist);
     }
 
     @Override
