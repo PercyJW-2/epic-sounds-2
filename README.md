@@ -11,6 +11,7 @@ A Discord-Musicbot designed to be similar to the [Groovy Music-Bot](https://groo
 - Customizable Prefix for the Bot. (Server Admin-Permissions needed)
 - Console-like usage. All commands are programmed to be used like a Command in a Console.
 - (Planned) Fully customizable Soundboard  
+- (Planned) Integration for Lavalink
 
 ## Commands  
 
