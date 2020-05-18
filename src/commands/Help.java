@@ -20,9 +20,9 @@ public class Help implements Command {
                         .setColor(Color.GREEN)
                         .setDescription("``` __  __     ______     __         ______  \n" +
                                         "/\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\  == \\ \n" +
-                                        " \\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\  _-/ \n" +
-                                        "  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\   \n" +
-                                        "   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_/   \n" +
+                                        "\\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\  _-/ \n" +
+                                        " \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\   \n" +
+                                        "  \\/_/\\/_/   \\/_____/   \\/_____/   \\/_/   \n" +
                                         "                                  ``` \n" +
                                 "_(for further details write the command with the addition of an '--help')_")
                         .addField(prefix + "customizePrefix","Changes the current Prefix.",false)

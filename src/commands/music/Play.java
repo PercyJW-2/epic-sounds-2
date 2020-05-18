@@ -75,6 +75,7 @@ public class Play implements Command {
         }
 
         String searchFinal = "";
+        int playlistIndex = 0;
 
         if (!(search.toString().startsWith("http://") || search.toString().startsWith("https://"))) {
             if (scsearch)
@@ -83,6 +84,11 @@ public class Play implements Command {
                 searchFinal = search.insert(0, "ytsearch:").toString();
         } else {
             searchFinal = search.substring(0,search.length()-1);
+            if (searchFinal.contains("&index=")) {
+                playlistIndex = searchFinal.toCharArray()[searchFinal.length() - 1] - '1';
+            } else {
+                playlist = true;
+            }
         }
 
         if (!g.getAudioManager().isConnected()) {
@@ -93,7 +99,8 @@ public class Play implements Command {
                 audioInstanceManager.getPlayer(g).setPaused(false);
             }
         }
-        audioInstanceManager.loadTrack(searchFinal, Objects.requireNonNull(event.getMember()), event.getMessage(), playlist);
+        audioInstanceManager
+                .loadTrack(searchFinal, Objects.requireNonNull(event.getMember()), event.getMessage(), playlist, playlistIndex);
     }
 
     @Override

@@ -63,7 +63,7 @@ public class AudioInstanceManager {
         return !hasPlayer(g) || getPlayer(g).getPlayingTrack() == null;
     }
 
-    public void loadTrack(String identifier, Member author, Message msg, boolean pSearchPlaylist) {
+    public void loadTrack(String identifier, Member author, Message msg, boolean pSearchPlaylist, int playlistIndex) {
         this.searchPlaylist = pSearchPlaylist;
         Guild guild = author.getGuild();
         getPlayer(guild);
@@ -91,8 +91,8 @@ public class AudioInstanceManager {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 if (!searchPlaylist) {
-                    getTrackManager(guild).enQueue(playlist.getTracks().get(0), author, msg.getTextChannel());
-                    AudioTrackInfo trackInfo = playlist.getTracks().get(0).getInfo();
+                    getTrackManager(guild).enQueue(playlist.getTracks().get(playlistIndex), author, msg.getTextChannel());
+                    AudioTrackInfo trackInfo = playlist.getTracks().get(playlistIndex).getInfo();
                     msg.getTextChannel().sendMessage(
                             new EmbedBuilder()
                                     .setColor(new Color(255, 0, 0))
@@ -101,7 +101,7 @@ public class AudioInstanceManager {
                                     .addField("      Author: ", trackInfo.author, true)
                                     .addBlankField(true)
                                     .addField("         URL: ", trackInfo.uri, true)
-                                    .addField("    Duration: ", "`" + getTimestamp(playlist.getTracks().get(0).getDuration()) + " Minutes`", true)
+                                    .addField("    Duration: ", "`" + getTimestamp(playlist.getTracks().get(playlistIndex).getDuration()) + " Minutes`", true)
                                     .addBlankField(true)
                                     .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", false)
                                     .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
@@ -109,7 +109,7 @@ public class AudioInstanceManager {
                     ).queue();
                     System.out.println("YOUTUBE SUCHEN SONG, " + identifier);
                 } else {
-                    for (int i = 0; i < (Math.min(playlist.getTracks().size(), PLAYLIST_LIMIT)); i++) {
+                    for (int i = playlistIndex; i < (Math.min(playlist.getTracks().size(), PLAYLIST_LIMIT)); i++) {
                         getTrackManager(guild).enQueue(playlist.getTracks().get(i), author, msg.getTextChannel());
                     }
                     msg.getTextChannel().sendMessage(
@@ -117,7 +117,7 @@ public class AudioInstanceManager {
                                     .setColor(new Color(255, 0, 0))
                                     .setDescription(":musical_note: **Playlist added!**")
                                     .addField("       Title: ", playlist.getName(), true)
-                                    .addField("        Size: ", "`" + playlist.getTracks().size() + " Songs`", true)
+                                    .addField("        Size: ", "`" + (playlist.getTracks().size() - playlistIndex) + " Songs`", true)
                                     .addBlankField(true)
                                     .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", true)
                                     .addField("Duration: ", "`" + getPlaylistTimestamp(playlist) + " Minutes`", true)
