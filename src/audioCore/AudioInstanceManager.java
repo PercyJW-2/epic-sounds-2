@@ -120,7 +120,7 @@ public class AudioInstanceManager {
                                     .addField("        Size: ", "`" + (playlist.getTracks().size() - playlistIndex) + " Songs`", true)
                                     .addBlankField(true)
                                     .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", true)
-                                    .addField("Duration: ", "`" + getPlaylistTimestamp(playlist) + " Minutes`", true)
+                                    .addField("Duration    : ", "`" + getPlaylistTimestamp(playlist) + " Minutes`", true)
                                     .addBlankField(true)
                                     .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
                                     .build()
