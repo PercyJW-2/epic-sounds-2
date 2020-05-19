@@ -80,7 +80,7 @@ public class AudioInstanceManager {
                                 .addField("       Author:", track.getInfo().author, true)
                                 .addBlankField(true)
                                 .addField("         URL:", track.getInfo().uri, true)
-                                .addField("    Duration: ", "`" + (track.getInfo().isStream ? "LIVE" : getTimestamp(track.getDuration())) + " Minutes`", true)
+                                .addField("    Duration: ", "`" + (track.getInfo().isStream ? "LIVE" : getTimestamp(track.getDuration()) + " Minutes") + "`", true)
                                 .addBlankField(true)
                                 .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname() + "", false)
                                 .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())

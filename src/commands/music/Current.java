@@ -108,7 +108,7 @@ public class Current implements Command {
                         (!info.isStream ? "/" + audioInstanceManager.getTimestamp(track.getDuration()) : "") +
                         "`", true)
                 .addBlankField(true)
-                .addField("Status:", (info.isStream ? ":red_circle:" : "`" + buildStatusBar(calculatePercentage(track)) + "`"), false)
+                .addField("Status:", (info.isStream ? ":red_circle: Live" : "`" + buildStatusBar(calculatePercentage(track)) + "`"), false)
                 .setFooter("Epic Sounds V2", botAvatarUrl)
                 .build();
     }
