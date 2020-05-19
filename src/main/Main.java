@@ -24,6 +24,8 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
@@ -76,16 +78,17 @@ public class Main {
             l.printStackTrace();
         }
 
-        ExecutorService myExecutor = Executors.newCachedThreadPool();
-        myExecutor.execute(() -> {
-            try {
-                Thread.sleep(86400000L); //Wait 24h
-                backupPrefixes();
-                backupSounds();
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    backupPrefixes();
+                    backupSounds();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }, 86400000L, 86400000L); //Wait 24h
     }
 
     private static void addCommands() {
