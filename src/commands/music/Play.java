@@ -74,16 +74,20 @@ public class Play implements Command {
             return;
         }
 
-        String searchFinal = "";
+        String searchFinal = search.toString();
         int playlistIndex = 0;
 
-        if (!(search.toString().startsWith("http://") || search.toString().startsWith("https://"))) {
+        if (searchFinal.startsWith("<") && searchFinal.endsWith(">")) {
+            searchFinal = searchFinal.substring(1, searchFinal.length() - 2);
+        }
+
+        if (!(searchFinal.startsWith("http://") || searchFinal.startsWith("https://"))) {
             if (scsearch)
-                searchFinal = search.insert(0, "scsearch:").toString();
+                searchFinal = "scsearch:" + searchFinal;
             else if (ytsearch)
-                searchFinal = search.insert(0, "ytsearch:").toString();
+                searchFinal = "ytsearch:" + searchFinal;
         } else {
-            searchFinal = search.substring(0,search.length()-1);
+            searchFinal = searchFinal.substring(0,search.length()-1);
             if (searchFinal.contains("&index=")) {
                 playlistIndex = searchFinal.toCharArray()[searchFinal.length() - 1] - '1';
             } else {

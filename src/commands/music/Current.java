@@ -3,6 +3,7 @@ package commands.music;
 import audioCore.AudioInstanceManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -48,21 +49,19 @@ public class Current implements Command {
             Message msg = event.getChannel().sendMessage(
                     getAudioStatusEmbed(info, avatarURL, g)
             ).complete();
+
             Timer updateTimer = new Timer();
             updateTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    msg.editMessage(getAudioStatusEmbed(info, avatarURL, g)).queue();
+                    if (track.getState() == AudioTrackState.PLAYING)
+                        msg.editMessage(getAudioStatusEmbed(info, avatarURL, g)).queue();
+                    else {
+                        msg.delete().queue();
+                        updateTimer.cancel();
+                    }
                 }
             }, 5000, 5000);
-
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    updateTimer.cancel();
-                    msg.delete().queue();
-                }
-            }, track.getDuration() - track.getPosition());
         }
     }
 
@@ -104,9 +103,12 @@ public class Current implements Command {
                 .addField("Author:", info.author, true)
                 .addBlankField(true)
                 .addField("URL:", info.uri, true)
-                .addField("Duration:", "`" + audioInstanceManager.getTimestamp(track.getPosition()) + "/" + audioInstanceManager.getTimestamp(track.getDuration()) + "`", true)
+                .addField((info.isStream ? "Listening for" : "Duration:"), "`" +
+                        audioInstanceManager.getTimestamp(track.getPosition()) +
+                        (!info.isStream ? "/" + audioInstanceManager.getTimestamp(track.getDuration()) : "") +
+                        "`", true)
                 .addBlankField(true)
-                .addField("Status:", "`" + buildStatusBar(calculatePercentage(track)) + "`", false)
+                .addField("Status:", (info.isStream ? ":red_circle:" : "`" + buildStatusBar(calculatePercentage(track)) + "`"), false)
                 .setFooter("Epic Sounds V2", botAvatarUrl)
                 .build();
     }
