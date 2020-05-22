@@ -35,7 +35,7 @@ To view details of Commands while the Bot operates, use `-h` or `--help`
 - `current` to view the currently playing song  
 - `queue` to view the current queue  
 - `undo` to remove the most recent addition of the queue  
-- `delete` to remove the next song in the queue  
+- `delete` to remove a song with the number of its position in the queue  
 - `shuffle` to shuffle the current queue  
 
 ### Soundboard Commands

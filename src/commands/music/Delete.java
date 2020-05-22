@@ -5,14 +5,16 @@ import audioCore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.Prefixes;
 
-import java.util.Queue;
+import java.util.*;
 
 import static util.DefaultMessageWriter.*;
 
 public class Delete implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
+    private long guildID;
 
     public Delete(AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
@@ -26,17 +28,21 @@ public class Delete implements Command {
     @Override
     public void action(String[] args, MessageReceivedEvent event) {
         Guild g = event.getGuild();
-        int count = 1;
-
-        if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writePersistentMessage(help(), event);
-                return;
-            } else {
-                count = Integer.parseInt(args[0]);
-                if (count < 1) {
-                    writeError("Please write an positive number", event);
-                    return;
+        guildID = g.getIdLong();
+        List<Integer> toBeDeleted = new LinkedList<>();
+        if (args != null) {
+            for (String arg : args) {
+                switch (arg) {
+                    case "--help":
+                    case "-h":
+                        writePersistentMessage(help(), event);
+                        return;
+                    default:
+                        int number = Integer.parseInt(arg);
+                        if (number < 0) {
+                            writeError("All Numbers need to be positive! It will be skipped", event);
+                        }
+                        toBeDeleted.add(number - 1);
                 }
             }
         }
@@ -44,22 +50,19 @@ public class Delete implements Command {
         if (audioInstanceManager.isIdle(g)) {
             writeError("There is nothing to delete", event);
         } else {
-            Queue<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(g).getRealQueue();
+            LinkedList<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(g).getRealQueue();
             if (audioQueue.size() < 2) {
                 writeError("There is nothing that can be deleted.", event);
             } else {
-                if (audioQueue.size() < count) {
-                    writeError("Requested to many songs to be deleted", event);
-                    return;
+                toBeDeleted.sort(Comparator.comparingInt(o -> o));
+                for (int i = 0; i < toBeDeleted.size(); i++) {
+                    if (toBeDeleted.get(i) - i >= audioQueue.size()) {
+                        writeError("There is no song with the number " + toBeDeleted.get(i) + ". It will be skipped", event);
+                        toBeDeleted.remove(i);
+                        i--;
+                    } else
+                        audioQueue.remove(toBeDeleted.get(i) - i);
                 }
-                audioQueue.add(audioQueue.poll());
-                for (int i = 0; i < count; i++) {
-                    audioQueue.poll();
-                }
-                for (int i = 1; i < audioQueue.size(); i++) {
-                    audioQueue.add(audioQueue.poll());
-                }
-                writeMessage("Deleted " + count + " of the next tracks.", event);
             }
         }
     }
@@ -71,7 +74,7 @@ public class Delete implements Command {
 
     @Override
     public String help() {
-        return "Use this Command to delete the next song, that is going to be played.\n" +
-                "Add a number to undo multiple songs.";
+        return "Use this command to delete a song from the queue with its specified number." +
+                "Usage: `" + Prefixes.getPrefix(guildID) + "delete [number1] [number2] [number3] ... [numberN]`";
     }
 }
