@@ -62,7 +62,7 @@ public class AudioInstanceManager {
         return !hasPlayer(g) || getPlayer(g).getPlayingTrack() == null;
     }
 
-    public void loadTrack(String identifier, Member author, Message msg, boolean pSearchPlaylist, int playlistIndex) {
+    public void loadTrack(String identifier, Member author, Message msg, boolean pSearchPlaylist, int playlistIndex, boolean silent) {
         this.searchPlaylist = pSearchPlaylist;
         Guild guild = author.getGuild();
         getPlayer(guild);
@@ -71,6 +71,7 @@ public class AudioInstanceManager {
             @Override
             public void trackLoaded(AudioTrack track) {
                 getTrackManager(guild).enQueue(track, author, msg.getTextChannel());
+                if (!silent)
                 msg.getTextChannel().sendMessage(
                         new EmbedBuilder()
                                 .setColor(new Color(255, 0, 0))
@@ -92,6 +93,7 @@ public class AudioInstanceManager {
                 if (!searchPlaylist) {
                     getTrackManager(guild).enQueue(playlist.getTracks().get(playlistIndex), author, msg.getTextChannel());
                     AudioTrackInfo trackInfo = playlist.getTracks().get(playlistIndex).getInfo();
+                    if (!silent)
                     msg.getTextChannel().sendMessage(
                             new EmbedBuilder()
                                     .setColor(new Color(255, 0, 0))
@@ -111,6 +113,7 @@ public class AudioInstanceManager {
                     for (int i = playlistIndex; i < (Math.min(playlist.getTracks().size(), PLAYLIST_LIMIT)); i++) {
                         getTrackManager(guild).enQueue(playlist.getTracks().get(i), author, msg.getTextChannel());
                     }
+                    if (!silent)
                     msg.getTextChannel().sendMessage(
                             new EmbedBuilder()
                                     .setColor(new Color(255, 0, 0))
