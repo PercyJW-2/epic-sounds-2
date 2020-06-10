@@ -19,7 +19,6 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("ALL")
 public class AudioInstanceManager {
 
     private static final int PLAYLIST_LIMIT = 1000;
@@ -141,6 +140,8 @@ public class AudioInstanceManager {
 
             @Override
             public void loadFailed(FriendlyException exception) {
+                System.out.println("ES IST EIN VERDAMMTER FEHLER AUFGETRETEN");
+                System.out.println(exception.getMessage());
                 exception.printStackTrace();
             }
         });
