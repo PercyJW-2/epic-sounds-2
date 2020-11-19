@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class CommandParser {
 
-    public static commandContainer parser(String raw, MessageReceivedEvent event, String prefix) {
+    public static CommandContainer parser(String raw, MessageReceivedEvent event, String prefix) {
 
         var beheaded = raw.replaceFirst(Pattern.quote(prefix), "");
         String[] splitBeheaded = beheaded.split(" ");
@@ -17,10 +17,10 @@ public class CommandParser {
         String[] args = new String[split.size() - 1];
         split.subList(1, split.size()).toArray(args);
 
-        return new commandContainer(raw, beheaded, splitBeheaded, invoke, args, event);
+        return new CommandContainer(raw, beheaded, splitBeheaded, invoke, args, event);
     }
 
-    public static class commandContainer {
+    public static class CommandContainer {
 
         public final String raw;
         public final String beheaded;
@@ -29,7 +29,7 @@ public class CommandParser {
         public final String[] args;
         public final MessageReceivedEvent event;
 
-        public commandContainer (String rw, String beheaded, String[] splitBeheaded, String invoke, String[] args, MessageReceivedEvent event) {
+        public CommandContainer (String rw, String beheaded, String[] splitBeheaded, String invoke, String[] args, MessageReceivedEvent event) {
             this.raw = rw;
             this.beheaded = beheaded;
             this.splitBeheaded = splitBeheaded;

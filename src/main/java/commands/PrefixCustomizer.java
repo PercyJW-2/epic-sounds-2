@@ -32,7 +32,7 @@ public class PrefixCustomizer implements Command {
             writeError("Don't use any Spaces for your Custom Prefix!", event);
             return;
         }
-        Prefixes.prefixMap.put(event.getGuild().getIdLong(), args[0]);
+        Prefixes.addPrefix(event.getGuild().getIdLong(), args[0]);
         writeMessage("Successfully changed Prefix to" + args[0], event);
     }
 

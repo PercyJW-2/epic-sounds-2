@@ -24,6 +24,7 @@ public class AudioInstanceManager {
     private static final int PLAYLIST_LIMIT = 1000;
     private static final AudioPlayerManager MANAGER = new DefaultAudioPlayerManager();
     private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> PLAYERS = new HashMap<>();
+    private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> SOUND_PLAYERS = new HashMap<>();
     private boolean searchPlaylist;
 
     public AudioInstanceManager() {
@@ -42,8 +43,43 @@ public class AudioInstanceManager {
         return p;
     }
 
+    private AudioPlayer createSoundPlayer(Guild g) {
+        AudioPlayer p = MANAGER.createPlayer();
+        TrackManager m = new TrackManager(p);
+        p.addListener(m);
+
+        g.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(p));
+
+        SOUND_PLAYERS.put(g, new AbstractMap.SimpleEntry<>(p, m));
+
+        return p;
+    }
+
+    public void switchPlayers(Guild g, PlayerType switchTo) {
+        switch (switchTo) {
+            case SONG:
+                g.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(getPlayer(g)));
+                break;
+            case SOUND:
+                g.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(getSoundPlayer(g)));
+                break;
+        }
+    }
+
     private boolean hasPlayer(Guild g) {
         return PLAYERS.containsKey(g);
+    }
+
+    private boolean hasSoundPlayer(Guild g) {
+        return  SOUND_PLAYERS.containsKey(g);
+    }
+
+    private AudioPlayer getSoundPlayer(Guild g) {
+        if (hasSoundPlayer(g)) {
+            return SOUND_PLAYERS.get(g).getKey();
+        } else {
+            return createSoundPlayer(g);
+        }
     }
 
     public AudioPlayer getPlayer (Guild g) {
@@ -186,4 +222,8 @@ public class AudioInstanceManager {
         getPlayer(g).stopTrack();
     }
 
+    public enum PlayerType {
+        SONG,
+        SOUND
+    }
 }
