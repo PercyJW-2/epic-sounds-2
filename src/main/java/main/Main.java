@@ -1,12 +1,10 @@
 package main;
 
+import Exceptions.SettingsNotFoundException;
 import audioCore.AudioInstanceManager;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;
-import commands.sounds.AddSound;
 import listeners.CommandListener;
 import listeners.UserJoinListener;
 import net.dv8tion.jda.api.JDA;
@@ -16,21 +14,14 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.stream.Stream;
 
-import util.Prefixes;
-import util.Sounds;
+import util.FileLoadingUtils;
+import util.SpotifyApiRequester;
 
 public class Main {
 
@@ -39,9 +30,22 @@ public class Main {
 
     public static void main(String[] args) {
 
+        HashMap<String, String> settings = null;
+        try {
+            settings = FileLoadingUtils.loadSettings();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(101);
+        } catch (SettingsNotFoundException e) {
+            System.out.println("Did not find Settings-File. Generated one. Please fill out its settings");
+            System.exit(100);
+        }
+
+        final String discordAPIKey = settings.get("Discord_API_Key");
+
         JDA jda;
 
-        builder = JDABuilder.create(args[0], Arrays.asList(
+        builder = JDABuilder.create(discordAPIKey, Arrays.asList(
                 GatewayIntent.GUILD_EMOJIS,
                 GatewayIntent.GUILD_MEMBERS,
                 GatewayIntent.GUILD_MESSAGES,
@@ -61,11 +65,11 @@ public class Main {
             jda.awaitReady();
 
             try {
-                loadPrefixes();
-                loadSounds();
+                FileLoadingUtils.loadPrefixes();
+                FileLoadingUtils.loadSounds();
                 Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    backupPrefixes();
-                    backupSounds();
+                    FileLoadingUtils.backupPrefixes();
+                    FileLoadingUtils.backupSounds();
                 }));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,8 +81,8 @@ public class Main {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                backupPrefixes();
-                backupSounds();
+                FileLoadingUtils.backupPrefixes();
+                FileLoadingUtils.backupSounds();
             }
         }, 86400000L, 86400000L); //Wait 24h
     }
@@ -101,89 +105,15 @@ public class Main {
         CommandHandler.getCommands().put("undo", new Undo(audioManager));
         CommandHandler.getCommands().put("delete", new Delete(audioManager));
         CommandHandler.getCommands().put("shuffle", new Shuffle(audioManager));
-        //CommandHandler.getCommands().put("bassboost", new BassBoost(audioManager)); // TODO ->firstly migration to lavalink
+        //CommandHandler.getCommands().put("bassboost", new BassBoost(audioManager)); // TODO -> someday dunno
 
-        CommandHandler.getCommands().put("addsound", new AddSound());
+        //CommandHandler.getCommands().put("addsound", new AddSound()); // TODO -> Soundboard doing it with more time
 
     }
 
     private static void addListeners() {
         builder.addEventListeners(new CommandListener());
         builder.addEventListeners(new UserJoinListener());
-    }
-
-    private static void backupPrefixes(){
-        Gson gson = new Gson();
-        String json = gson.toJson(Prefixes.getPrefixMap());
-        System.out.println(json);
-        try (FileWriter writer = new FileWriter("prefixes.json",StandardCharsets.UTF_8)) {
-            writer.write(json);
-            writer.flush();
-
-            System.out.println("saved prefixMap in prefixes.json");
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
-
-    private static void loadPrefixes() throws IOException{
-        Gson gson = new Gson();
-        HashMap<Long, String> prefixMap = null;
-        try {
-            //load File
-            StringBuilder contentBuilder = new StringBuilder();
-            Stream<String> stream = Files.lines(Paths.get("prefixes.json"), StandardCharsets.UTF_8);
-            stream.forEach(contentBuilder::append);
-            String json = contentBuilder.toString();
-            //loaded File
-            System.out.println(json);
-            Type type = new TypeToken<HashMap<Long,String>>(){}.getType();
-            prefixMap = gson.fromJson(json, type);
-        } catch (NoSuchFileException f){
-            System.out.println("File does not exist");
-        }
-        if (prefixMap == null) {
-            prefixMap = new HashMap<>();
-        }
-        Prefixes.setPrefixMap(prefixMap);
-        System.out.println("loaded prefixMap");
-    }
-
-    private static void backupSounds(){
-        Gson gson = new Gson();
-        String json = gson.toJson(Sounds.getSoundsMap());
-        System.out.println(json);
-        try (FileWriter writer = new FileWriter("sounds.json",StandardCharsets.UTF_8)) {
-            writer.write(json);
-            writer.flush();
-
-            System.out.println("saved soundsMap in sounds.json");
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
-
-    private static void loadSounds() throws IOException{
-        Gson gson = new Gson();
-        HashMap<Long, HashMap<String, String>> soundsMap = null;
-        try {
-            //load File
-            StringBuilder contentBuilder = new StringBuilder();
-            Stream<String> stream = Files.lines(Paths.get("sounds.json"), StandardCharsets.UTF_8);
-            stream.forEach(contentBuilder::append);
-            String json = contentBuilder.toString();
-            //loaded File
-            System.out.println(json);
-            Type type = new TypeToken<HashMap<Long,HashMap<String, String>>>(){}.getType();
-            soundsMap = gson.fromJson(json, type);
-        } catch (NoSuchFileException f){
-            System.out.println("File does not exist");
-        }
-        if (soundsMap == null) {
-            soundsMap = new HashMap<>();
-        }
-        Sounds.setSoundsMap(soundsMap);
-        System.out.println("loaded prefixMap");
     }
 
 }

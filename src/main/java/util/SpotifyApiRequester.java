@@ -1,5 +1,6 @@
 package util;
 
+import Exceptions.SettingsNotFoundException;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
@@ -12,28 +13,39 @@ import com.wrapper.spotify.requests.data.tracks.GetTrackRequest;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
+import java.util.HashMap;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class SpotifyApiRequester {
-    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
-            .setClientId("48af4ea8b1a54ab98ec8aeaa6dbd3753")
-            .setClientSecret("6cd5d1611a8447c5bdc33053b4d3245e")
-            .build();
+    private static SpotifyApi spotifyApi = null;
 
-    private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
+    protected SpotifyApiRequester() {
+        throw new UnsupportedOperationException();
+    }
 
     public static void clientCredentials() {
+        if (spotifyApi == null) {
+            try {
+                final HashMap<String, String> settings = FileLoadingUtils.loadSettings();
+                final String spotifyClientId = settings.get("Spotify_Client_ID");
+                final String spotifyClientSecret = settings.get("Spotify_Client_Secret");
+                spotifyApi = new SpotifyApi.Builder()
+                        .setClientId(spotifyClientId)
+                        .setClientSecret(spotifyClientSecret)
+                        .build();
+            } catch (IOException | SettingsNotFoundException e) {
+                System.out.println("There were some Problems while loading the settings");
+            }
+        }
         try {
-            final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
+            final ClientCredentials clientCredentials = spotifyApi.clientCredentials().build().execute();
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    public static String getTrack(String trackID) {
+    public static String getTrack(final String trackID) {
         clientCredentials();
         final GetTrackRequest getTrackRequest = spotifyApi.getTrack(trackID).build();
         try {
@@ -42,23 +54,26 @@ public class SpotifyApiRequester {
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return "never gonna give you up-Rick Astley"; //haha
+        // haha
+        return "never gonna give you up-Rick Astley";
     }
 
-    public static String[] getPlaylist(String playlistID) {
+    public static String[] getPlaylist(final String playlistID) {
         clientCredentials();
         final GetPlaylistsItemsRequest getPlaylistsItems = spotifyApi.getPlaylistsItems(playlistID).build();
         try {
             final Paging<PlaylistTrack> playlist = getPlaylistsItems.execute();
-            PlaylistTrack[] items = playlist.getItems();
+            final PlaylistTrack[] items = playlist.getItems();
             String[] names = new String[items.length];
             for (int i = 0; i < items.length; i++) {
-                names[i] = ((Track) items[i].getTrack()).getName() + "-" + ((Track) items[i].getTrack()).getArtists()[0].getName();
+                names[i] = items[i].getTrack().getName()
+                        + "-"
+                        + ((Track) items[i].getTrack()).getArtists()[0].getName();
             }
             return names;
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return null;
+        return new String[0];
     }
 }
