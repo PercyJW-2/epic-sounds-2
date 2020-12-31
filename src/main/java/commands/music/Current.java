@@ -3,12 +3,17 @@ package commands.music;
 import audioCore.AudioInstanceManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static util.DefaultMessageWriter.writeError;
 import static util.DefaultMessageWriter.writePersistentMessage;
@@ -40,20 +45,23 @@ public class Current implements Command {
         } else {
             AudioTrack track = audioInstanceManager.getPlayer(g).getPlayingTrack();
             AudioTrackInfo info = track.getInfo();
-            event.getChannel().sendMessage(
-                    new EmbedBuilder()
-                            .setColor(Color.GREEN)
-                            .setDescription("**CURRENT TRACK PLAYING:**")
-                            .addField("Title:", info.title, true)
-                            .addField("Author:", info.author, true)
-                            .addBlankField(true)
-                            .addField("URL:", info.uri, true)
-                            .addField("Duration:", "`" + audioInstanceManager.getTimestamp(track.getPosition()) + "/" + audioInstanceManager.getTimestamp(track.getDuration()) + "`", true)
-                            .addBlankField(true)
-                            .addField("Status:", "`" + buildStatusBar(calculatePercentage(track)) + "`", false)
-                            .setFooter("Epic Sounds V2", event.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                            .build()
-            ).queue();
+            String avatarURL = event.getJDA().getSelfUser().getAvatarUrl();
+            Message msg = event.getChannel().sendMessage(
+                    getAudioStatusEmbed(info, avatarURL, g)
+            ).complete();
+
+            Timer updateTimer = new Timer();
+            updateTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (track.getState() == AudioTrackState.PLAYING)
+                        msg.editMessage(getAudioStatusEmbed(info, avatarURL, g)).queue();
+                    else {
+                        msg.delete().queue();
+                        updateTimer.cancel();
+                    }
+                }
+            }, 5000, 5000);
         }
     }
 
@@ -84,5 +92,24 @@ public class Current implements Command {
             }
         }
         return bar.toString();
+    }
+
+    private MessageEmbed getAudioStatusEmbed(AudioTrackInfo info, String botAvatarUrl, Guild g) {
+        AudioTrack track = audioInstanceManager.getPlayer(g).getPlayingTrack();
+        return new EmbedBuilder()
+                .setColor(Color.GREEN)
+                .setDescription("**CURRENT TRACK PLAYING:**")
+                .addField("Title:", info.title, true)
+                .addField("Author:", info.author, true)
+                .addBlankField(true)
+                .addField("URL:", info.uri, true)
+                .addField((info.isStream ? "Listening for" : "Duration:"), "`" +
+                        audioInstanceManager.getTimestamp(track.getPosition()) +
+                        (!info.isStream ? "/" + audioInstanceManager.getTimestamp(track.getDuration()) : "") +
+                        "`", true)
+                .addBlankField(true)
+                .addField("Status:", (info.isStream ? ":red_circle: Live" : "`" + buildStatusBar(calculatePercentage(track)) + "`"), false)
+                .setFooter("Epic Sounds V2", botAvatarUrl)
+                .build();
     }
 }

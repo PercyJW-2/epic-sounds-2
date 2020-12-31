@@ -4,21 +4,21 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class TrackManager extends AudioEventAdapter {
 
     private final AudioPlayer PLAYER;
-    private final Queue<AudioInfo> QUEUE;
+    private final LinkedList<AudioInfo> QUEUE;
 
     public TrackManager(AudioPlayer PLAYER) {
         this.PLAYER = PLAYER;
-        this.QUEUE = new LinkedBlockingQueue<>();
+        this.QUEUE = new LinkedList<>();
     }
 
     public void enQueue(AudioTrack track, Member author, TextChannel channel) {
@@ -34,7 +34,7 @@ public class TrackManager extends AudioEventAdapter {
         return new LinkedHashSet<>(QUEUE);
     }
 
-    public Queue<AudioInfo> getRealQueue() {
+    public LinkedList<AudioInfo> getRealQueue() {
         return QUEUE;
     }
 
@@ -55,7 +55,12 @@ public class TrackManager extends AudioEventAdapter {
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
         AudioInfo info = QUEUE.element();
-        VoiceChannel vChan = info.getAUTHOR().getVoiceState().getChannel();
+        GuildVoiceState voiceState = info.getAUTHOR().getVoiceState();
+        if (voiceState == null) {
+            System.out.println("No voice-state found");
+            return;
+        }
+        VoiceChannel vChan = voiceState.getChannel();
 
 
         if (vChan == null)

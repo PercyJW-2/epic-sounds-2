@@ -5,9 +5,13 @@ import java.util.HashMap;
 import commands.Command;
 
 public class CommandHandler {
-    public static HashMap<String, Command> commands = new HashMap<>();
+    private static final HashMap<String, Command> commands = new HashMap<>();
 
-    public static void handlerCommand (CommandParser.commandContainer cmd) {
+    protected static HashMap<String, Command> getCommands() {
+        return commands;
+    }
+
+    public static void handlerCommand (CommandParser.CommandContainer cmd) {
 
         if (commands.containsKey(cmd.invoke)) {
 
