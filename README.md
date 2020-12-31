@@ -44,4 +44,4 @@ WIP
 
 ## Installation  
 
-Download the most recent zip-File from this Repository and unpack it. On Windows you start the Bot from `.\\bin\\music-bot.bat` and on Linux it starts from `./bin/music-bot` You also need a Discord Bot-Application and the Bot-Tag from it. After the first start you will get a settings.json file generated in the folder where you launched the bot. Your Discord Bot Token needs to be placed inside this file. When you want to have Spotify-Support you'll also put there your Spotify Client Id and Secret. Now launch the bot again and everything should work.
+Download the most recent zip-File from this Repository and unpack it. On Windows you start the Bot from `.\bin\music-bot.bat` and on Linux it starts from `./bin/music-bot` You also need a Discord Bot-Application and the Bot-Tag from it. After the first start you will get a settings.json file generated in the folder where you launched the bot. Your Discord Bot Token needs to be placed inside this file. When you want to have Spotify-Support you'll also put there your Spotify Client Id and Secret. Now launch the bot again and everything should work.
