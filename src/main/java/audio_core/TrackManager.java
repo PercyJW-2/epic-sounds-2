@@ -1,4 +1,4 @@
-package audioCore;
+package audio_core;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
@@ -55,7 +55,7 @@ public class TrackManager extends AudioEventAdapter {
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
         AudioInfo info = QUEUE.element();
-        GuildVoiceState voiceState = info.getAUTHOR().getVoiceState();
+        GuildVoiceState voiceState = info.getAuthor().getVoiceState();
         if (voiceState == null) {
             System.out.println("No voice-state found");
             return;
@@ -66,13 +66,13 @@ public class TrackManager extends AudioEventAdapter {
         if (vChan == null)
             player.stopTrack();
         else
-            new Thread(() -> info.getAUTHOR().getGuild().getAudioManager().openAudioConnection(vChan)).start();
+            new Thread(() -> info.getAuthor().getGuild().getAudioManager().openAudioConnection(vChan)).start();
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         QUEUE.poll();
         if (!QUEUE.isEmpty())
-            player.playTrack(QUEUE.peek().getTRACK());
+            player.playTrack(QUEUE.peek().getTrack());
     }
 }

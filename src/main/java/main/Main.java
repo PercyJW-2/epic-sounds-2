@@ -1,7 +1,7 @@
 package main;
 
 import Exceptions.SettingsNotFoundException;
-import audioCore.AudioInstanceManager;
+import audio_core.AudioInstanceManager;
 import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;
@@ -21,7 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import util.FileLoadingUtils;
-import util.SpotifyApiRequester;
 
 public class Main {
 

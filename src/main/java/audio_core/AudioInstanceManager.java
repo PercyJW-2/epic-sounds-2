@@ -1,4 +1,4 @@
-package audioCore;
+package audio_core;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;

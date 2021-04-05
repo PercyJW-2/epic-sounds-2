@@ -1,6 +1,6 @@
 package commands.music;
 
-import audioCore.AudioInstanceManager;
+import audio_core.AudioInstanceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;

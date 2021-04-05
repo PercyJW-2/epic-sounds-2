@@ -1,6 +1,6 @@
 package commands.music;
 
-import audioCore.AudioInstanceManager;
+import audio_core.AudioInstanceManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;

@@ -1,7 +1,7 @@
 package commands.music;
 
-import audioCore.AudioInfo;
-import audioCore.AudioInstanceManager;
+import audio_core.AudioInfo;
+import audio_core.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -58,7 +58,7 @@ public class Queue implements Command {
 
             long totalLength = 0;
             for (AudioInfo a : tracks) {
-                totalLength += a.getTRACK().getDuration();
+                totalLength += a.getTrack().getDuration();
                 allTracks.add(a);
             }
 
@@ -76,9 +76,9 @@ public class Queue implements Command {
                         .setFooter("Epic Sounds V2", event.getJDA().getSelfUser().getEffectiveAvatarUrl());
                 for (int i = startValue; i < (Math.min(endValue, tracks.size())); i++) {
                     playlistMsg.addField((i + 1) + ":",
-                                    allTracks.get(i).getTRACK().getInfo().title +
+                                    allTracks.get(i).getTrack().getInfo().title +
                                     "\n`Duration: " +
-                                    audioInstanceManager.getTimestamp(allTracks.get(i).getTRACK().getDuration()) +
+                                    audioInstanceManager.getTimestamp(allTracks.get(i).getTrack().getDuration()) +
                                     "`",
                             false);
                 }

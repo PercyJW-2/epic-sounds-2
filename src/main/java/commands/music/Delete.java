@@ -1,7 +1,7 @@
 package commands.music;
 
-import audioCore.AudioInfo;
-import audioCore.AudioInstanceManager;
+import audio_core.AudioInfo;
+import audio_core.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
