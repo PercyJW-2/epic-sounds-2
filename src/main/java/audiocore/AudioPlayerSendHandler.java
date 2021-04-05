@@ -10,7 +10,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
     private final AudioPlayer audioPlayer;
     private AudioFrame lastFrame;
 
-    public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
+    public AudioPlayerSendHandler(final AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
     }
 
@@ -22,7 +22,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
 
     @Override
     public ByteBuffer provide20MsAudio() {
-        byte[] bytes = lastFrame.getData();
+        final byte[] bytes = lastFrame.getData();
         return ByteBuffer.wrap(bytes);
     }
 

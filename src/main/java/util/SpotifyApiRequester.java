@@ -1,6 +1,6 @@
 package util;
 
-import Exceptions.SettingsNotFoundException;
+import exceptions.SettingsNotFoundException;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
@@ -12,7 +12,7 @@ import com.wrapper.spotify.requests.data.tracks.GetTrackRequest;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("PMD.ClassNamingConventions")
 public class SpotifyApiRequester {
@@ -22,10 +22,11 @@ public class SpotifyApiRequester {
         throw new UnsupportedOperationException();
     }
 
+    @SuppressWarnings({"checkstyle:MultipleStringLiterals", "PMD.NonThreadSafeSingleton"})
     public static void clientCredentials() {
         if (spotifyApi == null) {
             try {
-                final HashMap<String, String> settings = FileLoadingUtils.loadSettings();
+                final Map<String, String> settings = FileLoadingUtils.loadSettings();
                 final String spotifyClientId = settings.get("Spotify_Client_ID");
                 final String spotifyClientSecret = settings.get("Spotify_Client_Secret");
                 spotifyApi = new SpotifyApi.Builder()
@@ -44,6 +45,7 @@ public class SpotifyApiRequester {
         }
     }
 
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
     public static String getTrack(final String trackID) {
         clientCredentials();
         final GetTrackRequest getTrackRequest = spotifyApi.getTrack(trackID).build();

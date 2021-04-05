@@ -11,35 +11,34 @@ public class Pause implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Pause (AudioInstanceManager audioInstanceManager) {
+    public Pause(final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        final Guild guild = event.getGuild();
         if (args == null || args.length < 1) {
-            audioInstanceManager.getPlayer(g).setPaused(true);
+            audioInstanceManager.getPlayer(guild).setPaused(true);
             writeMessage("Paused playback!", event);
-        } else {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writePersistentMessage(help(), event);
-            }
+        } else if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
+            writePersistentMessage(help(), event);
         }
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this command to pause the music-playback. If the bot rejoins the channel it forgets that is was paused.";
+        return "Use this command to pause the music-playback. "
+                + "If the bot rejoins the channel it forgets that is was paused.";
     }
 }

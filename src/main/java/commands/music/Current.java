@@ -20,53 +20,54 @@ import static util.DefaultMessageWriter.writePersistentMessage;
 
 public class Current implements Command {
 
+    private static final int DELAY = 5000;
     private final AudioInstanceManager audioInstanceManager;
 
-    public Current (AudioInstanceManager audioInstanceManager) {
+    public Current(final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
-        if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        if (args != null && args.length > 0
+                && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
                 writePersistentMessage(help(), event);
                 return;
-            }
         }
-        if (audioInstanceManager.isIdle(g)) {
+        final Guild guild = event.getGuild();
+        if (audioInstanceManager.isIdle(guild)) {
             writeError("There is nothing to be shown", event);
         } else {
-            AudioTrack track = audioInstanceManager.getPlayer(g).getPlayingTrack();
-            AudioTrackInfo info = track.getInfo();
-            String avatarURL = event.getJDA().getSelfUser().getAvatarUrl();
-            Message msg = event.getChannel().sendMessage(
-                    getAudioStatusEmbed(info, avatarURL, g)
+            final AudioTrack track = audioInstanceManager.getPlayer(guild).getPlayingTrack();
+            final AudioTrackInfo info = track.getInfo();
+            final String avatarURL = event.getJDA().getSelfUser().getAvatarUrl();
+            final Message msg = event.getChannel().sendMessage(
+                    getAudioStatusEmbed(info, avatarURL, guild)
             ).complete();
 
-            Timer updateTimer = new Timer();
+            final Timer updateTimer = new Timer();
+            //TODO remove Timer
             updateTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     if (track.getState() == AudioTrackState.PLAYING)
-                        msg.editMessage(getAudioStatusEmbed(info, avatarURL, g)).queue();
+                        msg.editMessage(getAudioStatusEmbed(info, avatarURL, guild)).queue();
                     else {
                         msg.delete().queue();
                         updateTimer.cancel();
                     }
                 }
-            }, 5000, 5000);
+            }, DELAY, DELAY);
         }
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
@@ -75,15 +76,17 @@ public class Current implements Command {
         return "Use this command to show the current progress of the currently playing song.";
     }
 
-    private double calculatePercentage (AudioTrack track) {
-        double current = track.getPosition();
-        double length = track.getDuration();
-        return (current/length)*100;
+    @SuppressWarnings("checkstyle:MagicNumber")
+    private double calculatePercentage(final AudioTrack track) {
+        final double current = track.getPosition();
+        final double length = track.getDuration();
+        return (current / length) * 100;
     }
 
-    private String buildStatusBar(double percentage) {
-        int status = (int) Math.round(percentage/2);
-        StringBuilder bar = new StringBuilder();
+    @SuppressWarnings("checkstyle:MagicNumber")
+    private String buildStatusBar(final double percentage) {
+        final int status = (int) Math.round(percentage / 2);
+        final StringBuilder bar = new StringBuilder();
         for (int i = 0; i <= 50; i++) {
             if (i == status) {
                 bar.append(">");
@@ -94,8 +97,12 @@ public class Current implements Command {
         return bar.toString();
     }
 
-    private MessageEmbed getAudioStatusEmbed(AudioTrackInfo info, String botAvatarUrl, Guild g) {
-        AudioTrack track = audioInstanceManager.getPlayer(g).getPlayingTrack();
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
+    private MessageEmbed getAudioStatusEmbed(
+            final AudioTrackInfo info,
+            final String botAvatarUrl,
+            final Guild guild) {
+        final AudioTrack track = audioInstanceManager.getPlayer(guild).getPlayingTrack();
         return new EmbedBuilder()
                 .setColor(Color.GREEN)
                 .setDescription("**CURRENT TRACK PLAYING:**")
@@ -103,12 +110,19 @@ public class Current implements Command {
                 .addField("Author:", info.author, true)
                 .addBlankField(true)
                 .addField("URL:", info.uri, true)
-                .addField((info.isStream ? "Listening for" : "Duration:"), "`" +
-                        audioInstanceManager.getTimestamp(track.getPosition()) +
-                        (!info.isStream ? "/" + audioInstanceManager.getTimestamp(track.getDuration()) : "") +
-                        "`", true)
+                .addField(info.isStream
+                                ? "Listening for"
+                                : "Duration:",
+                        "`" + audioInstanceManager.getTimestamp(track.getPosition())
+                                + (info.isStream
+                                        ? ""
+                                        : "/" + audioInstanceManager.getTimestamp(track.getDuration())) + "`",
+                        true)
                 .addBlankField(true)
-                .addField("Status:", (info.isStream ? ":red_circle: Live" : "`" + buildStatusBar(calculatePercentage(track)) + "`"), false)
+                .addField("Status:", info.isStream
+                                                ? ":red_circle: Live"
+                                                : "`" + buildStatusBar(calculatePercentage(track)) + "`",
+                        false)
                 .setFooter("Epic Sounds V2", botAvatarUrl)
                 .build();
     }

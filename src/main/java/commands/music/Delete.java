@@ -16,30 +16,31 @@ public class Delete implements Command {
     private final AudioInstanceManager audioInstanceManager;
     private long guildID;
 
-    public Delete(AudioInstanceManager audioInstanceManager) {
+    public Delete(final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
+    @SuppressWarnings("PMD.MissingBreakInSwitch")
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
-        guildID = g.getIdLong();
-        List<Integer> toBeDeleted = new LinkedList<>();
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        final Guild guild = event.getGuild();
+        guildID = guild.getIdLong();
+        final List<Integer> toBeDeleted = new LinkedList<>();
         if (args != null) {
-            for (String arg : args) {
+            for (final String arg : args) {
                 switch (arg) {
                     case "--help":
                     case "-h":
                         writePersistentMessage(help(), event);
                         return;
                     default:
-                        int number = Integer.parseInt(arg);
-                        if (number < 0) {
+                        final int number = Integer.parseInt(arg);
+                        if (number < 1) {
                             writeError("All Numbers need to be positive! It will be skipped", event);
                         }
                         toBeDeleted.add(number - 1);
@@ -47,34 +48,41 @@ public class Delete implements Command {
             }
         }
 
-        if (audioInstanceManager.isIdle(g)) {
+        delete(event, guild, toBeDeleted);
+    }
+
+    private void delete(final MessageReceivedEvent event, final Guild guild, final List<Integer> toBeDeleted) {
+        if (audioInstanceManager.isIdle(guild)) {
             writeError("There is nothing to delete", event);
         } else {
-            LinkedList<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(g).getRealQueue();
+            final LinkedList<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(guild).getRealQueue();
             if (audioQueue.size() < 2) {
                 writeError("There is nothing that can be deleted.", event);
             } else {
                 toBeDeleted.sort(Comparator.comparingInt(o -> o));
-                for (int i = 0; i < toBeDeleted.size(); i++) {
-                    if (toBeDeleted.get(i) - i >= audioQueue.size()) {
-                        writeError("There is no song with the number " + toBeDeleted.get(i) + ". It will be skipped", event);
-                        toBeDeleted.remove(i);
-                        i--;
-                    } else
-                        audioQueue.remove(toBeDeleted.get(i) - i);
+                int deletedTracks = 0;
+                for (final Integer integer : toBeDeleted) {
+                    if (integer - deletedTracks >= audioQueue.size()) {
+                        writeError("There is no song with the number "
+                                + integer
+                                + ". It will be skipped", event);
+                    } else {
+                        audioQueue.remove(integer - deletedTracks);
+                        deletedTracks++;
+                    }
                 }
             }
         }
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this command to delete a song from the queue with its specified number." +
-                "Usage: `" + Prefixes.getPrefix(guildID) + "delete [number1] [number2] [number3] ... [numberN]`";
+        return "Use this command to delete a song from the queue with its specified number."
+                + "Usage: `" + Prefixes.getPrefix(guildID) + "delete [number1] [number2] [number3] ... [numberN]`";
     }
 }

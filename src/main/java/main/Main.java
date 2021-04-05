@@ -1,10 +1,11 @@
 package main;
 
-import Exceptions.SettingsNotFoundException;
+import exceptions.SettingsNotFoundException;
 import audiocore.AudioInstanceManager;
 import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;
+import commands.music.Queue;
 import listeners.CommandListener;
 import listeners.UserJoinListener;
 import net.dv8tion.jda.api.JDA;
@@ -15,29 +16,36 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import util.FileLoadingUtils;
 
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class Main {
 
+    private static final int EXIT_LOAD_ERROR = 101;
+    private static final int EXIT_NO_SETTINGS = 100;
+    private static final long BACKUP_DELAY = 86_400_000L;
     private static JDABuilder builder;
-    private static final AudioInstanceManager audioManager = new AudioInstanceManager();
+    private static final AudioInstanceManager AUDIO_MANAGER = new AudioInstanceManager();
 
-    public static void main(String[] args) {
+    /**
+     * Starts the Bot
+     * @param args all Program Arguments are contained in this Method
+     */
+    public static void main(final String[] args) {
 
-        HashMap<String, String> settings = null;
+        final Map<String, String> settings;
         try {
             settings = FileLoadingUtils.loadSettings();
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(101);
+            System.exit(EXIT_LOAD_ERROR);
+            return;
         } catch (SettingsNotFoundException e) {
             System.out.println("Did not find Settings-File. Generated one. Please fill out its settings");
-            System.exit(100);
+            System.exit(EXIT_NO_SETTINGS);
+            return;
         }
 
         final String discordAPIKey = settings.get("Discord_API_Key");
@@ -77,33 +85,35 @@ public class Main {
             l.printStackTrace();
         }
 
+        //TODO remove Timer
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 FileLoadingUtils.backupPrefixes();
                 FileLoadingUtils.backupSounds();
             }
-        }, 86400000L, 86400000L); //Wait 24h
+        }, BACKUP_DELAY, BACKUP_DELAY);
+        //Wait 24h
     }
 
     private static void addCommands() {
         CommandHandler.getCommands().put("customizeprefix", new PrefixCustomizer());
         CommandHandler.getCommands().put("help", new Help());
-        CommandHandler.getCommands().put("join", new Join(audioManager));
+        CommandHandler.getCommands().put("join", new Join(AUDIO_MANAGER));
         CommandHandler.getCommands().put("leave", new Leave());
-        CommandHandler.getCommands().put("play", new Play(audioManager));
-        CommandHandler.getCommands().put("stop", new Stop(audioManager));
-        CommandHandler.getCommands().put("skip", new Skip(audioManager));
-        CommandHandler.getCommands().put("next", new Skip(audioManager));
-        CommandHandler.getCommands().put("volume", new Volume(audioManager));
-        CommandHandler.getCommands().put("pause", new Pause(audioManager));
-        CommandHandler.getCommands().put("queue", new Queue(audioManager));
-        CommandHandler.getCommands().put("current", new Current(audioManager));
-        CommandHandler.getCommands().put("playing", new Current(audioManager));
-        CommandHandler.getCommands().put("np", new Current(audioManager));
-        CommandHandler.getCommands().put("undo", new Undo(audioManager));
-        CommandHandler.getCommands().put("delete", new Delete(audioManager));
-        CommandHandler.getCommands().put("shuffle", new Shuffle(audioManager));
+        CommandHandler.getCommands().put("play", new Play(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("stop", new Stop(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("skip", new Skip(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("next", new Skip(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("volume", new Volume(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("pause", new Pause(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("queue", new Queue(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("current", new Current(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("playing", new Current(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("np", new Current(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("undo", new Undo(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("delete", new Delete(AUDIO_MANAGER));
+        CommandHandler.getCommands().put("shuffle", new Shuffle(AUDIO_MANAGER));
         //CommandHandler.getCommands().put("bassboost", new BassBoost(audioManager)); // TODO -> someday dunno
 
         //CommandHandler.getCommands().put("addsound", new AddSound()); // TODO -> Soundboard doing it with more time

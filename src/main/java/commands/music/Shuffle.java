@@ -12,42 +12,43 @@ public class Shuffle implements Command {
     private final AudioInstanceManager audioInstanceManager;
     private long guildID;
 
-    public Shuffle (AudioInstanceManager audioInstanceManager) {
+    public Shuffle (final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
-        guildID = g.getIdLong();
-        if (args != null && args.length > 0) {
-            if (args[0].equals("--help") || args[0].equals("-h")) {
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        final Guild guild = event.getGuild();
+        guildID = guild.getIdLong();
+        if (args != null && args.length > 0
+            && (args[0].equals("--help") || args[0].equals("-h"))) {
                 writeMessage(help(), event);
                 return;
-            }
         }
 
-        if (audioInstanceManager.getTrackManager(g).getQueue().isEmpty()) {
+        if (audioInstanceManager.getTrackManager(guild).getQueue().isEmpty()) {
             writeError("Queue is empty", event);
         }
 
-        audioInstanceManager.getTrackManager(g).shuffleQueue();
+        audioInstanceManager.getTrackManager(guild).shuffleQueue();
         writeMessage("Shuffled queue successfully", event);
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this command to shuffle the queue.\n" +
-                "To view this message write '"+ Prefixes.getPrefix(guildID) + "shuffle --help'.";
+        return "Use this command to shuffle the queue.\n"
+                + "To view this message write '"
+                + Prefixes.getPrefix(guildID)
+                + "shuffle --help'.";
     }
 }

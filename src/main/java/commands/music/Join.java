@@ -12,39 +12,38 @@ public class Join implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Join(AudioInstanceManager audioManager) {
+    public Join(final AudioInstanceManager audioManager) {
         audioInstanceManager = audioManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
-        if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writePersistentMessage(help(), event);
-                return;
-            }
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        if (args != null && args.length > 0
+        && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
+            writePersistentMessage(help(), event);
+            return;
         }
-        VoiceChannel vChan = event.getMember().getVoiceState().getChannel();
-        if (g.getAudioManager().isConnected()) {
+        final Guild guild = event.getGuild();
+        final VoiceChannel vChan = event.getMember().getVoiceState().getChannel();
+        if (guild.getAudioManager().isConnected()) {
             writeError("Already Joined a Channel", event);
         } else if (vChan != null) {
-            g.getAudioManager().openAudioConnection(vChan);
-            audioInstanceManager.getPlayer(g);
-            if (audioInstanceManager.getPlayer(g).isPaused()) {
-                audioInstanceManager.getPlayer(g).setPaused(false);
+            guild.getAudioManager().openAudioConnection(vChan);
+            audioInstanceManager.getPlayer(guild);
+            if (audioInstanceManager.getPlayer(guild).isPaused()) {
+                audioInstanceManager.getPlayer(guild).setPaused(false);
             }
             writeMessage("Joined Voice-Channel", event);
         }
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 

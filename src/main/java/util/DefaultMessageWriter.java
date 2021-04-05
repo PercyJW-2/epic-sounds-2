@@ -8,10 +8,18 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class DefaultMessageWriter {
-    public static void writeError (String error, MessageReceivedEvent event) {
+
+    private static final int DELAY = 10_000;
+
+    protected DefaultMessageWriter() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void writeError (final String error, final MessageReceivedEvent event) {
         System.out.println(error);
-        Message msg = event.getTextChannel().sendMessage(
+        final Message msg = event.getTextChannel().sendMessage(
                 new EmbedBuilder()
                         .setColor(Color.RED)
                         .setTitle("Error")
@@ -19,32 +27,34 @@ public class DefaultMessageWriter {
                         .build()
         ).complete();
 
+        //TODO remove Timer
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 msg.delete().queue();
             }
-        }, 10000);
+        }, DELAY);
     }
 
-    public static void writeMessage (String msg, MessageReceivedEvent event) {
+    public static void writeMessage (final String msg, final MessageReceivedEvent event) {
         System.out.println(msg);
-        Message message = event.getTextChannel().sendMessage(
+        final Message message = event.getTextChannel().sendMessage(
                 new EmbedBuilder()
                         .setColor(Color.BLUE)
                         .setDescription(msg)
                         .build()
         ).complete();
 
+        //TODO remove Timer
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 message.delete().queue();
             }
-        }, 10000);
+        }, DELAY);
     }
 
-    public static void writePersistentMessage (String msg, MessageReceivedEvent event) {
+    public static void writePersistentMessage (final String msg, final MessageReceivedEvent event) {
         event.getChannel().sendMessage(
                 new EmbedBuilder()
                         .setColor(Color.BLUE)

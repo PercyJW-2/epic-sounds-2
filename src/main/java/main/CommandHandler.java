@@ -1,26 +1,32 @@
 package main;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import commands.Command;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class CommandHandler {
-    private static final HashMap<String, Command> commands = new HashMap<>();
+    private static final Map<String, Command> COMMANDS = new HashMap<>();
 
-    protected static HashMap<String, Command> getCommands() {
-        return commands;
+    protected CommandHandler() {
+        throw new UnsupportedOperationException();
     }
 
-    public static void handlerCommand (CommandParser.CommandContainer cmd) {
+    protected static Map<String, Command> getCommands() {
+        return COMMANDS;
+    }
 
-        if (commands.containsKey(cmd.invoke)) {
+    public static void handlerCommand(final CommandParser.CommandContainer cmd) {
 
-            boolean safe = commands.get(cmd.invoke).called(cmd.args, cmd.event);
+        if (COMMANDS.containsKey(cmd.invoke)) {
+
+            final boolean safe = COMMANDS.get(cmd.invoke).called(cmd.args, cmd.event);
 
             if (!safe) {
-                commands.get(cmd.invoke).action(cmd.args, cmd.event);
+                COMMANDS.get(cmd.invoke).action(cmd.args, cmd.event);
             }
-            commands.get(cmd.invoke).executed(safe, cmd.event);
+            COMMANDS.get(cmd.invoke).executed(safe, cmd.event);
 
         } else {
 

@@ -13,55 +13,57 @@ import java.util.*;
 
 public class TrackManager extends AudioEventAdapter {
 
-    private final AudioPlayer PLAYER;
-    private final LinkedList<AudioInfo> QUEUE;
+    private final AudioPlayer player;
+    @SuppressWarnings("PMD.LooseCoupling")
+    private final LinkedList<AudioInfo> queue;
 
-    public TrackManager(AudioPlayer PLAYER) {
-        this.PLAYER = PLAYER;
-        this.QUEUE = new LinkedList<>();
+    public TrackManager(final AudioPlayer player) {
+        super();
+        this.player = player;
+        this.queue = new LinkedList<>();
     }
 
-    public void enQueue(AudioTrack track, Member author, TextChannel channel) {
-        AudioInfo info = new AudioInfo(track, author, channel);
-        QUEUE.add(info);
+    public void enQueue(final AudioTrack track, final Member author, final TextChannel channel) {
+        final AudioInfo info = new AudioInfo(track, author, channel);
+        queue.add(info);
 
-        if (PLAYER.getPlayingTrack() == null) {
-            PLAYER.playTrack(track);
+        if (player.getPlayingTrack() == null) {
+            player.playTrack(track);
         }
     }
 
     public Set<AudioInfo> getQueue() {
-        return new LinkedHashSet<>(QUEUE);
+        return new LinkedHashSet<>(queue);
     }
 
+    @SuppressWarnings("PMD.LooseCoupling")
     public LinkedList<AudioInfo> getRealQueue() {
-        return QUEUE;
+        return queue;
     }
 
     public void purgeQueue() {
-        QUEUE.clear();
+        queue.clear();
     }
 
     public void shuffleQueue() {
-        List<AudioInfo> cQueue = new ArrayList<>(getQueue());
-        AudioInfo current = cQueue.get(0);
+        final List<AudioInfo> cQueue = new ArrayList<>(getQueue());
+        final AudioInfo current = cQueue.get(0);
         cQueue.remove(0);
         Collections.shuffle(cQueue);
         cQueue.add(0, current);
         purgeQueue();
-        QUEUE.addAll(cQueue);
+        queue.addAll(cQueue);
     }
 
     @Override
-    public void onTrackStart(AudioPlayer player, AudioTrack track) {
-        AudioInfo info = QUEUE.element();
-        GuildVoiceState voiceState = info.getAuthor().getVoiceState();
+    public void onTrackStart(final AudioPlayer player, final AudioTrack track) {
+        final AudioInfo info = queue.element();
+        final GuildVoiceState voiceState = info.getAuthor().getVoiceState();
         if (voiceState == null) {
             System.out.println("No voice-state found");
             return;
         }
-        VoiceChannel vChan = voiceState.getChannel();
-
+        final VoiceChannel vChan = voiceState.getChannel();
 
         if (vChan == null)
             player.stopTrack();
@@ -70,9 +72,9 @@ public class TrackManager extends AudioEventAdapter {
     }
 
     @Override
-    public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        QUEUE.poll();
-        if (!QUEUE.isEmpty())
-            player.playTrack(QUEUE.peek().getTrack());
+    public void onTrackEnd(final AudioPlayer player, final AudioTrack track, final AudioTrackEndReason endReason) {
+        queue.poll();
+        if (!queue.isEmpty())
+            player.playTrack(queue.peek().getTrack());
     }
 }

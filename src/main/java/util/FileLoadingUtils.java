@@ -1,25 +1,30 @@
 package util;
 
-import Exceptions.SettingsNotFoundException;
+import exceptions.SettingsNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
+@SuppressWarnings("checkstyle:MultipleStringLiterals")
 public class FileLoadingUtils {
+
+    protected FileLoadingUtils() {
+        throw new UnsupportedOperationException();
+    }
 
     public static void backupPrefixes() {
         saveObj("prefixes", Prefixes.getPrefixMap());
     }
 
-    public static void loadPrefixes() throws IOException{
+    public static void loadPrefixes() throws IOException {
         HashMap<Long, String> prefixMap =
                 loadObj("prefixes", new TypeToken<>(){});
         if (prefixMap == null) {
@@ -29,11 +34,11 @@ public class FileLoadingUtils {
         System.out.println("loaded prefixMap");
     }
 
-    public static void backupSounds(){
+    public static void backupSounds() {
         saveObj("sounds", Sounds.getSoundsMap());
     }
 
-    public static void loadSounds() throws IOException{
+    public static void loadSounds() throws IOException {
         HashMap<Long, HashMap<String, String>> soundsMap =
                 loadObj("sounds", new TypeToken<>(){});
         if (soundsMap == null) {
@@ -43,7 +48,7 @@ public class FileLoadingUtils {
         System.out.println("loaded soundsMap");
     }
 
-    public static HashMap<String, String> loadSettings() throws IOException, SettingsNotFoundException {
+    public static Map<String, String> loadSettings() throws IOException, SettingsNotFoundException {
         HashMap<String, String> settings = loadObj("settings", new TypeToken<>(){});
         if (settings == null) {
             settings = new HashMap<>();
@@ -56,33 +61,32 @@ public class FileLoadingUtils {
         return settings;
     }
 
-    private static <T> void saveObj(final String name, T objToSave) {
-        Gson gson = new Gson();
-        String json = gson.toJson(objToSave);
+    private static <T> void saveObj(final String name, final T objToSave) {
+        final Gson gson = new Gson();
+        final String json = gson.toJson(objToSave);
         System.out.println(json);
-        try (FileWriter writer = new FileWriter(name + ".json", StandardCharsets.UTF_8)) {
-            writer.write(json);
-            writer.flush();
+        try (OutputStream fos = Files.newOutputStream(new File(name + ".json").toPath())) {
+            fos.write(json.getBytes(StandardCharsets.UTF_8));
 
-            System.out.println(("saved name in name.json").replaceAll("name", name));
+            System.out.println("saved name in name.json".replaceAll("name", name));
         } catch (IOException i) {
             i.printStackTrace();
         }
     }
 
-    private static <T> T loadObj(final String name, TypeToken<T> type) throws IOException {
-        Gson gson = new Gson();
+    private static <T> T loadObj(final String name, final TypeToken<T> type) throws IOException {
+        final Gson gson = new Gson();
         T obj = null;
         try {
             //load File
-            StringBuilder contentBuilder = new StringBuilder();
-            Stream<String> stream = Files.lines(Paths.get(name + ".json"), StandardCharsets.UTF_8);
+            final StringBuilder contentBuilder = new StringBuilder();
+            final Stream<String> stream = Files.lines(Paths.get(name + ".json"), StandardCharsets.UTF_8);
             stream.forEach(contentBuilder::append);
-            String json = contentBuilder.toString();
+            final String json = contentBuilder.toString();
             //loaded File
             System.out.println(json);
             obj = gson.fromJson(json, type.getType());
-        } catch (NoSuchFileException f){
+        } catch (NoSuchFileException f) {
             System.out.println("File does not exist");
             System.out.println("File will be created on exit");
         }

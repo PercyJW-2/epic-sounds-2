@@ -4,17 +4,23 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class CommandParser {
 
-    public static CommandContainer parser(String raw, MessageReceivedEvent event, String prefix) {
+    protected CommandParser() {
+        throw new UnsupportedOperationException();
+    }
 
-        var beheaded = raw.replaceFirst(Pattern.quote(prefix), "");
-        String[] splitBeheaded = beheaded.split(" ");
-        var invoke = splitBeheaded[0].toLowerCase();
-        ArrayList<String> split = new ArrayList<>(Arrays.asList(splitBeheaded));
-        String[] args = new String[split.size() - 1];
+    public static CommandContainer parser(final String raw, final MessageReceivedEvent event, final String prefix) {
+
+        final var beheaded = raw.replaceFirst(Pattern.quote(prefix), "");
+        final var splitBeheaded = beheaded.split(" ");
+        final var invoke = splitBeheaded[0].toLowerCase(Locale.getDefault());
+        final var split = new ArrayList<>(Arrays.asList(splitBeheaded));
+        final var args = new String[split.size() - 1];
         split.subList(1, split.size()).toArray(args);
 
         return new CommandContainer(raw, beheaded, splitBeheaded, invoke, args, event);
@@ -29,7 +35,14 @@ public class CommandParser {
         public final String[] args;
         public final MessageReceivedEvent event;
 
-        public CommandContainer (String rw, String beheaded, String[] splitBeheaded, String invoke, String[] args, MessageReceivedEvent event) {
+        @SuppressWarnings("PMD.ArrayIsStoredDirectly")
+        public CommandContainer (
+                final String rw,
+                final String beheaded,
+                final String[] splitBeheaded,
+                final String invoke,
+                final String[] args,
+                final MessageReceivedEvent event) {
             this.raw = rw;
             this.beheaded = beheaded;
             this.splitBeheaded = splitBeheaded;

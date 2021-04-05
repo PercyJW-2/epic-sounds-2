@@ -8,15 +8,16 @@ import static util.DefaultMessageWriter.*;
 public class Leave implements Command {
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h"))
-                writePersistentMessage(help(), event); return;
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        if (args != null && args.length > 0
+            && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
+                writePersistentMessage(help(), event);
+                return;
         }
         if (!event.getGuild().getAudioManager().isConnected()) {
             writeError("The Bot is in not connected to any Channel", event);
@@ -27,7 +28,7 @@ public class Leave implements Command {
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 

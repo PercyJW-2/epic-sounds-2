@@ -12,17 +12,20 @@ import static util.DefaultMessageWriter.writeMessage;
 
 public class PrefixCustomizer implements Command {
 
+    private static final long AUTHOR = 279_184_766_140_678_145L;
     private long guildID = 0;
 
-    public boolean called(String[] args, MessageReceivedEvent event) {
-        if (event.getMember().getPermissions().contains(Permission.ADMINISTRATOR) || event.getMember().getUser().getIdLong() == 279184766140678145L) {
-            return false;
-        } else {
-            return true;
-        }
+    @Override
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
+        return !event
+                .getMember()
+                .getPermissions()
+                .contains(Permission.ADMINISTRATOR)
+                && event.getMember().getUser().getIdLong() != AUTHOR;
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
+    @Override
+    public void action(final String[] args, final MessageReceivedEvent event) {
         if (args.length == 0) {
             guildID = event.getGuild().getIdLong();
             writeMessage(help(), event);
@@ -36,7 +39,8 @@ public class PrefixCustomizer implements Command {
         writeMessage("Successfully changed Prefix to" + args[0], event);
     }
 
-    public void executed(boolean success, MessageReceivedEvent event) {
+    @Override
+    public void executed(final boolean success, final MessageReceivedEvent event) {
         if (success) {
             event.getChannel().sendMessage(
                     new EmbedBuilder()
@@ -48,12 +52,13 @@ public class PrefixCustomizer implements Command {
         }
     }
 
+    @Override
     public String help() {
-        return ("Usage of the Command, to change the Prefix for the Bot:\n" +
-                "$prefix changePrefix [new Prefix]\n" +
-                "\n" +
-                "IMPORTANT:\n" +
-                "  When you change the Default Prefix (Yo!) \n" +
-                "  you need to use your custom one instead.").replace("$prefix", Prefixes.getPrefix(guildID));
+        return ("Usage of the Command, to change the Prefix for the Bot:\n"
+                + "$prefix changePrefix [new Prefix]\n"
+                + "\n"
+                + "IMPORTANT:\n"
+                + "  When you change the Default Prefix (Yo!) \n"
+                + "  you need to use your custom one instead.").replace("$prefix", Prefixes.getPrefix(guildID));
     }
 }

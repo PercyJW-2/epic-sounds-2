@@ -14,39 +14,38 @@ public class Stop implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Stop (AudioInstanceManager audioInstanceManager) {
+    public Stop (final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
-        guildID = g.getIdLong();
-        if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
-                writePersistentMessage(help(), event);
-                return;
-            }
+    public void action(final String[] args, final MessageReceivedEvent event) {
+        final Guild guild = event.getGuild();
+        guildID = guild.getIdLong();
+        if (args != null && args.length > 0
+                && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
+            writePersistentMessage(help(), event);
+            return;
         }
 
-        audioInstanceManager.stop(g);
+        audioInstanceManager.stop(guild);
 
-        writeMessage("Stopped playback and purged queue.",event);
+        writeMessage("Stopped playback and purged queue.", event);
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this command to stop the music playback and purge the queue.\n" +
-                "To view this message write '"+ Prefixes.getPrefix(guildID) + "stop --help'.";
+        return "Use this command to stop the music playback and purge the queue.\n"
+                + "To view this message write '" + Prefixes.getPrefix(guildID) + "stop --help'.";
     }
 }

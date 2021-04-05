@@ -20,29 +20,28 @@ public class Queue implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Queue (AudioInstanceManager audioInstanceManager) {
+    public Queue(final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
+    public void action(final String[] args, final MessageReceivedEvent event) {
         int sideNumb = 1;
 
         if (args != null && args.length > 0) {
-            for (String arg : args) {
-                if (arg.toLowerCase().equals("--help") || arg.toLowerCase().equals("-h")) {
+            for (final String arg : args) {
+                if (arg.equalsIgnoreCase("--help") || arg.equalsIgnoreCase("-h")) {
                     writePersistentMessage(help(), event);
                     return;
-                } else{
+                } else {
                     try {
                         sideNumb = Integer.parseInt(arg);
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         writeError("Please write a number for the queue-page.", event);
                         return;
                     }
@@ -50,25 +49,30 @@ public class Queue implements Command {
             }
         }
 
-        if (audioInstanceManager.getPlayer(g).getPlayingTrack() == null) {
+        executeAction(event, sideNumb);
+    }
+
+    private void executeAction(final MessageReceivedEvent event, final int sideNumb) {
+        final Guild guild = event.getGuild();
+        if (audioInstanceManager.getPlayer(guild).getPlayingTrack() == null) {
             writeError("The bot needs to be playing something!", event);
         } else {
-            Set<AudioInfo> tracks = audioInstanceManager.getTrackManager(g).getQueue();
-            List<AudioInfo> allTracks = new LinkedList<>();
+            final Set<AudioInfo> tracks = audioInstanceManager.getTrackManager(guild).getQueue();
+            final List<AudioInfo> allTracks = new LinkedList<>();
 
             long totalLength = 0;
-            for (AudioInfo a : tracks) {
-                totalLength += a.getTrack().getDuration();
-                allTracks.add(a);
+            for (final AudioInfo info : tracks) {
+                totalLength += info.getTrack().getDuration();
+                allTracks.add(info);
             }
 
-            int pageCount = (tracks.size()/PAGE_SIZE) + 1;
+            final int pageCount = tracks.size() / PAGE_SIZE + 1;
             if (sideNumb > pageCount || sideNumb < 1) {
                 writeError("Please write a number within the range of 1 to " + pageCount, event);
             } else {
-                int startValue = (sideNumb - 1) * PAGE_SIZE;
-                int endValue = sideNumb * PAGE_SIZE;
-                EmbedBuilder playlistMsg = new EmbedBuilder()
+                final int startValue = (sideNumb - 1) * PAGE_SIZE;
+                final int endValue = sideNumb * PAGE_SIZE;
+                final EmbedBuilder playlistMsg = new EmbedBuilder()
                         .setColor(Color.GREEN)
                         .setDescription("**CURRENT QUEUE**")
                         .addField("Page:", sideNumb + "/" + pageCount, true)
@@ -76,10 +80,10 @@ public class Queue implements Command {
                         .setFooter("Epic Sounds V2", event.getJDA().getSelfUser().getEffectiveAvatarUrl());
                 for (int i = startValue; i < (Math.min(endValue, tracks.size())); i++) {
                     playlistMsg.addField((i + 1) + ":",
-                                    allTracks.get(i).getTrack().getInfo().title +
-                                    "\n`Duration: " +
-                                    audioInstanceManager.getTimestamp(allTracks.get(i).getTrack().getDuration()) +
-                                    "`",
+                            allTracks.get(i).getTrack().getInfo().title
+                                    + "\n`Duration: "
+                                    + audioInstanceManager.getTimestamp(allTracks.get(i).getTrack().getDuration())
+                                    + "`",
                             false);
                 }
                 System.out.println("Built queue-message");
@@ -89,13 +93,13 @@ public class Queue implements Command {
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this command to view the current queue.\n" +
-                "Add a number for the correct page of the queue.";
+        return "Use this command to view the current queue.\n"
+                + "Add a number for the correct page of the queue.";
     }
 }

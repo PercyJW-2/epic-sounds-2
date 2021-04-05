@@ -14,22 +14,21 @@ public class Undo implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Undo (AudioInstanceManager audioInstanceManager) {
+    public Undo(final AudioInstanceManager audioInstanceManager) {
         this.audioInstanceManager = audioInstanceManager;
     }
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
-        Guild g = event.getGuild();
+    public void action(final String[] args, final MessageReceivedEvent event) {
         int count = 1;
 
         if (args != null && args.length > 0) {
-            if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
+            if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
                 writePersistentMessage(help(), event);
                 return;
             } else {
@@ -41,13 +40,18 @@ public class Undo implements Command {
             }
         }
 
-        if (audioInstanceManager.isIdle(g)) {
+        executeAction(event, count);
+    }
+
+    private void executeAction(final MessageReceivedEvent event, final int count) {
+        final Guild guild = event.getGuild();
+        if (audioInstanceManager.isIdle(guild)) {
             writeError("There is nothing to undo", event);
         } else {
-            if (audioInstanceManager.getTrackManager(g).getQueue().isEmpty()) {
+            if (audioInstanceManager.getTrackManager(guild).getQueue().isEmpty()) {
                 writeError("There is nothing that can be deleted.", event);
             } else {
-                Queue<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(g).getRealQueue();
+                final Queue<AudioInfo> audioQueue = audioInstanceManager.getTrackManager(guild).getRealQueue();
                 if (audioQueue.size() < count) {
                     writeError("Requested to many songs to be deleted", event);
                     return;
@@ -64,13 +68,13 @@ public class Undo implements Command {
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final MessageReceivedEvent event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this Command to delete the most recent addition to the queue.\n" +
-                "Add a number to undo multiple songs.";
+        return "Use this Command to delete the most recent addition to the queue.\n"
+                + "Add a number to undo multiple songs.";
     }
 }
