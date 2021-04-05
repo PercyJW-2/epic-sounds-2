@@ -1,7 +1,7 @@
 package main;
 
 import Exceptions.SettingsNotFoundException;
-import audio_core.AudioInstanceManager;
+import audiocore.AudioInstanceManager;
 import commands.Help;
 import commands.PrefixCustomizer;
 import commands.music.*;

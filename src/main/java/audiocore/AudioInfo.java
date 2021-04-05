@@ -1,4 +1,4 @@
-package audio_core;
+package audiocore;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Member;
