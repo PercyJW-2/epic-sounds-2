@@ -291,8 +291,6 @@
 
         <module name="LeftCurly"/>
 
-        <module name="NeedBraces"/>
-
         <module name="RightCurly"/>
 
         <module name="EmptyCatchBlock">
@@ -386,8 +384,6 @@
         </module>
 
         <module name="AvoidDoubleBraceInitialization"/>
-
-        <module name="AvoidInlineConditionals"/>
 
         <!-- Checks for class design                         -->
 
