@@ -117,7 +117,7 @@ public class Main {
         CommandHandler.getCommands().put("undo", new Undo(AUDIO_MANAGER));
         CommandHandler.getCommands().put("delete", new Delete(AUDIO_MANAGER));
         CommandHandler.getCommands().put("shuffle", new Shuffle(AUDIO_MANAGER));
-        //CommandHandler.getCommands().put("bassboost", new BassBoost(audioManager)); // TODO -> someday dunno
+        CommandHandler.getCommands().put("bassboost", new BassBoost(AUDIO_MANAGER));
 
         //CommandHandler.getCommands().put("addsound", new AddSound()); // TODO -> Soundboard doing it with more time
 
