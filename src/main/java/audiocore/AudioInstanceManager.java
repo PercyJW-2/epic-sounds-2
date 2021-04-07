@@ -27,7 +27,6 @@ public class AudioInstanceManager {
     private static final int PLAYLIST_LIMIT = 1000;
     private static final AudioPlayerManager MANAGER = new DefaultAudioPlayerManager();
     private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> PLAYERS = new HashMap<>();
-    private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> SOUND_PLAYERS = new HashMap<>();
     private static final int FRAME_BUFFER_DURATION = 2000;
     private static final Logger LOG = LoggerFactory.getLogger(AudioInstanceManager.class);
     private boolean searchPlaylist;
@@ -48,40 +47,8 @@ public class AudioInstanceManager {
         return player;
     }
 
-    private AudioPlayer createSoundPlayer(final Guild guild) {
-        final AudioPlayer player = MANAGER.createPlayer();
-        final TrackManager manager = new TrackManager(player);
-        player.addListener(manager);
-
-        guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
-
-        SOUND_PLAYERS.put(guild, new AbstractMap.SimpleEntry<>(player, manager));
-
-        return player;
-    }
-
-    public void switchPlayers(final Guild guild, final PlayerType switchTo) {
-        if (switchTo == PlayerType.SONG) {
-            guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(getPlayer(guild)));
-        } else if (switchTo == PlayerType.SOUND) {
-            guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(getSoundPlayer(guild)));
-        }
-    }
-
     private boolean hasPlayer(final Guild guild) {
         return PLAYERS.containsKey(guild);
-    }
-
-    private boolean hasSoundPlayer(final Guild guild) {
-        return  SOUND_PLAYERS.containsKey(guild);
-    }
-
-    private AudioPlayer getSoundPlayer(final Guild guild) {
-        if (hasSoundPlayer(guild)) {
-            return SOUND_PLAYERS.get(guild).getKey();
-        } else {
-            return createSoundPlayer(guild);
-        }
     }
 
     public AudioPlayer getPlayer(final Guild guild) {
@@ -229,10 +196,5 @@ public class AudioInstanceManager {
         if (isIdle(guild)) return;
         getTrackManager(guild).purgeQueue();
         getPlayer(guild).stopTrack();
-    }
-
-    public enum PlayerType {
-        SONG,
-        SOUND
     }
 }
