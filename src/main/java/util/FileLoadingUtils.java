@@ -3,6 +3,8 @@ package util;
 import exceptions.SettingsNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +17,8 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("checkstyle:MultipleStringLiterals")
 public class FileLoadingUtils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FileLoadingUtils.class);
 
     protected FileLoadingUtils() {
         throw new UnsupportedOperationException();
@@ -31,7 +35,7 @@ public class FileLoadingUtils {
             prefixMap = new HashMap<>();
         }
         Prefixes.setPrefixMap(prefixMap);
-        System.out.println("loaded prefixMap");
+        LOG.info("loaded prefixMap");
     }
 
     public static void backupSounds() {
@@ -45,7 +49,7 @@ public class FileLoadingUtils {
             soundsMap = new HashMap<>();
         }
         Sounds.setSoundsMap(soundsMap);
-        System.out.println("loaded soundsMap");
+        LOG.info("loaded soundsMap");
     }
 
     public static Map<String, String> loadSettings() throws IOException, SettingsNotFoundException {
@@ -64,13 +68,13 @@ public class FileLoadingUtils {
     private static <T> void saveObj(final String name, final T objToSave) {
         final Gson gson = new Gson();
         final String json = gson.toJson(objToSave);
-        System.out.println(json);
+        LOG.info(json);
         try (OutputStream fos = Files.newOutputStream(new File(name + ".json").toPath())) {
             fos.write(json.getBytes(StandardCharsets.UTF_8));
 
-            System.out.println("saved name in name.json".replaceAll("name", name));
+            LOG.info("saved name in {}.json", name);
         } catch (IOException i) {
-            i.printStackTrace();
+            LOG.error(i.getMessage());
         }
     }
 
@@ -84,13 +88,12 @@ public class FileLoadingUtils {
             stream.forEach(contentBuilder::append);
             final String json = contentBuilder.toString();
             //loaded File
-            System.out.println(json);
+            LOG.info(json);
             obj = gson.fromJson(json, type.getType());
         } catch (NoSuchFileException f) {
-            System.out.println("File does not exist");
-            System.out.println("File will be created on exit");
+            LOG.warn("File does not exist \n File will be created on exit");
         }
-        System.out.println("loaded " + name);
+        LOG.info("loaded " + name);
         return obj;
     }
 }

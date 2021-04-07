@@ -8,11 +8,14 @@ import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class TrackManager extends AudioEventAdapter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(TrackManager.class);
     private final AudioPlayer player;
     @SuppressWarnings("PMD.LooseCoupling")
     private final LinkedList<AudioInfo> queue;
@@ -60,7 +63,7 @@ public class TrackManager extends AudioEventAdapter {
         final AudioInfo info = queue.element();
         final GuildVoiceState voiceState = info.getAuthor().getVoiceState();
         if (voiceState == null) {
-            System.out.println("No voice-state found");
+            LOG.warn("No voice-state found");
             return;
         }
         final VoiceChannel vChan = voiceState.getChannel();

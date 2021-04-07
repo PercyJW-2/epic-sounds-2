@@ -14,6 +14,8 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.AbstractMap;
@@ -27,6 +29,7 @@ public class AudioInstanceManager {
     private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> PLAYERS = new HashMap<>();
     private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> SOUND_PLAYERS = new HashMap<>();
     private static final int FRAME_BUFFER_DURATION = 2000;
+    private static final Logger LOG = LoggerFactory.getLogger(AudioInstanceManager.class);
     private boolean searchPlaylist;
 
     public AudioInstanceManager() {
@@ -139,7 +142,7 @@ public class AudioInstanceManager {
                                     .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
                                     .build()
                     ).queue();
-                    System.out.println("YOUTUBE SUCHEN PLAYLIST, " + identifier);
+                    LOG.info("Youtube search: Playlist: {}", identifier);
                 } else {
                     getTrackManager(
                             guild).enQueue(playlist.getTracks().get(playlistIndex), author, msg.getTextChannel());
@@ -152,7 +155,7 @@ public class AudioInstanceManager {
                                     author,
                                     msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
                     ).queue();
-                    System.out.println("YOUTUBE SUCHEN SONG, " + identifier);
+                    LOG.info("Youtube serach: Track: {}", identifier);
                 }
             }
 
@@ -168,9 +171,8 @@ public class AudioInstanceManager {
 
             @Override
             public void loadFailed(final FriendlyException exception) {
-                System.out.println("ES IST EIN VERDAMMTER FEHLER AUFGETRETEN");
-                System.out.println(exception.getMessage());
-                exception.printStackTrace();
+                LOG.error("ES IST EIN VERDAMMTER FEHLER AUFGETRETEN");
+                LOG.error(exception.getMessage());
             }
         });
     }

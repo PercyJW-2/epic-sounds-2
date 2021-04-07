@@ -7,11 +7,15 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public class UserJoinListener extends ListenerAdapter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserJoinListener.class);
 
     private static final int FREQUENCY = 1000;
 
@@ -35,15 +39,13 @@ public class UserJoinListener extends ListenerAdapter {
             guild.getAudioManager().closeAudioConnection();
             if (newChannel != null) {
                 new Thread(() -> {
-                    while (guild.getAudioManager().isConnected()) {
-                        try {
-                            Thread.sleep(FREQUENCY);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        Thread.sleep(FREQUENCY);
+                    } catch (InterruptedException e) {
+                        LOG.error(e.getMessage());
                     }
                     guild.getAudioManager().openAudioConnection(newChannel);
-                    System.out.println("Switched voice channel");
+                    LOG.info("Switched voice channel");
                 }).start();
             }
         }

@@ -10,12 +10,15 @@ import com.wrapper.spotify.model_objects.specification.Track;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 import com.wrapper.spotify.requests.data.tracks.GetTrackRequest;
 import org.apache.hc.core5.http.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
 
 @SuppressWarnings("PMD.ClassNamingConventions")
 public class SpotifyApiRequester {
+    private static final Logger LOG = LoggerFactory.getLogger(SpotifyApiRequester.class);
     private static SpotifyApi spotifyApi = null;
 
     protected SpotifyApiRequester() {
@@ -34,14 +37,14 @@ public class SpotifyApiRequester {
                         .setClientSecret(spotifyClientSecret)
                         .build();
             } catch (IOException | SettingsNotFoundException e) {
-                System.out.println("There were some Problems while loading the settings");
+                LOG.info("There were some Problems while loading the settings");
             }
         }
         try {
             final ClientCredentials clientCredentials = spotifyApi.clientCredentials().build().execute();
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            LOG.info("Error: " + e.getMessage());
         }
     }
 
@@ -53,7 +56,7 @@ public class SpotifyApiRequester {
             final Track track = getTrackRequest.execute();
             return track.getName() + "-" + track.getArtists()[0].getName();
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            LOG.error("Error: {}", e.getMessage());
         }
         // haha
         return "never gonna give you up-Rick Astley";
@@ -73,7 +76,7 @@ public class SpotifyApiRequester {
             }
             return names;
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            LOG.error("Error: {}", e.getMessage());
         }
         return new String[0];
     }

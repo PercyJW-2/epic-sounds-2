@@ -6,6 +6,8 @@ import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.Color;
 import java.util.LinkedList;
@@ -17,6 +19,7 @@ import static util.DefaultMessageWriter.*;
 public class Queue implements Command {
 
     private static final int PAGE_SIZE = 10;
+    private static final Logger LOG = LoggerFactory.getLogger(Queue.class);
 
     private final AudioInstanceManager audioInstanceManager;
 
@@ -86,7 +89,7 @@ public class Queue implements Command {
                                     + "`",
                             false);
                 }
-                System.out.println("Built queue-message");
+                LOG.info("Built queue-message");
                 event.getChannel().sendMessage(playlistMsg.build()).queue();
             }
         }

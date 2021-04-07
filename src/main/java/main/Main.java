@@ -18,6 +18,8 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.FileLoadingUtils;
 
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
@@ -28,6 +30,7 @@ public class Main {
     private static final long BACKUP_DELAY = 86_400_000L;
     private static JDABuilder builder;
     private static final AudioInstanceManager AUDIO_MANAGER = new AudioInstanceManager();
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     /**
      * Starts the Bot
@@ -39,11 +42,11 @@ public class Main {
         try {
             settings = FileLoadingUtils.loadSettings();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             System.exit(EXIT_LOAD_ERROR);
             return;
         } catch (SettingsNotFoundException e) {
-            System.out.println("Did not find Settings-File. Generated one. Please fill out its settings");
+            LOG.warn("Did not find Settings-File. Generated one. Please fill out its settings");
             System.exit(EXIT_NO_SETTINGS);
             return;
         }
@@ -79,10 +82,10 @@ public class Main {
                     FileLoadingUtils.backupSounds();
                 }));
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
             }
         } catch (LoginException | InterruptedException l) {
-            l.printStackTrace();
+            LOG.error(l.getMessage());
         }
 
         //TODO remove Timer

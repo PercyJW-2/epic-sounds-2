@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import commands.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("PMD.ClassNamingConventions")
 public class CommandHandler {
     private static final Map<String, Command> COMMANDS = new HashMap<>();
+    private static final Logger LOG = LoggerFactory.getLogger(CommandHandler.class);
 
     protected CommandHandler() {
         throw new UnsupportedOperationException();
@@ -30,7 +33,7 @@ public class CommandHandler {
 
         } else {
 
-            System.out.println("That command is not registrated");
+            LOG.info("That command is not registrated");
 
         }
 
