@@ -3,6 +3,7 @@ package commands.music;
 import audiocore.AudioInstanceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
 import commands.Command;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import util.EventContainer;
 import org.slf4j.Logger;
@@ -24,8 +25,10 @@ public class BassBoost implements Command {
     private final AudioInstanceManager audioInstanceManager;
     private final Map<Guild, Pair<EqualizerFactory, Boolean>> equalizers = new HashMap<>();
 
-    public BassBoost(final AudioInstanceManager audioInstanceManager) {
+    public BassBoost(final AudioInstanceManager audioInstanceManager,
+                     final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description).queue();
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -24,8 +25,10 @@ public class Current implements Command {
     private static final int DELAY = 5000;
     private final AudioInstanceManager audioInstanceManager;
 
-    public Current(final AudioInstanceManager audioInstanceManager) {
+    public Current(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description).queue();
     }
 
     @Override

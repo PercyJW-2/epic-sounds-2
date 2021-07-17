@@ -3,7 +3,9 @@ package commands.music;
 import audiocore.AudioInfo;
 import audiocore.AudioInstanceManager;
 import commands.Command;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import util.EventContainer;
 import util.Prefixes;
 
@@ -16,8 +18,15 @@ public class Delete implements Command {
     private final AudioInstanceManager audioInstanceManager;
     private long guildID;
 
-    public Delete(final AudioInstanceManager audioInstanceManager) {
+    public Delete(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description).addOption(
+                OptionType.STRING,
+                "tracknumbers",
+                "Numbers of tracks that are deleted",
+                true
+        ).queue();
     }
 
     @Override
@@ -60,16 +69,20 @@ public class Delete implements Command {
                 writeError("There is nothing that can be deleted.", event);
             } else {
                 toBeDeleted.sort(Comparator.comparingInt(o -> o));
+                final StringBuilder notDeletedTracks = new StringBuilder();
                 int deletedTracks = 0;
                 for (final Integer integer : toBeDeleted) {
                     if (integer - deletedTracks >= audioQueue.size()) {
-                        writeError("There is no song with the number "
-                                + integer
-                                + ". It will be skipped", event);
+                        notDeletedTracks.append(integer).append(' ');
                     } else {
                         audioQueue.remove(integer - deletedTracks);
                         deletedTracks++;
                     }
+                }
+                if (notDeletedTracks.toString().equals("")) {
+                    writeError("There is/are no songs with the number "
+                            + notDeletedTracks
+                            + ". It will be skipped", event);
                 }
             }
         }

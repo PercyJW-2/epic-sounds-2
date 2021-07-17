@@ -2,6 +2,7 @@ package commands.music;
 
 import audiocore.AudioInstanceManager;
 import commands.Command;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import util.EventContainer;
 
@@ -11,8 +12,10 @@ public class Pause implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Pause(final AudioInstanceManager audioInstanceManager) {
+    public Pause(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description).queue();
     }
 
     @Override

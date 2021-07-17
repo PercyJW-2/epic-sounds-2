@@ -3,7 +3,9 @@ package commands.music;
 import audiocore.AudioInfo;
 import audiocore.AudioInstanceManager;
 import commands.Command;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import util.EventContainer;
 
 import java.util.Queue;
@@ -14,8 +16,17 @@ public class Undo implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Undo(final AudioInstanceManager audioInstanceManager) {
+    public Undo(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description)
+                .addOption(
+                        OptionType.INTEGER,
+                        "count",
+                        "amount of tracks that will be undone",
+                        false
+                )
+                .queue();
     }
 
     @Override

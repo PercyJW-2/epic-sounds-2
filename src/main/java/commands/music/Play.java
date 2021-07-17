@@ -3,8 +3,10 @@ package commands.music;
 import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import util.EventContainer;
 import org.jetbrains.annotations.NotNull;
 import util.Prefixes;
@@ -21,8 +23,21 @@ public class Play implements Command {
     private final AudioInstanceManager audioInstanceManager;
     private boolean blockedDefaultLoading;
 
-    public Play (final AudioInstanceManager audioInstanceManager) {
+    public Play(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description)
+                .addOption(
+                        OptionType.STRING,
+                        "parameters",
+                        "Contains different search-parameters, like -p -yts -scs or -h",
+                        false
+                ).addOption(
+                        OptionType.STRING,
+                        "song",
+                        "Contains a link or a search query.",
+                        false
+                ).queue();
     }
 
     @Override

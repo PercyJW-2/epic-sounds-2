@@ -2,6 +2,7 @@ package commands.music;
 
 import audiocore.AudioInstanceManager;
 import commands.Command;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import util.EventContainer;
 import static util.DefaultMessageWriter.*;
@@ -12,8 +13,10 @@ public class Shuffle implements Command {
     private final AudioInstanceManager audioInstanceManager;
     private long guildID;
 
-    public Shuffle (final AudioInstanceManager audioInstanceManager) {
+    public Shuffle(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description).queue();
     }
 
     @Override

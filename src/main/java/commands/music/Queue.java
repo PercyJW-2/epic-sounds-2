@@ -4,7 +4,9 @@ import audiocore.AudioInfo;
 import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import util.EventContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +25,15 @@ public class Queue implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Queue(final AudioInstanceManager audioInstanceManager) {
+    public Queue(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description)
+                .addOption(OptionType.INTEGER,
+                        "pagenum",
+                        "Number of the page of the queue",
+                        false)
+                .queue();
     }
 
     @Override

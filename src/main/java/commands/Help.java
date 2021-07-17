@@ -1,12 +1,21 @@
 package commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import util.EventContainer;
 import util.Prefixes;
 
 import java.awt.*;
 
 public class Help implements Command {
+    public Help(final String invoke, final String description, final JDA jda) {
+        jda.upsertCommand(invoke, description).queue();
+    }
+
+    public Help() {
+
+    }
+
     @Override
     public boolean called(final String[] args, final EventContainer event) {
         return false;

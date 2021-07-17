@@ -2,6 +2,8 @@ package commands.music;
 
 import audiocore.AudioInstanceManager;
 import commands.Command;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import util.EventContainer;
 
 import java.util.Locale;
@@ -12,9 +14,19 @@ public class Volume implements Command {
 
     private final AudioInstanceManager audioInstanceManager;
 
-    public Volume (final AudioInstanceManager audioInstanceManager) {
+    public Volume(final AudioInstanceManager audioInstanceManager,
+                   final String invoke, final String description, final JDA jda) {
         this.audioInstanceManager = audioInstanceManager;
+        jda.upsertCommand(invoke, description)
+                .addOption(
+                        OptionType.INTEGER,
+                        "volume",
+                        "Percentage of volume from 0 to 200 percent",
+                        true
+                        )
+                .queue();
     }
+
     @Override
     public boolean called(final String[] args, final EventContainer event) {
         return false;
@@ -24,7 +36,7 @@ public class Volume implements Command {
     @Override
     public void action(final String[] args, final EventContainer event) {
         boolean show = true;
-        int volume = 50;
+        int volume = 100;
         if (args.length > 0) {
             for (final String str : args) {
                 switch (str.toLowerCase(Locale.getDefault())) {

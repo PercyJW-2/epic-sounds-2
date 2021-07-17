@@ -1,6 +1,7 @@
 package commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import util.EventContainer;
 import util.Prefixes;
@@ -14,6 +15,10 @@ public class PrefixCustomizer implements Command {
 
     private static final long AUTHOR = 279_184_766_140_678_145L;
     private long guildID = 0;
+
+    public PrefixCustomizer(final String invoke, final String description, final JDA jda) {
+        jda.upsertCommand(invoke, description).queue();
+    }
 
     @Override
     public boolean called(final String[] args, final EventContainer event) {
