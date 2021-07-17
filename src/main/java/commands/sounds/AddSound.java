@@ -1,7 +1,7 @@
 package commands.sounds;
 
 import commands.Command;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import util.Prefixes;
 
 import java.util.HashMap;
@@ -15,23 +15,23 @@ public class AddSound implements Command {
     private long guildID;
 
     @Override
-    public boolean called(String[] args, MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         guildID = event.getGuild().getIdLong();
         if (args[0] == null) {
             writeError("You need to give this Command some Arguments", event);
             return;
         }
-        if (args[0].toLowerCase().equals("--help") || args[0].toLowerCase().equals("-h")) {
+        if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
             writeMessage(help(), event);
             return;
         }
-        String keyword = args[0];
-        String link;
+        final String keyword = args[0];
+        final String link;
         if (args.length >= 2) {
             link = args[1];
         } else {
@@ -46,13 +46,13 @@ public class AddSound implements Command {
     }
 
     @Override
-    public void executed(boolean success, MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this Command to add a Sound to the local Server-Sounds.\n" +
-                "usage: " + Prefixes.getPrefix(guildID) + "addSound [sound-keyword] [link]";
+        return "Use this Command to add a Sound to the local Server-Sounds.\n"
+                + "usage: " + Prefixes.getPrefix(guildID) + "addSound [sound-keyword] [link]";
     }
 }

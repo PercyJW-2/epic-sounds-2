@@ -4,7 +4,7 @@ import audiocore.AudioInfo;
 import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 
 import java.util.Queue;
 
@@ -19,17 +19,17 @@ public class Undo implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         int count = 1;
 
         if (args != null && args.length > 0) {
             if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
-                writePersistentMessage(help(), event);
+                writeMessage(help(), event);
                 return;
             } else {
                 count = Integer.parseInt(args[0]);
@@ -43,7 +43,7 @@ public class Undo implements Command {
         executeAction(event, count);
     }
 
-    private void executeAction(final MessageReceivedEvent event, final int count) {
+    private void executeAction(final EventContainer event, final int count) {
         final Guild guild = event.getGuild();
         if (audioInstanceManager.isIdle(guild)) {
             writeError("There is nothing to undo", event);
@@ -68,7 +68,7 @@ public class Undo implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

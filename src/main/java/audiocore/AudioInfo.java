@@ -2,19 +2,20 @@ package audiocore;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import util.EventContainer;
 
 
 public class AudioInfo {
 
     private final AudioTrack track;
     private final Member author;
-    private final TextChannel channel;
+    private final EventContainer.Reply reply;
 
-    public AudioInfo(final AudioTrack track, final Member author, final TextChannel channel) {
+    public AudioInfo(final AudioTrack track, final Member author, final EventContainer.Reply reply) {
         this.track = track;
         this.author = author;
-        this.channel = channel;
+        this.reply = reply;
     }
 
     public AudioTrack getTrack() {
@@ -25,7 +26,7 @@ public class AudioInfo {
         return author;
     }
 
-    public TextChannel getChannel() {
-        return channel;
+    public EventContainer.Reply getReply() {
+        return reply;
     }
 }

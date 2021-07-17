@@ -9,14 +9,15 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
+import util.MessageHookContainer;
 
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static util.DefaultMessageWriter.writeError;
-import static util.DefaultMessageWriter.writePersistentMessage;
+import static util.DefaultMessageWriter.writeMessage;
 
 public class Current implements Command {
 
@@ -28,15 +29,15 @@ public class Current implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         if (args != null && args.length > 0
                 && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
-                writePersistentMessage(help(), event);
+                writeMessage(help(), event);
                 return;
         }
         final Guild guild = event.getGuild();
@@ -46,9 +47,9 @@ public class Current implements Command {
             final AudioTrack track = audioInstanceManager.getPlayer(guild).getPlayingTrack();
             final AudioTrackInfo info = track.getInfo();
             final String avatarURL = event.getJDA().getSelfUser().getAvatarUrl();
-            final Message msg = event.getChannel().sendMessage(
+            final MessageHookContainer msg = event.getReply().reply(
                     getAudioStatusEmbed(info, avatarURL, guild)
-            ).complete();
+            );
 
             final Timer updateTimer = new Timer();
             //TODO remove Timer
@@ -56,9 +57,21 @@ public class Current implements Command {
                 @Override
                 public void run() {
                     if (track.getState() == AudioTrackState.PLAYING)
-                        msg.editMessage(getAudioStatusEmbed(info, avatarURL, guild)).queue();
+                        if (msg.getMsg() == null) {
+                            if (msg.getHook().isExpired()) {
+                                updateTimer.cancel();
+                                msg.getHook()
+                                        .getInteraction()
+                                        .getMessageChannel()
+                                        .sendMessage("For Live-Updates the Command needs to be typed again!")
+                                        .queue();
+                            } else {
+                                msg.getHook().editOriginalEmbeds(getAudioStatusEmbed(info, avatarURL, guild)).queue();
+                            }
+                        } else {
+                            msg.getMsg().editMessageEmbeds(getAudioStatusEmbed(info, avatarURL, guild)).queue();
+                        }
                     else {
-                        msg.delete().queue();
                         updateTimer.cancel();
                     }
                 }
@@ -67,7 +80,7 @@ public class Current implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

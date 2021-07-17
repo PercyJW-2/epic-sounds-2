@@ -5,7 +5,7 @@ import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import org.jetbrains.annotations.NotNull;
 import util.Prefixes;
 import util.SpotifyApiRequester;
@@ -26,13 +26,13 @@ public class Play implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @SuppressWarnings({"checkstyle:MultipleStringLiterals", "PMD.MissingBreakInSwitch"})
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         final Guild guild = event.getGuild();
 
         if (args == null || args.length < 1) {
@@ -55,7 +55,7 @@ public class Play implements Command {
             switch (arg.toLowerCase(Locale.getDefault())) {
                 case "--help":
                 case "-h":
-                    writePersistentMessage(help(), event);
+                    writeMessage(help(), event);
                     break;
                 case "--ytsearch":
                 case "-yts":
@@ -69,7 +69,7 @@ public class Play implements Command {
                     playlist = true;
                     break;
                 default:
-                    search.append(arg).append(" ");
+                    search.append(arg).append(' ');
             }
         }
 
@@ -109,7 +109,7 @@ public class Play implements Command {
 
     @NotNull
     private String getSpotifySongNames(
-            final MessageReceivedEvent event,
+            final EventContainer event,
             final boolean playlist,
             final String searchFinal,
             final int playlistIndex) {
@@ -128,9 +128,9 @@ public class Play implements Command {
                 audioInstanceManager
                         .loadTrack("ytsearch:" + query,
                                 Objects.requireNonNull(event.getMember()),
-                                event.getMessage(), playlist, playlistIndex, true);
+                                event.getReply(), playlist, playlistIndex, true);
             }
-            event.getTextChannel().sendMessage(
+            event.getReply().reply(
                     new EmbedBuilder()
                             .setColor(Color.RED)
                             .setDescription(":musical_note: **Playlist added!**")
@@ -143,13 +143,13 @@ public class Play implements Command {
                             .setFooter("Epic Sounds V2",
                                     event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                             .build()
-            ).queue();
+            );
         }
         return output;
     }
 
     private void startPlayback(
-            final MessageReceivedEvent event,
+            final EventContainer event,
             final Guild guild,
             final boolean playlist,
             final String searchFinal,
@@ -169,14 +169,14 @@ public class Play implements Command {
                     .loadTrack(
                             searchFinal,
                             Objects.requireNonNull(event.getMember()),
-                            event.getMessage(),
+                            event.getReply(),
                             playlist,
                             playlistIndex,
                             false);
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

@@ -5,7 +5,7 @@ import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,18 +28,18 @@ public class Queue implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         int sideNumb = 1;
 
         if (args != null && args.length > 0) {
             for (final String arg : args) {
                 if (arg.equalsIgnoreCase("--help") || arg.equalsIgnoreCase("-h")) {
-                    writePersistentMessage(help(), event);
+                    writeMessage(help(), event);
                     return;
                 } else {
                     try {
@@ -55,7 +55,7 @@ public class Queue implements Command {
         executeAction(event, sideNumb);
     }
 
-    private void executeAction(final MessageReceivedEvent event, final int sideNumb) {
+    private void executeAction(final EventContainer event, final int sideNumb) {
         final Guild guild = event.getGuild();
         if (audioInstanceManager.getPlayer(guild).getPlayingTrack() == null) {
             writeError("The bot needs to be playing something!", event);
@@ -79,7 +79,7 @@ public class Queue implements Command {
                         .setColor(Color.GREEN)
                         .setDescription("**CURRENT QUEUE**")
                         .addField("Page:", sideNumb + "/" + pageCount, true)
-                        .addField("Total length:", audioInstanceManager.getTimestamp(totalLength),true)
+                        .addField("Total length:", audioInstanceManager.getTimestamp(totalLength), true)
                         .setFooter("Epic Sounds V2", event.getJDA().getSelfUser().getEffectiveAvatarUrl());
                 for (int i = startValue; i < (Math.min(endValue, tracks.size())); i++) {
                     playlistMsg.addField((i + 1) + ":",
@@ -90,13 +90,13 @@ public class Queue implements Command {
                             false);
                 }
                 LOG.info("Built queue-message");
-                event.getChannel().sendMessage(playlistMsg.build()).queue();
+                event.getReply().reply(playlistMsg.build());
             }
         }
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

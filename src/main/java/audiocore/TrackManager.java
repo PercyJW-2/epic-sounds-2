@@ -4,12 +4,10 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.EventContainer;
 
 import java.util.*;
 
@@ -26,8 +24,8 @@ public class TrackManager extends AudioEventAdapter {
         this.queue = new LinkedList<>();
     }
 
-    public void enQueue(final AudioTrack track, final Member author, final TextChannel channel) {
-        final AudioInfo info = new AudioInfo(track, author, channel);
+    public void enQueue(final AudioTrack track, final Member author, final EventContainer.Reply reply) {
+        final AudioInfo info = new AudioInfo(track, author, reply);
         queue.add(info);
 
         if (player.getPlayingTrack() == null) {

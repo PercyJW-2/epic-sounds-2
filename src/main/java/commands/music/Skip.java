@@ -3,7 +3,7 @@ package commands.music;
 import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import util.Prefixes;
 
 import static util.DefaultMessageWriter.*;
@@ -19,17 +19,17 @@ public class Skip implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         final Guild guild = event.getGuild();
         guildID = guild.getIdLong();
         if (args != null && args.length > 0
                 && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
-            writePersistentMessage(help(), event);
+            writeMessage(help(), event);
             return;
         }
 
@@ -39,7 +39,7 @@ public class Skip implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

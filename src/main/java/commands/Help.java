@@ -1,22 +1,27 @@
 package commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import util.Prefixes;
 
 import java.awt.*;
 
 public class Help implements Command {
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @SuppressWarnings("checkstyle:LineLength")
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
-        final String prefix = Prefixes.getPrefix(event.getGuild().getIdLong());
-        event.getChannel().sendMessage(
+    public void action(final String[] args, final EventContainer event) {
+        final String prefix;
+        if (event.isSlash()) {
+            prefix = "/";
+        } else {
+            prefix = Prefixes.getPrefix(event.getGuild().getIdLong());
+        }
+        event.getReply().reply(
                 new EmbedBuilder()
                         .setColor(Color.GREEN)
                         .setDescription("``` __  __     ______     __         ______  \n"
@@ -42,11 +47,11 @@ public class Help implements Command {
                         .addField(prefix + "bassboost", "Enables or disables Bass-Boost", false)
                         .setFooter("Epic Sounds V2", event.getJDA().getSelfUser().getAvatarUrl())
                         .build()
-        ).queue();
+        );
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

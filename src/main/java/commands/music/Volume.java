@@ -2,7 +2,7 @@ package commands.music;
 
 import audiocore.AudioInstanceManager;
 import commands.Command;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 
 import java.util.Locale;
 
@@ -16,21 +16,21 @@ public class Volume implements Command {
         this.audioInstanceManager = audioInstanceManager;
     }
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @SuppressWarnings({"PMD.MissingBreakInSwitch", "PMD.CyclomaticComplexity"})
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         boolean show = true;
         int volume = 50;
         if (args.length > 0) {
-            for (final String s: args) {
-                switch (s.toLowerCase(Locale.getDefault())) {
+            for (final String str : args) {
+                switch (str.toLowerCase(Locale.getDefault())) {
                     case "--help":
                     case "-h":
-                        writePersistentMessage(help(), event);
+                        writeMessage(help(), event);
                         break;
                     case "--show":
                     case "-s":
@@ -42,7 +42,7 @@ public class Volume implements Command {
                         break;
                     default:
                         show = false;
-                        volume = Integer.parseInt(s);
+                        volume = Integer.parseInt(str);
                 }
             }
         } else {
@@ -62,15 +62,15 @@ public class Volume implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 
     @Override
     public String help() {
-        return "Use this Command to change the master volume of the bot.\n" +
-                "Use '--help' or '-h' to view this message.\n" +
-                "Use '--show', '-s' or write nothing to view the current volume.\n" +
-                "Write a number to change the Volume to that number.";
+        return "Use this Command to change the master volume of the bot.\n"
+                + "Use '--help' or '-h' to view this message.\n"
+                + "Use '--show', '-s' or write nothing to view the current volume.\n"
+                + "Write a number to change the Volume to that number.";
     }
 }

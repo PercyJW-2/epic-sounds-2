@@ -36,7 +36,7 @@ public class CommandParser {
         public final MessageReceivedEvent event;
 
         @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-        public CommandContainer (
+        public CommandContainer(
                 final String rw,
                 final String beheaded,
                 final String[] splitBeheaded,

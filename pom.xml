@@ -222,16 +222,11 @@
     </build>
 
     <repositories>
-        <repository>
-          <id>jcenter</id>
-          <name>jcenter-bintray</name>
-          <url>https://jcenter.bintray.com</url>
-        </repository>
-        <repository>
-            <id>whatever</id>
-            <name>whatever</name>
-            <url>https://dl.bintray.com/natanbc/mave</url>
-        </repository>
+       <repository>
+           <id>artifactory</id>
+           <name>jfrog</name>
+           <url>https://dimensional.jfrog.io/artifactory/maven</url>
+       </repository>
         <repository>
             <id>dv8tion</id>
             <name>m2-dv8tion</name>
@@ -243,7 +238,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.1_253</version>
+            <version>4.3.0_296</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -253,12 +248,17 @@
         <dependency>
             <groupId>com.sedmelluq</groupId>
             <artifactId>lavaplayer</artifactId>
-            <version>1.3.75</version>
+            <version>1.3.77</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.natanbc</groupId>
             <artifactId>lavaplayer-arm-natives</artifactId>
             <version>1.3.10</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.natanbc</groupId>
+            <artifactId>lp-cross</artifactId>
+            <version>0.1.3-1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

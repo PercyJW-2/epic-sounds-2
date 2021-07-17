@@ -4,7 +4,7 @@ import audiocore.AudioInstanceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Pair;
@@ -12,7 +12,6 @@ import util.Pair;
 import java.util.HashMap;
 import java.util.Map;
 
-import static util.DefaultMessageWriter.writePersistentMessage;
 import static util.DefaultMessageWriter.writeMessage;
 
 public class BassBoost implements Command {
@@ -30,15 +29,15 @@ public class BassBoost implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         if (args != null && args.length > 0
             && (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h"))) {
-            writePersistentMessage(help(), event);
+            writeMessage(help(), event);
             return;
         }
         final Guild guild = event.getGuild();
@@ -50,25 +49,25 @@ public class BassBoost implements Command {
         }
         final Pair<EqualizerFactory, Boolean> currentEQ = equalizers.get(guild);
         final EqualizerFactory eq = currentEQ.getFirst();
-        if (!currentEQ.getSecond()) {
-            for (int i = 0; i < BOOSTED.length; i++) {
-                eq.setGain(i, BOOSTED[i]);
-            }
-            currentEQ.setSecond(true);
-            writeMessage("Enabled Bass-Boost", event);
-            LOG.info("Enabled");
-        } else {
+        if (currentEQ.getSecond()) {
             for (int i = 0; i < CHANNELS; i++) {
                 eq.setGain(i, 0f);
             }
             currentEQ.setSecond(false);
             writeMessage("Disabled Bass-Boost", event);
             LOG.info("Disabled");
+        } else {
+            for (int i = 0; i < BOOSTED.length; i++) {
+                eq.setGain(i, BOOSTED[i]);
+            }
+            currentEQ.setSecond(true);
+            writeMessage("Enabled Bass-Boost", event);
+            LOG.info("Enabled");
         }
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

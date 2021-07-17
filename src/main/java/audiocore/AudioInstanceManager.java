@@ -10,12 +10,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.EventContainer;
 
 import java.awt.*;
 import java.util.AbstractMap;
@@ -68,8 +66,8 @@ public class AudioInstanceManager {
     }
 
     public void loadTrack(
-            final String identifier, final Member author, final Message msg, final boolean pSearchPlaylist,
-            final int playlistIndex, final boolean silent) {
+            final String identifier, final Member author, final EventContainer.Reply reply,
+            final boolean pSearchPlaylist, final int playlistIndex, final boolean silent) {
         this.searchPlaylist = pSearchPlaylist;
         final Guild guild = author.getGuild();
         getPlayer(guild);
@@ -77,15 +75,15 @@ public class AudioInstanceManager {
         MANAGER.loadItemOrdered(guild, identifier, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(final AudioTrack track) {
-                getTrackManager(guild).enQueue(track, author, msg.getTextChannel());
+                getTrackManager(guild).enQueue(track, author, reply);
                 if (!silent)
-                msg.getTextChannel().sendMessage(
+                reply.reply(
                         buildSingleSongMsg(
                                 track.getInfo(),
                                 track.getDuration(),
                                 author,
-                                msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                ).queue();
+                                author.getJDA().getSelfUser().getEffectiveAvatarUrl())
+                );
             }
 
             @SuppressWarnings({"checkstyle:MultipleStringLiterals", "LineLength"})
@@ -93,10 +91,10 @@ public class AudioInstanceManager {
             public void playlistLoaded(final AudioPlaylist playlist) {
                 if (searchPlaylist) {
                     for (int i = playlistIndex; i < (Math.min(playlist.getTracks().size(), PLAYLIST_LIMIT)); i++) {
-                        getTrackManager(guild).enQueue(playlist.getTracks().get(i), author, msg.getTextChannel());
+                        getTrackManager(guild).enQueue(playlist.getTracks().get(i), author, reply);
                     }
                     if (!silent)
-                    msg.getTextChannel().sendMessage(
+                    reply.reply(
                             new EmbedBuilder()
                                     .setColor(Color.RED)
                                     .setDescription(":musical_note: **Playlist added!**")
@@ -106,34 +104,34 @@ public class AudioInstanceManager {
                                     .addField("Requested by: ", (author.getNickname() == null) ? author.getEffectiveName() : author.getNickname(), true)
                                     .addField("Duration    : ", "`" + getPlaylistTimestamp(playlist) + " Minutes`", true)
                                     .addBlankField(true)
-                                    .setFooter("Epic Sounds V2", msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
+                                    .setFooter("Epic Sounds V2", author.getJDA().getSelfUser().getEffectiveAvatarUrl())
                                     .build()
-                    ).queue();
+                    );
                     LOG.info("Youtube search: Playlist: {}", identifier);
                 } else {
                     getTrackManager(
-                            guild).enQueue(playlist.getTracks().get(playlistIndex), author, msg.getTextChannel());
+                            guild).enQueue(playlist.getTracks().get(playlistIndex), author, reply);
                     final AudioTrackInfo trackInfo = playlist.getTracks().get(playlistIndex).getInfo();
                     if (!silent)
-                    msg.getTextChannel().sendMessage(
+                    reply.reply(
                             buildSingleSongMsg(
                                     trackInfo,
                                     playlist.getTracks().get(playlistIndex).getDuration(),
                                     author,
-                                    msg.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                    ).queue();
+                                    author.getJDA().getSelfUser().getEffectiveAvatarUrl())
+                    );
                     LOG.info("Youtube serach: Track: {}", identifier);
                 }
             }
 
             @Override
             public void noMatches() {
-                msg.getTextChannel().sendMessage(
+                reply.reply(
                         new EmbedBuilder()
                                 .setColor(Color.RED)
                                 .setDescription("There was nothing to be found")
                         .build()
-                ).queue();
+                );
             }
 
             @Override

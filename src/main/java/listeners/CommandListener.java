@@ -5,13 +5,14 @@ import main.CommandHandler;
 import main.CommandParser;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
+import util.EventConverterUtil;
 import util.Prefixes;
 
 import java.util.List;
-
-import static util.DefaultMessageWriter.writeMessage;
 
 public class CommandListener extends ListenerAdapter {
     @Override
@@ -28,15 +29,20 @@ public class CommandListener extends ListenerAdapter {
 
             } else if (msgContent.startsWith(Prefixes.defaultPrefix)
                     && !msg.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-                new Help().action(new String[]{}, event);
+                new Help().action(new String[]{}, EventConverterUtil.convertMessageEvent(event));
             } else {
                 final List<User> mentions = msg.getMentionedUsers();
                 if (mentions.contains(event.getJDA().getSelfUser())) {
-                    new Help().action(new String[]{}, event);
+                    new Help().action(new String[]{}, EventConverterUtil.convertMessageEvent(event));
                 }
             }
         } catch (StringIndexOutOfBoundsException ignored) {
 
         }
+    }
+
+    @Override
+    public void onSlashCommand(@NotNull final SlashCommandEvent event) {
+        CommandHandler.handleSlashCommand(event);
     }
 }

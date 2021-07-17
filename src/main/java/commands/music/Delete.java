@@ -4,7 +4,7 @@ import audiocore.AudioInfo;
 import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import util.Prefixes;
 
 import java.util.*;
@@ -21,13 +21,13 @@ public class Delete implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @SuppressWarnings("PMD.MissingBreakInSwitch")
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         final Guild guild = event.getGuild();
         guildID = guild.getIdLong();
         final List<Integer> toBeDeleted = new LinkedList<>();
@@ -36,7 +36,7 @@ public class Delete implements Command {
                 switch (arg) {
                     case "--help":
                     case "-h":
-                        writePersistentMessage(help(), event);
+                        writeMessage(help(), event);
                         return;
                     default:
                         final int number = Integer.parseInt(arg);
@@ -51,7 +51,7 @@ public class Delete implements Command {
         delete(event, guild, toBeDeleted);
     }
 
-    private void delete(final MessageReceivedEvent event, final Guild guild, final List<Integer> toBeDeleted) {
+    private void delete(final EventContainer event, final Guild guild, final List<Integer> toBeDeleted) {
         if (audioInstanceManager.isIdle(guild)) {
             writeError("There is nothing to delete", event);
         } else {
@@ -76,7 +76,7 @@ public class Delete implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 

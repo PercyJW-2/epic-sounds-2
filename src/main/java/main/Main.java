@@ -1,5 +1,6 @@
 package main;
 
+import commands.Command;
 import exceptions.SettingsNotFoundException;
 import audiocore.AudioInstanceManager;
 import commands.Help;
@@ -12,6 +13,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
@@ -68,11 +70,12 @@ public class Main {
         builder.setActivity(Activity.playing("your Music | Yo!help"));
 
         addListeners();
-        addCommands();
 
         try {
             jda = builder.build();
             jda.awaitReady();
+
+            addCommands(jda);
 
             try {
                 FileLoadingUtils.loadPrefixes();
@@ -99,28 +102,48 @@ public class Main {
         //Wait 24h
     }
 
-    private static void addCommands() {
-        CommandHandler.getCommands().put("customizeprefix", new PrefixCustomizer());
-        CommandHandler.getCommands().put("help", new Help());
-        CommandHandler.getCommands().put("join", new Join(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("leave", new Leave());
-        CommandHandler.getCommands().put("play", new Play(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("stop", new Stop(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("skip", new Skip(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("next", new Skip(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("volume", new Volume(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("pause", new Pause(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("queue", new Queue(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("current", new Current(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("playing", new Current(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("np", new Current(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("undo", new Undo(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("delete", new Delete(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("shuffle", new Shuffle(AUDIO_MANAGER));
-        CommandHandler.getCommands().put("bassboost", new BassBoost(AUDIO_MANAGER));
+    private static void addCommands(final JDA jda) {
+        addCommand(
+                new PrefixCustomizer(),
+                jda,
+                "Customizes Prefix when not using /",
+                "customizeprefix");
+        addCommand(new Help(), jda, "Prints all Commands", "help");
+        addCommand(new Join(AUDIO_MANAGER), jda, "Lets the Bot join the channel", "join");
+        addCommand(new Leave(), jda, "Lets the Bot leave the channel", "leave");
+        addCommand(new Play(AUDIO_MANAGER), jda, "Starts playback for a song", "play", "p");
+        addCommand(new Stop(AUDIO_MANAGER), jda, "Stops playback", "stop", "st");
+        addCommand(new Skip(AUDIO_MANAGER), jda, "Skips song", "skip", "next", "sk");
+        addCommand(new Volume(AUDIO_MANAGER), jda, "Changes volume", "volume");
+        addCommand(new Play(AUDIO_MANAGER), jda, "Pauses playback", "pause");
+        addCommand(new Queue(AUDIO_MANAGER), jda, "Shows the current queue", "queue", "list");
+        addCommand(
+                new Current(AUDIO_MANAGER),
+                jda,
+                "Shows the current song",
+                "playing", "current", "np");
+        addCommand(
+                new Undo(AUDIO_MANAGER),
+                jda,
+                "Deletes the most recent addition to the queue",
+                "undo");
+        addCommand(
+                new Delete(AUDIO_MANAGER),
+                jda,
+                "Deletes the specified song from the queue",
+                "delete");
+        addCommand(new Shuffle(AUDIO_MANAGER), jda, "Shuffles the queue", "shuffle");
+        addCommand(new BassBoost(AUDIO_MANAGER), jda, "Enables/Disables bassboost", "bassboost");
 
-        //CommandHandler.getCommands().put("addsound", new AddSound()); // TODO -> Soundboard doing it with more time
+        //addCommand(new AddSound(), jda, "Adds Sound to soundboard", "addsound");
+        //TODO -> Soundboard doing it with more time
 
+    }
+
+    private static void addCommand(final Command cmd, final JDA jda, final String description, final String... names) {
+        for (final String name : names) {
+            CommandHandler.getCommands().put(name, cmd);
+        }
     }
 
     private static void addListeners() {

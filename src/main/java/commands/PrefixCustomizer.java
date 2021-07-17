@@ -2,7 +2,7 @@ package commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import util.Prefixes;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ public class PrefixCustomizer implements Command {
     private long guildID = 0;
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return !event
                 .getMember()
                 .getPermissions()
@@ -25,7 +25,7 @@ public class PrefixCustomizer implements Command {
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         if (args.length == 0) {
             guildID = event.getGuild().getIdLong();
             writeMessage(help(), event);
@@ -40,15 +40,15 @@ public class PrefixCustomizer implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
         if (success) {
-            event.getChannel().sendMessage(
+            event.getReply().reply(
                     new EmbedBuilder()
                             .setTitle("Not enough Permissions")
                             .setColor(Color.RED)
                             .setDescription("You need to be an Administrator on this Server to use this Command!")
                             .build()
-            ).queue();
+            );
         }
     }
 

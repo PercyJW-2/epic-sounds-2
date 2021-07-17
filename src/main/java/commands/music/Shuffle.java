@@ -3,7 +3,7 @@ package commands.music;
 import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import util.EventContainer;
 import static util.DefaultMessageWriter.*;
 import util.Prefixes;
 
@@ -17,12 +17,12 @@ public class Shuffle implements Command {
     }
 
     @Override
-    public boolean called(final String[] args, final MessageReceivedEvent event) {
+    public boolean called(final String[] args, final EventContainer event) {
         return false;
     }
 
     @Override
-    public void action(final String[] args, final MessageReceivedEvent event) {
+    public void action(final String[] args, final EventContainer event) {
         final Guild guild = event.getGuild();
         guildID = guild.getIdLong();
         if (args != null && args.length > 0
@@ -40,7 +40,7 @@ public class Shuffle implements Command {
     }
 
     @Override
-    public void executed(final boolean success, final MessageReceivedEvent event) {
+    public void executed(final boolean success, final EventContainer event) {
 
     }
 
