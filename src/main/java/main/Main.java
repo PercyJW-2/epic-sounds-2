@@ -1,6 +1,7 @@
 package main;
 
 import commands.Command;
+//import commands.spotifyconnect.SpotifyConnect;
 import exceptions.SettingsNotFoundException;
 import audiocore.AudioInstanceManager;
 import commands.Help;
@@ -13,7 +14,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
@@ -35,7 +35,7 @@ public class Main {
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     /**
-     * Starts the Bot
+     * Starts the Bot.
      * @param args all Program Arguments are contained in this Method
      */
     public static void main(final String[] args) {
@@ -102,6 +102,7 @@ public class Main {
         //Wait 24h
     }
 
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
     private static void addCommands(final JDA jda) {
         addCommand(
                 new PrefixCustomizer("customize-prefix", "Customizes Prefix when not using /", jda),
@@ -146,6 +147,9 @@ public class Main {
         addCommand(
                 new BassBoost(AUDIO_MANAGER, "bassboost", "Enables/Disables bassboost", jda),
                 "bassboost");
+        //addCommand(
+        //        new SpotifyConnect(AUDIO_MANAGER, "spotifyconnect", "Activates Spotify connect playback", jda),
+        //        "spotifyconnect");
 
         //addCommand(new AddSound(), jda, "Adds Sound to soundboard", "addsound");
         //TODO -> Soundboard doing it with more time
