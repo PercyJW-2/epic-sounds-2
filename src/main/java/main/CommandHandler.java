@@ -1,7 +1,6 @@
 package main;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,6 +15,8 @@ import util.EventConverterUtil;
 public class CommandHandler {
     private static final Map<String, Command> COMMANDS = new HashMap<>();
     private static final Logger LOG = LoggerFactory.getLogger(CommandHandler.class);
+    private static final String THAT_COMMAND_IS_NOT_REGISTERED = "That command is not registered";
+    private static final String DELIMITER = " ";
 
     protected CommandHandler() {
         throw new UnsupportedOperationException();
@@ -39,7 +40,7 @@ public class CommandHandler {
 
         } else {
 
-            LOG.info("That command is not registered");
+            LOG.info(THAT_COMMAND_IS_NOT_REGISTERED);
 
         }
 
@@ -48,17 +49,17 @@ public class CommandHandler {
     public static void handleSlashCommand(final SlashCommandEvent evt) {
         if (COMMANDS.containsKey(evt.getName())) {
             final String options =
-                    evt.getOptions().stream().map(OptionMapping::getAsString).collect(Collectors.joining(" "));
+                    evt.getOptions().stream().map(OptionMapping::getAsString).collect(Collectors.joining(DELIMITER));
             final boolean safe = COMMANDS.get(evt.getName()).called(
-                    options.split(" "), EventConverterUtil.convertSlashCommandEvent(evt));
+                    options.split(DELIMITER), EventConverterUtil.convertSlashCommandEvent(evt));
 
             if (!safe) {
                 COMMANDS.get(evt.getName()).action(
-                        options.split(" "), EventConverterUtil.convertSlashCommandEvent(evt));
+                        options.split(DELIMITER), EventConverterUtil.convertSlashCommandEvent(evt));
             }
             COMMANDS.get(evt.getName()).executed(safe, EventConverterUtil.convertSlashCommandEvent(evt));
         } else {
-            LOG.info("That command is not registered");
+            LOG.info(THAT_COMMAND_IS_NOT_REGISTERED);
         }
     }
 

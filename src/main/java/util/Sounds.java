@@ -1,28 +1,32 @@
 package util;
 
+import java.util.Map;
 import java.util.HashMap;
 
-public class Sounds {
+public final class Sounds {
+    private static Map<Long, Map<String, String>> soundsMap = new HashMap<>();
 
-    private static HashMap<Long, HashMap<String, String>> soundsMap = new HashMap<>();
+    private Sounds() {
+        throw new UnsupportedOperationException();
+    }
 
-    public static boolean containsGuild(Long key) {
+    public static boolean containsGuild(final Long key) {
         return soundsMap.containsKey(key);
     }
 
-    public static void addGuildSoundSet(long guildID, HashMap<String, String> sounds) {
+    public static void addGuildSoundSet(final long guildID, final Map<String, String> sounds) {
         soundsMap.put(guildID, sounds);
     }
 
-    public static HashMap<String, String> getGuildSoundSet(long guildID) {
+    public static Map<String, String> getGuildSoundSet(final long guildID) {
         return soundsMap.get(guildID);
     }
 
-    public static HashMap<Long, HashMap<String, String>> getSoundsMap() {
+    public static Map<Long, Map<String, String>> getSoundsMap() {
         return soundsMap;
     }
 
-    public static void setSoundsMap(HashMap<Long, HashMap<String, String>> soundsMap) {
+    public static void setSoundsMap(final Map<Long, Map<String, String>> soundsMap) {
         if (soundsMap.isEmpty()) {
             Sounds.soundsMap = soundsMap;
         }

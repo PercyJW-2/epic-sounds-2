@@ -43,7 +43,7 @@ public class FileLoadingUtils {
     }
 
     public static void loadSounds() throws IOException {
-        HashMap<Long, HashMap<String, String>> soundsMap =
+        Map<Long, Map<String, String>> soundsMap =
                 loadObj("sounds", new TypeToken<>(){});
         if (soundsMap == null) {
             soundsMap = new HashMap<>();

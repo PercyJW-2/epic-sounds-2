@@ -7,6 +7,7 @@ import xyz.gianlu.librespot.player.mixing.output.SinkOutput;
 import java.io.IOException;
 
 public class SpotifySinkOutput implements SinkOutput {
+    private static final int VOLUME = 100;
     private AudioFrame currentFrame = null;
 
 
@@ -24,9 +25,10 @@ public class SpotifySinkOutput implements SinkOutput {
         return currentFrame;
     }
 
-    private class Frame implements AudioFrame {
+    private static class Frame implements AudioFrame {
         private byte[] currentBuffer;
 
+        @SuppressWarnings("PMD.ArrayIsStoredDirectly")
         public void writeData(final byte[] buffer) {
             currentBuffer = buffer;
         }
@@ -38,7 +40,7 @@ public class SpotifySinkOutput implements SinkOutput {
 
         @Override
         public int getVolume() {
-            return 100;
+            return VOLUME;
         }
 
         @Override
@@ -46,13 +48,14 @@ public class SpotifySinkOutput implements SinkOutput {
             return 0;
         }
 
+        @SuppressWarnings("PMD.MethodReturnsInternalArray")
         @Override
         public byte[] getData() {
             return currentBuffer;
         }
 
         @Override
-        public void getData(byte[] buffer, int offset) {
+        public void getData(final byte[] buffer, final int offset) {
             System.arraycopy(currentBuffer, 0, buffer, offset, currentBuffer.length);
         }
 

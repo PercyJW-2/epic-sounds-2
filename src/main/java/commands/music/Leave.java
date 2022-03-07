@@ -1,6 +1,5 @@
 package commands.music;
 
-import audiocore.AudioInstanceManager;
 import commands.Command;
 import net.dv8tion.jda.api.JDA;
 import util.EventContainer;
@@ -40,6 +39,7 @@ public class Leave implements Command {
 
     @Override
     public String help() {
-        return "Use this Command to disconnect the Bot from a Channel. The Bot has to be connected to an Channel, so it can leave.";
+        return "Use this Command to disconnect the Bot from a Channel."
+                + " The Bot has to be connected to an Channel, so it can leave.";
     }
 }

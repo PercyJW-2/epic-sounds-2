@@ -2,12 +2,14 @@ package util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
-public class Prefixes {
-
-    public static final String defaultPrefix = "Yo!";
+public final class Prefixes {
+    public static final String DEFAULT_PREFIX = "Yo!";
     private static Map<Long, String> prefixMap = new HashMap<>();
+
+    private Prefixes() {
+        throw new UnsupportedOperationException();
+    }
 
     public static void addPrefix(final long guildID, final String prefix) {
         prefixMap.put(guildID, prefix);
@@ -23,10 +25,10 @@ public class Prefixes {
         return prefixMap;
     }
 
-    public static String getPrefix (final long guildID) {
+    public static String getPrefix(final long guildID) {
         String prefix = prefixMap.get(guildID);
         if (prefix == null) {
-            prefix = defaultPrefix;
+            prefix = DEFAULT_PREFIX;
         }
         return prefix;
     }

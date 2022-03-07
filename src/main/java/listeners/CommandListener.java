@@ -27,7 +27,7 @@ public class CommandListener extends ListenerAdapter {
                 CommandHandler.handlerCommand(
                         CommandParser.parser(msgContent, event, prefix));
 
-            } else if (msgContent.startsWith(Prefixes.defaultPrefix)
+            } else if (msgContent.startsWith(Prefixes.DEFAULT_PREFIX)
                     && !msg.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
                 new Help().action(new String[]{}, EventConverterUtil.convertMessageEvent(event));
             } else {

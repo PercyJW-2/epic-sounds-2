@@ -34,7 +34,7 @@ public class Delete implements Command {
         return false;
     }
 
-    @SuppressWarnings("PMD.MissingBreakInSwitch")
+    @SuppressWarnings({"PMD.MissingBreakInSwitch", "PMD.SwitchStmtsShouldHaveDefault"})
     @Override
     public void action(final String[] args, final EventContainer event) {
         final Guild guild = event.getGuild();
@@ -42,17 +42,15 @@ public class Delete implements Command {
         final List<Integer> toBeDeleted = new LinkedList<>();
         if (args != null) {
             for (final String arg : args) {
-                switch (arg) {
-                    case "--help":
-                    case "-h":
-                        writeMessage(help(), event);
-                        return;
-                    default:
-                        final int number = Integer.parseInt(arg);
-                        if (number < 1) {
-                            writeError("All Numbers need to be positive! It will be skipped", event);
-                        }
-                        toBeDeleted.add(number - 1);
+                if (arg.equals("--help") || arg.equals("-h")) {
+                    writeMessage(help(), event);
+                    return;
+                } else {
+                    final int number = Integer.parseInt(arg);
+                    if (number < 1) {
+                        writeError("All Numbers need to be positive! It will be skipped", event);
+                    }
+                    toBeDeleted.add(number - 1);
                 }
             }
         }

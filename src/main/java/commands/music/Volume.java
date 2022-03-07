@@ -12,6 +12,8 @@ import static util.DefaultMessageWriter.*;
 
 public class Volume implements Command {
 
+    private static final int MAX_VOLUME = 200;
+    private static final int DEFAULT_VOLUME = 100;
     private final AudioInstanceManager audioInstanceManager;
 
     public Volume(final AudioInstanceManager audioInstanceManager,
@@ -32,29 +34,25 @@ public class Volume implements Command {
         return false;
     }
 
-    @SuppressWarnings({"PMD.MissingBreakInSwitch", "PMD.CyclomaticComplexity"})
+    @SuppressWarnings({
+            "PMD.MissingBreakInSwitch",
+            "PMD.CyclomaticComplexity",
+            "checkstyle:MultipleStringLiterals",
+            "checkstyle:InnerAssignment"})
     @Override
     public void action(final String[] args, final EventContainer event) {
         boolean show = true;
-        int volume = 100;
+        int volume = DEFAULT_VOLUME;
         if (args.length > 0) {
             for (final String str : args) {
                 switch (str.toLowerCase(Locale.getDefault())) {
-                    case "--help":
-                    case "-h":
-                        writeMessage(help(), event);
-                        break;
-                    case "--show":
-                    case "-s":
-                        show = true;
-                        break;
-                    case "--changeVolume":
-                    case "-cv":
-                        show = false;
-                        break;
-                    default:
+                    case "--help", "-h" -> writeMessage(help(), event);
+                    case "--show", "-s" -> show = true;
+                    case "--changevolume", "-cv" -> show = false;
+                    default -> {
                         show = false;
                         volume = Integer.parseInt(str);
+                    }
                 }
             }
         } else {
@@ -64,7 +62,7 @@ public class Volume implements Command {
         if (show) {
             writeMessage("The current Volume is: " + audioInstanceManager.getVolume(event.getGuild()), event);
         } else {
-            if (volume > 200 || volume < 0) {
+            if (volume > MAX_VOLUME || volume < 0) {
                 writeError("The Number to change the Volume mut be inbetween 0 and 200", event);
             } else {
                 audioInstanceManager.setVolume(event.getGuild(), volume);
@@ -80,9 +78,10 @@ public class Volume implements Command {
 
     @Override
     public String help() {
-        return "Use this Command to change the master volume of the bot.\n"
-                + "Use '--help' or '-h' to view this message.\n"
-                + "Use '--show', '-s' or write nothing to view the current volume.\n"
-                + "Write a number to change the Volume to that number.";
+        return """
+                Use this Command to change the master volume of the bot.
+                Use '--help' or '-h' to view this message.
+                Use '--show', '-s' or write nothing to view the current volume.
+                Write a number to change the Volume to that number.""";
     }
 }
