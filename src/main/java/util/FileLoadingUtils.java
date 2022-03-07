@@ -59,6 +59,8 @@ public class FileLoadingUtils {
             settings.put("Discord_API_Key", "Your_Bot_Token");
             settings.put("Spotify_Client_ID", "Your_Spotify_Client_ID");
             settings.put("Spotify_Client_Secret", "Your_Spotify_Client_Secret");
+            settings.put("papisid", "Your_PAPISID");
+            settings.put("psid", "Your_PSID");
             saveObj("settings", settings);
             throw new SettingsNotFoundException();
         }

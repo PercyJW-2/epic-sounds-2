@@ -31,7 +31,7 @@ public class Main {
     private static final int EXIT_NO_SETTINGS = 100;
     private static final long BACKUP_DELAY = 86_400_000L;
     private static JDABuilder builder;
-    private static final AudioInstanceManager AUDIO_MANAGER = new AudioInstanceManager();
+    private static AudioInstanceManager AUDIO_MANAGER;
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     /**
@@ -54,6 +54,7 @@ public class Main {
         }
 
         final String discordAPIKey = settings.get("Discord_API_Key");
+        AUDIO_MANAGER = new AudioInstanceManager(settings.get("papisid"), settings.get("psid"));
 
         JDA jda;
 

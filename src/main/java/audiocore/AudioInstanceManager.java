@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeHttpContextFilter;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -20,6 +21,8 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import static util.DefaultMessageWriter.writeError;
+
 public class AudioInstanceManager {
 
     private static final int PLAYLIST_LIMIT = 1000;
@@ -29,8 +32,10 @@ public class AudioInstanceManager {
     private static final Logger LOG = LoggerFactory.getLogger(AudioInstanceManager.class);
     private boolean searchPlaylist;
 
-    public AudioInstanceManager() {
+    public AudioInstanceManager(final String papisid, final String psid) {
         AudioSourceManagers.registerRemoteSources(MANAGER);
+        YoutubeHttpContextFilter.setPAPISID(papisid);
+        YoutubeHttpContextFilter.setPSID(psid);
     }
 
     private AudioPlayer createPlayer(final Guild guild) {
@@ -138,6 +143,12 @@ public class AudioInstanceManager {
             public void loadFailed(final FriendlyException exception) {
                 LOG.error("ES IST EIN VERDAMMTER FEHLER AUFGETRETEN");
                 LOG.error(exception.getMessage());
+                reply.reply(
+                        new EmbedBuilder()
+                                .setColor(Color.RED)
+                                .setDescription(exception.getMessage())
+                                .build()
+                );
             }
         });
     }
