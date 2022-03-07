@@ -30,7 +30,6 @@ public class AddSound implements Command {
             writeMessage(help(), event);
             return;
         }
-        final String keyword = args[0];
         final String link;
         if (args.length >= 2) {
             link = args[1];
@@ -41,6 +40,7 @@ public class AddSound implements Command {
         if (!Sounds.containsGuild(guildID)) {
             Sounds.addGuildSoundSet(guildID, new HashMap<>());
         }
+        final String keyword = args[0];
         Sounds.getGuildSoundSet(guildID).put(keyword, link);
         writeMessage("Added " + keyword + "to the sounds of this server", event);
     }

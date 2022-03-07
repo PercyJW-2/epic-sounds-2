@@ -79,7 +79,7 @@ public class Delete implements Command {
                         deletedTracks++;
                     }
                 }
-                if (notDeletedTracks.toString().equals("")) {
+                if (notDeletedTracks.length() == 0) {
                     writeError("There is/are no songs with the number "
                             + notDeletedTracks
                             + ". It will be skipped", event);

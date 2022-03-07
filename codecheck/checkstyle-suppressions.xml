@@ -16,6 +16,14 @@
 
     <suppress files="[\\/]test[\\/]" checks="JavadocVariable"/>
 
+    <suppress files="[\\/]main[\\/]" checks="JavadocType"/>
+
+    <suppress files="[\\/]main[\\/]" checks="JavadocMethod"/>
+
+    <suppress files="[\\/]main[\\/]" checks="JavadocPackage"/>
+
+    <suppress files="[\\/]main[\\/]" checks="JavadocVariable"/>
+
     <suppress files="[\\/]resources[\\/]" checks=".*"/>
 
     <suppress files="[\\/]java[\\/]spread[\\/]" checks=".*"/>

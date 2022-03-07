@@ -156,6 +156,7 @@ public class Main {
 
     }
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static void addCommand(final Command cmd, final String... names) {
         for (final String name : names) {
             CommandHandler.getCommands().put(name, cmd);

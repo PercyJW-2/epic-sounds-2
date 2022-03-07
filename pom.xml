@@ -18,14 +18,14 @@
     </properties>
 
     <build>
-        <defaultGoal>clean verify</defaultGoal>
+        <defaultGoal>clean verify package</defaultGoal>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <!--Compiler-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -83,7 +83,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.16.0</version>
                 <configuration>
                     <targetJdk>${java.version}</targetJdk>
                     <rulesets>
@@ -105,45 +105,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.pmd</groupId>
-                        <artifactId>pmd-core</artifactId>
-                        <version>6.29.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>net.sourceforge.pmd</groupId>
-                        <artifactId>pmd-java</artifactId>
-                        <version>6.29.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <!-- Generate Spotbugs warnings and report in validation phase -->
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.0.4</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs</artifactId>
-                        <version>4.1.3</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>spotbugs-check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <excludeFilterFile>codecheck/spotbugs-filter.xml</excludeFilterFile>
-                    <failOnError>false</failOnError>
-                </configuration>
             </plugin>
 
             <!-- Generate jacoco code coverage report in test phase-->
@@ -171,50 +132,27 @@
                 </executions>
             </plugin>
 
-            <!--startup script creation-->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <version>2.0.0</version>
-                <configuration>
-                    <repositoryLayout>flat</repositoryLayout>
-                    <programs>
-                        <program>
-                            <mainClass>main.Main</mainClass>
-                            <id>music-bot</id>
-                        </program>
-                    </programs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>applications</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assemble</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--create archives for deployment-->
+            <!--Package everything together-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <target>
-                        <zip destfile="${project.build.directory}/${project.artifactId}.zip"
-                             basedir="${project.build.directory}/appassembler/"
-                             excludes=""/>
-                    </target>
-                </configuration>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
-                        <id>make-zip</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.Main</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -242,7 +180,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.9</version>
+            <version>2.9.0</version>
         </dependency>
         <dependency>
             <groupId>com.sedmelluq</groupId>

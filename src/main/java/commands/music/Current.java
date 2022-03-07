@@ -105,9 +105,9 @@ public class Current implements Command {
         final StringBuilder bar = new StringBuilder();
         for (int i = 0; i <= 50; i++) {
             if (i == status) {
-                bar.append(">");
+                bar.append('>');
             } else {
-                bar.append("\u2013");
+                bar.append('\u2013');
             }
         }
         return bar.toString();
