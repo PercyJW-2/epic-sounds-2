@@ -3,32 +3,27 @@
  */
 
 plugins {
-    `java-library`
-    `maven-publish`
+    application
 }
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     maven {
         url = uri("https://jitpack.io")
-    }
-
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
     }
 }
 
 dependencies {
-    api(libs.com.github.dv8fromtheworld.jda)
-    api(libs.com.google.code.gson.gson)
-    api(libs.dev.arbjerg.lavaplayer)
-    api(libs.org.slf4j.slf4j.reload4j)
-    api(libs.se.michaelthelin.spotify.spotify.web.api.java)
-    api(libs.xyz.gianlu.librespot.librespot.lib)
-    api(libs.xyz.gianlu.librespot.librespot.player)
+    implementation(libs.com.github.dv8fromtheworld.jda)
+    implementation(libs.com.google.code.gson.gson)
+    implementation(libs.dev.arbjerg.lavaplayer)
+    implementation(libs.org.slf4j.slf4j.reload4j)
+    implementation(libs.se.michaelthelin.spotify.spotify.web.api.java)
+    implementation(libs.xyz.gianlu.librespot.librespot.lib)
+    implementation(libs.xyz.gianlu.librespot.librespot.player)
     testImplementation(libs.org.assertj.assertj.core)
     testImplementation(libs.org.junit.jupiter.junit.jupiter.api)
-    implementation(kotlin("script-runtime"))
+    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }
 
 group = "percyjw"
@@ -36,16 +31,6 @@ version = "0.9"
 description = "Epic-Sounds-2-Project"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
-    }
-}
-
-tasks.withType<JavaCompile>() {
-    options.encoding = "UTF-8"
-}
-
-tasks.withType<Javadoc>() {
-    options.encoding = "UTF-8"
+application {
+    mainClass.set("epicsounds2.main.Main")
 }
