@@ -1,28 +1,27 @@
 package epicsounds2.main;
 
-import epicsounds2.commands.Command;
-//import commands.spotifyconnect.SpotifyConnect;
-import epicsounds2.exceptions.SettingsNotFoundException;
 import epicsounds2.audiocore.AudioInstanceManager;
+import epicsounds2.commands.Command;
 import epicsounds2.commands.Help;
 import epicsounds2.commands.PrefixCustomizer;
 import epicsounds2.commands.music.*;
-import epicsounds2.commands.music.Queue;
+import epicsounds2.exceptions.SettingsNotFoundException;
 import epicsounds2.listeners.CommandListener;
 import epicsounds2.listeners.UserJoinListener;
+import epicsounds2.util.FileLoadingUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-
-import javax.security.auth.login.LoginException;
-import java.io.IOException;
-import java.util.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import epicsounds2.util.FileLoadingUtils;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class Main {
@@ -54,7 +53,7 @@ public class Main {
         }
 
         final String discordAPIKey = settings.get("Discord_API_Key");
-        AUDIO_MANAGER = new AudioInstanceManager(settings.get("papisid"), settings.get("psid"));
+        AUDIO_MANAGER = new AudioInstanceManager(settings.get("email"), settings.get("password"));
 
         JDA jda;
 

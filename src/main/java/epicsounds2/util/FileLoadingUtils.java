@@ -59,8 +59,8 @@ public class FileLoadingUtils {
             settings.put("Discord_API_Key", "Your_Bot_Token");
             settings.put("Spotify_Client_ID", "Your_Spotify_Client_ID");
             settings.put("Spotify_Client_Secret", "Your_Spotify_Client_Secret");
-            settings.put("papisid", "Your_PAPISID");
-            settings.put("psid", "Your_PSID");
+            settings.put("email", "google-account email");
+            settings.put("password", "google-account password");
             saveObj("settings", settings);
             throw new SettingsNotFoundException();
         }
@@ -83,10 +83,9 @@ public class FileLoadingUtils {
     private static <T> T loadObj(final String name, final TypeToken<T> type) throws IOException {
         final Gson gson = new Gson();
         T obj = null;
-        try {
+        try (final Stream<String> stream = Files.lines(Paths.get(name + ".json"), StandardCharsets.UTF_8)) {
             //load File
             final StringBuilder contentBuilder = new StringBuilder();
-            final Stream<String> stream = Files.lines(Paths.get(name + ".json"), StandardCharsets.UTF_8);
             stream.forEach(contentBuilder::append);
             final String json = contentBuilder.toString();
             //loaded File
