@@ -10,8 +10,7 @@ A Discord-Musicbot designed to be similar to the [Groovy Music-Bot](https://groo
 - User controllable Master-Volume for the Bot, to change the Volume for everyone  
 - Customizable Prefix for the Bot. (Server Admin-Permissions needed)
 - Console-like usage. All commands are programmed to be used like a Command in a Console.
-- (Planned) Fully customizable Soundboard  
-- (Planned) Integration for Lavalink
+- (Planned) Fully customizable Soundboard
 
 ## Commands  
 
@@ -44,7 +43,4 @@ WIP
 
 ## Installation  
 
-Download the most recent jar-File from this Repository and launch it from commandline
-with java. You also need a Discord Bot-Application and the Bot-Tag from it.  
-Now write `java -jar epic_sounds2.jar "TAG"` while replacing TAG with your Bot-Tag.
-maybe you also need to change name of the .jar-file if it differs from your Download.
+Currently there is no download and the bot needs to be compiled. On Windows you start the Bot from `.\bin\music-bot.bat` and on Linux it starts from `./bin/music-bot` You also need a Discord Bot-Application and the Bot-Tag from it. After the first start you will get a settings.json file generated in the folder where you launched the bot. Your Discord Bot Token needs to be placed inside this file. If you want to have Spotify-Support you'll also put there your Spotify Client Id and Secret. Now launch the bot again and everything should work.
