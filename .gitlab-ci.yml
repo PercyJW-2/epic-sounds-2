@@ -12,6 +12,8 @@ stages:
 build:
   stage: build
   script: gradle build
+  after_script:
+    - mv build/libs/*jar *jar
   artifacts:
     paths:
-      - build/libs/*.jar
+      - ./*.jar
