@@ -1,4 +1,4 @@
-image: gradle:alpine
+image: arm64v8/gradle
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
