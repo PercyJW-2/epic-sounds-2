@@ -1,0 +1,11 @@
+version: '3.7'
+
+volumes:
+  epic-sounds-data:
+
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - epic-sounds-data:/appdata
