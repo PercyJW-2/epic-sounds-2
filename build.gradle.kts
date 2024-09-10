@@ -16,12 +16,16 @@ repositories {
     maven {
         setUrl("https://jitpack.io")
     }
+    maven {
+        setUrl("https://maven.lavalink.dev/releases")
+    }
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:5.0.0-beta.18")
+    implementation("net.dv8tion:JDA:5.1.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("dev.arbjerg:lavaplayer:2.0.4")
+    implementation("com.github.devoxin:lavaplayer:1.9.1")
+    implementation("dev.lavalink.youtube:common:latest.release")
     implementation("org.slf4j:slf4j-log4j12:2.0.9")
     implementation("se.michaelthelin.spotify:spotify-web-api-java:8.3.4")
     implementation("xyz.gianlu.librespot:librespot-lib:1.6.3")
@@ -43,4 +47,12 @@ application {
 tasks.withType<ShadowJar> {
     archiveFileName.set("epic-sounds-2-0.9.jar")
     dependsOn(":distTar", ":distZip")
+}
+
+tasks.withType<Tar> {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.withType<Zip> {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

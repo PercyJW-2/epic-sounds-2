@@ -5,11 +5,11 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
-import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import epicsounds2.util.EventContainer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -30,10 +30,18 @@ public class AudioInstanceManager {
     private static final Map<Guild, Map.Entry<AudioPlayer, TrackManager>> PLAYERS = new HashMap<>();
     private static final int FRAME_BUFFER_DURATION = 2000;
     private static final Logger LOG = LoggerFactory.getLogger(AudioInstanceManager.class);
+    private final String currentOauthRefreshToken;
     private boolean searchPlaylist;
 
-    public AudioInstanceManager(final String email, final String password) {
-        MANAGER.registerSourceManager(new YoutubeAudioSourceManager(true, email, password));
+    public AudioInstanceManager(final String oauthRefreshToken) {
+        final YoutubeAudioSourceManager manager = new YoutubeAudioSourceManager();
+        if (oauthRefreshToken != null) {
+            manager.useOauth2(oauthRefreshToken, true);
+        } else {
+            manager.useOauth2(null, false);
+        }
+        currentOauthRefreshToken = manager.getOauth2RefreshToken();
+        MANAGER.registerSourceManager(manager);
         AudioSourceManagers.registerRemoteSources(MANAGER);
     }
 
@@ -51,6 +59,10 @@ public class AudioInstanceManager {
 
     private boolean hasPlayer(final Guild guild) {
         return PLAYERS.containsKey(guild);
+    }
+
+    public String getCurrentOauthRefreshToken() {
+        return currentOauthRefreshToken;
     }
 
     public AudioPlayer getPlayer(final Guild guild) {

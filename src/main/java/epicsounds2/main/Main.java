@@ -53,7 +53,10 @@ public class Main {
         }
 
         final String discordAPIKey = settings.get("Discord_API_Key");
-        AUDIO_MANAGER = new AudioInstanceManager(settings.get("email"), settings.get("password"));
+        String oauthToken = settings.getOrDefault("oauthToken", null);
+        AUDIO_MANAGER = new AudioInstanceManager(oauthToken);
+        oauthToken = AUDIO_MANAGER.getCurrentOauthRefreshToken();
+        settings.put("oauthToken", oauthToken);
 
         JDA jda;
 
